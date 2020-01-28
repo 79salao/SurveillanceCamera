@@ -1,4 +1,4 @@
-package dev.futurepath.videovigilancia.model.controller;
+package dev.futurepath.videovigilancia.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
