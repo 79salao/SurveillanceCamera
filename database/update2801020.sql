@@ -1,0 +1,3 @@
+ALTER TABLE `records`
+	CHANGE COLUMN `date` `date` DATE NOT NULL AFTER `id`,
+	ADD COLUMN `time` TIME NOT NULL AFTER `date`;
