@@ -23,7 +23,7 @@
 				<article class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 					<img src="logo.png" alt="logo movicoders" />
 					<h1>L O G I N</h1>
-					<form class="login-box" th:action="@{/}" th:object="${user}" method="post">
+					<form class="login-box" th:action="@{/validateUser}" th:object="${user}" method="post">
 						<div class="form-group">
 							<label>User-name</label> <input type="text" class="form-login" th:field="*{username}" />
 						</div>

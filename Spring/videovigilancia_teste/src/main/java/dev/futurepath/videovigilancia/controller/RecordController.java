@@ -13,11 +13,17 @@ public class RecordController {
 	@Autowired
 	private IRecordDao recordDao;
 	
-	@RequestMapping(value= "/recordPage")
+	@RequestMapping(value= "/main")
 	public String mainPage(Model model) {
 		model.addAttribute("title","TB/O Records");
 		model.addAttribute("record", recordDao.findAll());
-		return "recordPage";
+		return "mainpage";
 	}
+	
+	/*@RequestMapping(value = "/charts")
+	public String chartsPage(Model model) {
+		model.addAttribute("data", recordDao.findByDates());
+		return "charts";
+	}*/
 
 }

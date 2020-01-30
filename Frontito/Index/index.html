@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>LOGIN</title>
+  <title th:text="${title}"></title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <link rel="stylesheet" href="styles.css">
@@ -28,12 +28,12 @@
         <article class="col-xs-12 col-sm-6">
           <img src="logo.png" alt="logo movicoders"><!-- logo del login -->
           <h1>L O G I N</h1>
-          <form class="login-box"><!-- caja central donde se encierra login -->
+          <form class="login-box" th:action="@{/validateUser}" th:object="${user}" method="post"><!-- caja central donde se encierra login -->
             <div class="form-group">
-              <input type="text" class="form-login" placeholder="User-Name">
+              <input type="text" class="form-login" placeholder="Username" th:field="*{username}">
             </div>
             <div class="form-group">
-              <input type="password" class="form-login" placeholder="Password">
+              <input type="password" class="form-login" placeholder="Password" th:field="*{password}">
             </div>
             <button
             type="submit" class="btn btn-login">Login <!-- login button -->
@@ -64,10 +64,10 @@
           <div class="modal-body"><!-- send an email, changing the password in the database and sending the changed password -->
             <p style="font-size: large;">Te enviaremos un correo con la nueva contraseña, asegurate de cambiarla
               por una que recuerdes con mayor facilidad.</p><br>
-            <form class="forgotpw-form">
+            <form class="forgotpw-form" th:object="${user}" method="post">
               <div class="form-group">
                 <label>Email:</label>
-                <input type="email" style="border: 1px solid #0f407a" class="form-fgpw">
+                <input type="email" style="border: 1px solid #0f407a" class="form-fgpw" th:field="*{email}">
                 <small class="form-text text-muted">No compartiremos tu correo con terceros.</small>
               </div>
               <button type="submit" class="btn btn-primary">Send!</button><!-- send email button -->

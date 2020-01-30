@@ -16,26 +16,20 @@ public class UserController {
 	@Autowired
 	private IUserDao userDao;
 
-	@RequestMapping(value = "/signIn")
-	public String homePage(Model model) {
+	@RequestMapping(value = {"/signIn", "/"})
+	public String indexPage(Model model) {
 		model.addAttribute("title", "TB/O SignIn");
 		model.addAttribute("user", new User());
-		return "signIn";
+		return "index";
 	}
 
-	@PostMapping(value = "/")
+	@PostMapping(value = "/validateUser")
 	public String validate(@ModelAttribute("user") User user, Model model) {
-		//Tiene que haber alguna manera mejor de hacerlo
-		try {
-			if (userDao.findId(user).equals(null)) {
-				model.addAttribute("title", "TB/O SignIn");
-				return "redirect:signIn";
-			}
-		} catch (NullPointerException e) {
-			return "redirect:signIn";
+		if (userDao.findId(user) == null) {
+			model.addAttribute("title", "TB/O SignIn");
+			return "redirect:index";
 		}
-		return "redirect:recordPage";
+		return "redirect:main";
 	}
 
-	
 }
