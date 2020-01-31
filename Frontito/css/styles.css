@@ -1,0 +1,127 @@
+  
+
+.site{
+    background: url(bg.jpeg) no-repeat center top;
+    background-size: cover;
+}
+
+header{
+    background: #0f407a;
+    color: white;
+    text-align: center;
+    padding: 30px;  
+    font-family: 'Times New Roman', Times, serif;
+}
+
+header img{
+    float: left;
+}
+
+article h1{
+    border-bottom: 3px solid #0f407a;
+    margin-bottom: 70px;
+    margin-top: 30px;
+    font-weight: bold;
+    color: #0f407a;
+}
+
+
+.color-movi{
+    background: #0f407a;
+    color: white;
+}
+
+footer{ 
+    background: #0f407a;
+    color: white;
+    padding: 20px;
+    height: 90px;
+    margin-top: 300px;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: larger;
+}
+
+footer img{
+    height: 50px;
+    width: 100px;
+    float: left;
+}
+
+article{
+    background: white;
+    text-align: center;
+    padding: 50px;
+    border-left: 15px solid #0f407a;
+    border-right: 15px solid #0f407a;
+    border-bottom: 15px solid #0f407a;
+}
+
+article img{
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+article h1{
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.btn-login{
+    border: none;
+    outline: none;
+    width: 90px;
+    background: #0f407a;
+    color: #fff;
+    font-size: 16px;
+    border-radius: 20px;
+    padding: 10px;
+    margin-top: 30px;  
+}
+
+.btn-recup{
+    border: none;
+    outline: none;
+    width: 213px;
+    background: #0f407a;
+    color: #fff;
+    font-size: 16px;
+    border-radius: 20px;
+    padding: 10px;
+    margin-top: 30px;  
+}
+
+.login-box label{
+    margin-bottom: 30px;
+    padding: 1px;
+}
+
+.modal-footer{
+    background: #0f407a;
+    bottom: 0;
+}
+
+.modal-header{
+    background: #0f407a;
+    color: white;
+}
+
+@media screen and (max-width: 768px){
+    footer{
+        margin-top: 0;
+    }
+}
+
+.form-login[type = "text"],.form-login[type = "password"]{
+    transition: 0.25s;
+    width: 200px;
+    text-align: center;
+    margin: 15px;
+    border: 1px solid #0f407a;
+}
+
+.form-login[type = "text"]:focus,.form-login[type = "password"]:focus{
+    border: 3px solid #a2d9f5;
+    width: 250px;
+}
