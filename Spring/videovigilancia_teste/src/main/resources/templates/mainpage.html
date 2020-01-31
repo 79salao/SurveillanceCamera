@@ -2,16 +2,17 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<title>nombre</title>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<style>
+<title th:text"${title}">
+	</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<style>
 table {
 	font-family: arial, sans-serif;
 	border-collapse: collapse;
@@ -118,7 +119,6 @@ tr {
 	text-align: left;
 }
 </style>
-
 </head>
 <header>
 	<!-- Navegation bar -->
@@ -160,105 +160,104 @@ tr {
 <body>
 	<!--Contenedor central-->
 	<div class="container-fluid">
-		<form>
-			<div class="row">
-
+		<div class="row">
+			<form method="get" action="/main">
 				<!--Filter-->
-
 				<aside class="col-xs-12 col-sm-5 col-md-4 col-lg-3"
 					style="background: #143968; margin: 0px; height: 900px;">
 					<div class="form-group">
 						<label for="example-date-input" class="col-form-label">DESDE</label>
 						<div>
-							<input class="form-control" type="date" id="example-date-input" />
+							<input class="form-control" type="date" name="from" th:value="${from}"/>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="example-date-input" class="col-form-label">HASTA</label>
 						<div>
-							<input class="form-control" type="date" id="example-date-input" />
+							<input class="form-control" type="date" name="to" th:value="${to}" />
 						</div>
 					</div>
 					<button class="btn btn-primary" type="submit">Buscar</button>
 				</aside>
-		</form>
+			</form>
 
-		<!-- acordeon table -->
+			<!-- acordeon table -->
 
-		<section class="col-xs-12 col-sm-7 col-md-8 col-lg-9"
-			style="background: #0f407a; color: black;">
-			<div id="accordion" th:each="record:${record}">
-				<div class="card" style="border: 10px solid #143968">
-					<div class="card-header" id="headingTwo">
-						<h5 class="mb-0">
-							<button class="btn btn-link collapsed"
-								style="color: black; font-weight: bold;" data-toggle="collapse"
-								data-target="#collapseTwo" aria-expanded="false"
-								aria-controls="collapseTwo">
-								Grabacion | <span th:text="${record.date}"></span>
-							</button>
-						</h5>
-					</div>
-					<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
-						data-parent="#accordion">
-						<div class="card-body"
-							style="padding: 10px; border-top: 3px solid #143968;">
-							<table style="width: 100%">
-								<tr>
-									<th>Camara nº:</th>
-									<td th:text="${record.camera}"></td>
-								</tr>
-								<tr>
-									<th>Duracion:</th>
-									<td th:text="${record.duration}"></td>
-								</tr>
-							</table>
-							<button type="button" class="btn btn-primary" data-toggle="modal"
-								data-target=".bd-example-modal-lg-record"
-								th:text="${record.videoLocation}"></button>
+			<section class="col-xs-12 col-sm-7 col-md-8 col-lg-9"
+				style="background: #0f407a; color: black;">
+				<div id="accordion" th:each="record:${record}">
+					<div class="card" style="border: 10px solid #143968">
+						<div class="card-header" id="headingTwo">
+							<h5 class="mb-0">
+								<button class="btn btn-link collapsed"
+									style="color: black; font-weight: bold;" data-toggle="collapse"
+									th:attr="data-target='#collapse'+${record.id}, aria-controls='collapse'+${record.id}" aria-expanded="false"
+									>
+									Grabacion | <span th:text="${record.date}"></span>
+								</button>
+							</h5>
+						</div>
+						<div th:id="'collapse'+${record.id}" class="collapse"
+							aria-labelledby="headingTwo" data-parent="#accordion">
+							<div class="card-body"
+								style="padding: 10px; border-top: 3px solid #143968;">
+								<table style="width: 100%">
+									<tr>
+										<th>Camara nº:</th>
+										<td th:text="${record.camera}"></td>
+									</tr>
+									<tr>
+										<th>Duracion:</th>
+										<td th:text="${record.duration}"></td>
+									</tr>
+								</table>
+								<!-- Aún hay que hacer la parte del vídeo con th -->
+								<button type="button" class="btn btn-primary"
+									data-toggle="modal" data-target=".bd-example-modal-lg-record">Vídeo</button>
+							</div>
 						</div>
 					</div>
 				</div>
-		</section>
-	</div>
-	</div>
-
-	<!-- Stream modal -->
-
-	<div class="modal fade bd-example-modal-lg-stream" tabindex="-1"
-		role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<img src="http://192.168.2.119:8000/stream.mjpg" width="100%"
-					height="auto" style="border: 5px solid #0f407a">
-				<button type="button" class="close" data-dismiss="modal"
-					aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-footer"
-				style="text-align: center; color: white; font-size: larger; background: #0f407a;">
-				CAMERA 1</div>
+			</section>
 		</div>
-	</div>
 
-	<!-- record modal -->
+		<!-- Stream modal -->
 
-	<div class="modal fade bd-example-modal-lg-record" tabindex="-1"
-		role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<iframe width="100%" height="500px"
-					src="https://www.youtube.com/embed/W3Jd0k7gv9c" frameborder="0"
-					allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-					allowfullscreen></iframe>
-				<button type="button" class="close" data-dismiss="modal"
-					aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
+		<div class="modal fade bd-example-modal-lg-stream" tabindex="-1"
+			role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<img src="http://192.168.2.119:8000/stream.mjpg" width="100%"
+						height="auto" style="border: 5px solid #0f407a">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-footer"
+					style="text-align: center; color: white; font-size: larger; background: #0f407a;">
+					CAMERA 1</div>
 			</div>
 		</div>
-	</div>
+
+		<!-- record modal -->
+
+		<div class="modal fade bd-example-modal-lg-record" tabindex="-1"
+			role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<iframe width="100%" height="500px"
+						src="https://www.youtube.com/embed/W3Jd0k7gv9c" frameborder="0"
+						allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+						allowfullscreen></iframe>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+			</div>
+		</div>
+		</div>
 </body>
 
 <!-- Footer -->
@@ -269,6 +268,8 @@ tr {
 			<div class="col-md-12" style="background: #ffffff; padding: 10px;">
 				<h5 class="text-uppercase">A futurepath project</h5>
 			</div>
+		</div>
+	</div>
 </footer>
 
 </html>

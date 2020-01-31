@@ -7,6 +7,8 @@ import dev.futurepath.videovigilancia.model.entity.Record;
 
 public interface IRecordDao {
 	
-	public List<Record> findAll();	
+	public List<Record> findAll();
+	
+	List<Record> findByDates(String from, String to);	
 	
 }
