@@ -96,6 +96,10 @@ h4 {
         margin-top: 25px !important;
         margin-bottom: 25px !important;
     }
+
+    .navbar{
+        min-height: 50px;
+    }
 }
 
 @media ( min-width : 768px) {
@@ -107,7 +111,7 @@ h4 {
 	}
 	#movil-menu{
 		visibility: hidden;
-	}
+    }
 }
 
 @media (min-width: 1100px) {
