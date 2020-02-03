@@ -2,17 +2,17 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>nombre</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/estilo.css">
-    <script src="js/jquery-3.4.1.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-    <script src="js/chartsJS2.js"></script>
+	<title>nombre</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../css/stats_styles.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+	<script src="../js/chartJS.js"></script>
+  </head>
 
-</head>
 <header>
 	<!-- Navegation bar -->
 	<nav class="navbar navbar-dark bg-primary "
@@ -20,7 +20,7 @@
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<img src="..\images\logonav.png"
-					width="80" height="80" class="navbar-left">
+					width="80" height="80" class="navbar-left" id="logonav">
 			</div>
 			<ul class="nav navbar-nav"
 				style="background-color: #ffffff; color: #0f407a; font-size: medium;">
@@ -33,18 +33,33 @@
 			<!-- dropmenu -->
 
 			<ul class="nav navbar-right" style="background-color: #ffffff;">
-				<li class="nav-item dropdown"><a
+				<!-- dropmenu account -->
+				<li class="nav-item dropdown" id="account-menu"><a
 					class="nav-link dropdown-toggle" href="#"
 					id="navbarDropdownMenuLink" data-toggle="dropdown"
-					aria-haspopup="true" aria-expanded="true"> <img
-						src="..\images\account.png"
-						width="30" height="30">
+					aria-haspopup="true" aria-expanded="true"> 
+					<img src="..\images\account.png" width="30" height="30">
 				</a>
-					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style="height: 130px; width: 150px;">
-						<a class="dropdown-item" data-toggle="modal" data-target=".bd-example-modal-lg-name" style="font-size: medium; color: #0f407a;">Change name</a>
-						<a class="dropdown-item" data-toggle="modal" data-target=".bd-example-modal-lg-password" style="font-size: medium; color: #0f407a;">Change password</a>
-						<a class="dropdown-item" data-toggle="modal" data-target=".bd-example-modal-lg-email" style="font-size: medium; color: #0f407a;">Change email</a>
-						<a class="dropdown-item" href="#" style="color: #0f407a">Sign out</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style="height: 100px; width: 150px;">
+						<a class="dropdown-item" data-toggle="modal" data-target=".bd-example-modal-lg-name" style="font-size: medium; color: #0f407a;">Change name <br></a>
+						<a class="dropdown-item" data-toggle="modal" data-target=".bd-example-modal-lg-password" style="font-size: medium; color: #0f407a;">Change password <br></a>
+						<a class="dropdown-item" data-toggle="modal" data-target=".bd-example-modal-lg-email" style="font-size: medium; color: #0f407a;">Change email <br></a>
+						<a class="dropdown-item" href="#" style="color: #0f407a; font-weight: bold;">Sign out</a>
+					</div>
+				</li>
+
+				<!-- dropmenu -->
+				<li class="nav-item dropdown" id="movil-menu"><a
+					class="nav-link dropdown-toggle" href="#"
+					id="navbarDropdownMenuLink" data-toggle="dropdown"
+					aria-haspopup="true" aria-expanded="true"> 
+					<img src="..\images\movil-menu.png" width="30" height="30">
+				</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style="height: 100px; width: 150px;">
+						<a class="dropdown-item" style="font-size: medium; color: #0f407a;" href="#">Grabaciones <br></a>
+						<a class="dropdown-item" style="font-size: medium; color: #0f407a;" href="#">Estadísticas <br></a>
+						<a class="dropdown-item" style="font-size: medium; color: #0f407a;" data-toggle="modal" data-target=".bd-example-modal-lg-stream">Directo <br></a>
+						<a class="dropdown-item" style="font-size: medium; color: #0f407a; font-weight: bold;" href="#" style="color: #0f407a">Sign out</a>
 					</div>
 				</li>
 			</ul>
@@ -80,11 +95,11 @@
 		</form>
 
 		<section class="col-xs-12 col-sm-9 col-md-9 col-lg-10" style="background: #0f407a; color: black;">
-			<div class="españa" id="chartContainer"></div>
-		</section>
-	</div>
-</form>
-</div>
+          <div class="españa" id="chartContainer"></div>
+        </section>
+      </div>
+    </form>
+  </div>
 
 	<!-- Stream modal -->
 
