@@ -23,7 +23,6 @@ table {
 }
 
 td, th {
-	text-align: left;
 	padding: 8px;
 }
 
@@ -78,8 +77,6 @@ h4 {
 .modal-footer{
 	background: #0f407a;
 	position: absolute;
-	bottom: 0;
-	width: 100%;
 }
 
 .modal-header{
@@ -88,8 +85,8 @@ h4 {
 }
 
 footer {
-  background-color: black;
-  position: relative;
+  background-color: white;
+  position: fixed;
   bottom: 0;
   width: 100%;
   height: 40px;
@@ -103,6 +100,9 @@ footer {
 		padding-bottom: 26.5px;
 		line-height: 27px;
 	}
+	#movil-menu{
+		visibility: hidden;
+	}
 }
 
 @media screen and (max-width: 767px) {
@@ -110,6 +110,10 @@ footer {
         height: 100%;
         padding: 15px;
       }
+
+	  .navbar-right{
+		  height: 30px;
+	  }
 
       .navbar-header img {
         display: none;
@@ -122,6 +126,11 @@ footer {
       #account-menu {
         float: right;
       }
+
+	  #movil-menu{
+		visibility: visible;
+		float: left;
+	  }
 
       aside {
         height: 430px !important;
@@ -172,31 +181,34 @@ tr {
 
 			<!-- dropmenu -->
 
-			<ul class="nav navbar-right" style="background-color: #ffffff;" id="account-menu">
-				<li class="nav-item dropdown"><a
+			<ul class="nav navbar-right" style="background-color: #ffffff;">
+				<!-- dropmenu account -->
+				<li class="nav-item dropdown" id="account-menu"><a
 					class="nav-link dropdown-toggle" href="#"
 					id="navbarDropdownMenuLink" data-toggle="dropdown"
 					aria-haspopup="true" aria-expanded="true"> 
 					<img src="..\images\account.png" width="30" height="30">
 				</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style="height: 130px; width: 150px;">
-						<a class="dropdown-item" data-toggle="modal" data-target=".bd-example-modal-lg-name" style="font-size: medium; color: #0f407a;">Change name</a>
-						<a class="dropdown-item" data-toggle="modal" data-target=".bd-example-modal-lg-password" style="font-size: medium; color: #0f407a;">Change password</a>
-						<a class="dropdown-item" data-toggle="modal" data-target=".bd-example-modal-lg-email" style="font-size: medium; color: #0f407a;">Change email</a>
-						<a class="dropdown-item" href="#" style="color: #0f407a">Sign out</a>
+						<a class="dropdown-item" data-toggle="modal" data-target=".bd-example-modal-lg-name" style="font-size: medium; color: #0f407a;">Change name <br></a>
+						<a class="dropdown-item" data-toggle="modal" data-target=".bd-example-modal-lg-password" style="font-size: medium; color: #0f407a;">Change password <br></a>
+						<a class="dropdown-item" data-toggle="modal" data-target=".bd-example-modal-lg-email" style="font-size: medium; color: #0f407a;">Change email <br></a>
+						<a class="dropdown-item" href="#" style="color: #0f407a; font-weight: bold;">Sign out</a>
 					</div>
 				</li>
-				<li class="nav-item dropdown"><a
+
+				<!-- dropmenu -->
+				<li class="nav-item dropdown" id="movil-menu"><a
 					class="nav-link dropdown-toggle" href="#"
 					id="navbarDropdownMenuLink" data-toggle="dropdown"
 					aria-haspopup="true" aria-expanded="true"> 
 					<img src="..\images\movil-menu.png" width="30" height="30">
 				</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style="height: 130px; width: 150px;">
-						<a class="dropdown-item" data-toggle="modal" data-target=".bd-example-modal-lg-name" style="font-size: medium; color: #0f407a;">Change name</a>
-						<a class="dropdown-item" data-toggle="modal" data-target=".bd-example-modal-lg-password" style="font-size: medium; color: #0f407a;">Change password</a>
-						<a class="dropdown-item" data-toggle="modal" data-target=".bd-example-modal-lg-email" style="font-size: medium; color: #0f407a;">Change email</a>
-						<a class="dropdown-item" href="#" style="color: #0f407a">Sign out</a>
+						<a class="dropdown-item" style="font-size: medium; color: #0f407a;" href="#">Grabaciones <br></a>
+						<a class="dropdown-item" style="font-size: medium; color: #0f407a;" href="#">Estadísticas <br></a>
+						<a class="dropdown-item" style="font-size: medium; color: #0f407a;" data-toggle="modal" data-target=".bd-example-modal-lg-stream">Directo <br></a>
+						<a class="dropdown-item" style="font-size: medium; color: #0f407a; font-weight: bold;" href="#" style="color: #0f407a">Sign out</a>
 					</div>
 				</li>
 			</ul>
@@ -274,17 +286,19 @@ tr {
 	<div class="modal fade bd-example-modal-lg-stream" tabindex="-1"
 		role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<img src="http://192.168.2.119:8000/stream.mjpg" width="100%"
-					height="auto" style="border: 5px solid #0f407a">
-				<button type="button" class="close" data-dismiss="modal"
+			<div class="modal-header">
+				<button type="button" class="close" style="background-color: white;" data-dismiss="modal"
 					aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<div class="modal-footer"
-				style="text-align: center; color: white; font-size: larger; background: #0f407a;">
-				CAMERA 1</div>
+			<div class="modal-content" style="border-top: 5px solid #0f407a; border-left: 5px solid #0f407a; border-right: 5px solid #0f407a;">
+				<img src="http://192.168.2.119:8000/stream.mjpg" width="100%"
+					height="auto">
+			</div>
+			<div class="modal-footer" style="text-align: center; color: white; font-size: larger; background: #0f407a; width: 100%;">
+				<h4>CAMERA 1</h4>
+			</div>
 		</div>
 	</div>
 
@@ -401,12 +415,11 @@ tr {
 
 <!-- Footer -->
 
-<footer class="page-footer font-small blue pt-4">
-	<div class="container-fluid text-right text-md-left">
-		<div class="row">
-			<div class="col-md-12" style="background: #ffffff; padding: 10px;">
-				<h5 class="text-uppercase">A futurepath project</h5>
-			</div>
+<footer class="row">
+	<div class="col-xs-12">
+		<img src="..\images\futurepath.png" width="100px" height="50px" style="float: left;">
+        <a href="https://futurepath.dev/" style="color:#0f407a ;float: left;margin-left: 8px;margin-top: 16px;">A Futurepath project.</a>
+	</div>
 </footer>
 
 </html>
