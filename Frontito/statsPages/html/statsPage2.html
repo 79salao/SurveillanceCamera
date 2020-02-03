@@ -2,155 +2,15 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<title th:text"${title}"></title>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<style>
-	
-table {
-	font-family: arial, sans-serif;
-	border-collapse: collapse;
-	border: 2px;
-	width: 100%;
-	margin-bottom: 30px;
-	margin-top: 30px;
-}
-
-td, th {
-	text-align: left;
-	padding: 8px;
-}
-
-tr:nth-child(even) {
-	background-color: #dddddd;
-}
-
-body {
-	background: #0f407a !important;
-	margin: 0;
-	height: 100% !important;
-}
-
-html {
-	margin: 0px;
-	height: 100%;
-	width: 100%;
-}
-
-.navbar {
-	min-height: 80px;
-	-webkit-border-radius: 0;
-	-moz-border-radius: 0;
-	border-radius: 0;
-}
-
-.sidenav {
-	background-color: #ffffff;
-}
-
-.col-form-label {
-	margin-bottom: 20px;
-	color: #ffffff;
-}
-
-h4 {
-	color: rgb(255, 255, 255);
-}
-
-.navbar-brand {
-	padding: 0 15px;
-	height: 80px;
-	line-height: 80px;
-}
-
-.navbar-toggle {
-	/* (80px - button height 34px) / 2 = 23px */
-	margin-top: 23px;
-	padding: 9px 10px !important;
-}
-
-.modal-footer{
-	background: #0f407a;
-	position: absolute;
-	bottom: 0;
-	width: 100%;
-}
-
-.modal-header{
-    background: #0f407a;
-    color: white;
-}
-
-footer {
-  background-color: black;
-  position: relative;
-  bottom: 0;
-  width: 100%;
-  height: 40px;
-  color: white;
-}
-
-@media ( min-width : 768px) {
-	.navbar-nav>li>a {
-		/* (80px - line-height of 27px) / 2 = 26.5px */
-		padding-top: 26.5px;
-		padding-bottom: 26.5px;
-		line-height: 27px;
-	}
-}
-
-@media screen and (max-width: 767px) {
-      .sidenav {
-        height: 100%;
-        padding: 15px;
-      }
-
-      .navbar-header img {
-        display: none;
-      }
-
-      .navbar-nav {
-        display: none;
-      }
-
-      #account-menu {
-        float: right;
-      }
-
-      aside {
-        height: 430px !important;
-        margin-top: 25px !important;
-        margin-bottom: 25px !important;
-      }
-    }
-
-@media screen and (max-width: 1200px) {
-	aside {
-		height: 600px;
-	}
-}
-
-@media screen and (max-width: 425px) {
-      footer{
-        margin-top: 0px;
-      }
-
-    }
-
-.card {
-	background: white;
-}
-
-tr {
-	text-align: left;
-}
-</style>
+    <title>nombre</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/estilo.css">
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script src="js/chartsJS2.js"></script>
 
 </head>
 <header>
@@ -160,7 +20,7 @@ tr {
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<img src="..\images\logonav.png"
-					width="80" height="80" class="navbar-left" id="logonav">
+					width="80" height="80" class="navbar-left">
 			</div>
 			<ul class="nav navbar-nav"
 				style="background-color: #ffffff; color: #0f407a; font-size: medium;">
@@ -172,25 +32,13 @@ tr {
 
 			<!-- dropmenu -->
 
-			<ul class="nav navbar-right" style="background-color: #ffffff;" id="account-menu">
+			<ul class="nav navbar-right" style="background-color: #ffffff;">
 				<li class="nav-item dropdown"><a
 					class="nav-link dropdown-toggle" href="#"
 					id="navbarDropdownMenuLink" data-toggle="dropdown"
-					aria-haspopup="true" aria-expanded="true"> 
-					<img src="..\images\account.png" width="30" height="30">
-				</a>
-					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style="height: 130px; width: 150px;">
-						<a class="dropdown-item" data-toggle="modal" data-target=".bd-example-modal-lg-name" style="font-size: medium; color: #0f407a;">Change name</a>
-						<a class="dropdown-item" data-toggle="modal" data-target=".bd-example-modal-lg-password" style="font-size: medium; color: #0f407a;">Change password</a>
-						<a class="dropdown-item" data-toggle="modal" data-target=".bd-example-modal-lg-email" style="font-size: medium; color: #0f407a;">Change email</a>
-						<a class="dropdown-item" href="#" style="color: #0f407a">Sign out</a>
-					</div>
-				</li>
-				<li class="nav-item dropdown"><a
-					class="nav-link dropdown-toggle" href="#"
-					id="navbarDropdownMenuLink" data-toggle="dropdown"
-					aria-haspopup="true" aria-expanded="true"> 
-					<img src="..\images\movil-menu.png" width="30" height="30">
+					aria-haspopup="true" aria-expanded="true"> <img
+						src="..\images\account.png"
+						width="30" height="30">
 				</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" style="height: 130px; width: 150px;">
 						<a class="dropdown-item" data-toggle="modal" data-target=".bd-example-modal-lg-name" style="font-size: medium; color: #0f407a;">Change name</a>
@@ -208,66 +56,35 @@ tr {
 <body>
 	<!--Contenedor central-->
 	<div class="container-fluid">
-		<div class="row">
-			<form method="get" action="/main">
+		<form>
+			<div class="row">
+
 				<!--Filter-->
-				<aside class="col-xs-12 col-sm-5 col-md-4 col-lg-3"
-					style="background: #143968; margin: 0px; height: 900px;">
+
+				<aside class="col-xs-12 col-sm-3 col-md-3 col-lg-2"
+					style="background: #143968;">
 					<div class="form-group">
 						<label for="example-date-input" class="col-form-label">DESDE</label>
 						<div>
-							<input class="form-control" type="date" name="from" th:value="${from}"/>
+							<input class="form-control" type="date" id="example-date-input" />
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="example-date-input" class="col-form-label">HASTA</label>
 						<div>
-							<input class="form-control" type="date" name="to" th:value="${to}" />
+							<input class="form-control" type="date" id="example-date-input" />
 						</div>
 					</div>
 					<button class="btn btn-primary" type="submit">Buscar</button>
 				</aside>
-			</form>
+		</form>
 
-			<!-- acordeon table -->
-
-			<section class="col-xs-12 col-sm-7 col-md-8 col-lg-9"
-				style="background: #0f407a; color: black;">
-				<div id="accordion" th:each="record:${record}">
-					<div class="card" style="border: 10px solid #143968">
-						<div class="card-header" id="headingTwo">
-							<h5 class="mb-0">
-								<button class="btn btn-link collapsed"
-									style="color: black; font-weight: bold;" data-toggle="collapse"
-									th:attr="data-target='#collapse'+${record.id}, aria-controls='collapse'+${record.id}" aria-expanded="false"
-									>
-									Grabacion | <span th:text="${record.date}"></span>
-								</button>
-							</h5>
-						</div>
-						<div th:id="'collapse'+${record.id}" class="collapse"
-							aria-labelledby="headingTwo" data-parent="#accordion">
-							<div class="card-body"
-								style="padding: 10px; border-top: 3px solid #143968;">
-								<table style="width: 100%">
-									<tr>
-										<th>Camara nº:</th>
-										<td th:text="${record.camera}"></td>
-									</tr>
-									<tr>
-										<th>Duracion:</th>
-										<td th:text="${record.duration}"></td>
-									</tr>
-								</table>
-								<!-- Aún hay que hacer la parte del vídeo con th -->
-								<button type="button" class="btn btn-primary"
-									data-toggle="modal" data-target=".bd-example-modal-lg-record">Vídeo</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</section>
-		</div>
+		<section class="col-xs-12 col-sm-9 col-md-9 col-lg-10" style="background: #0f407a; color: black;">
+			<div class="españa" id="chartContainer"></div>
+		</section>
+	</div>
+</form>
+</div>
 
 	<!-- Stream modal -->
 
