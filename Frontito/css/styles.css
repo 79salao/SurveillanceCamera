@@ -100,6 +100,7 @@ article h1{
 .modal-footer{
     background: #0f407a;
     bottom: 0;
+    width: 100%;
 }
 
 .modal-header{
