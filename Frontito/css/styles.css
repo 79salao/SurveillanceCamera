@@ -102,16 +102,6 @@ article h1{
     color: white;
 }
 
-@media screen and (max-width: 768px){
-    footer{
-        margin-top: 0;
-    }
-
-    #futurepath_text{
-        display: none;
-    }
-}
-
 .form-login[type = "text"],.form-login[type = "password"]{
     transition: 0.25s;
     width: 200px;
@@ -124,3 +114,14 @@ article h1{
     border: 3px solid #a2d9f5;
     width: 250px;
 }
+
+@media screen and (max-width: 768px){
+    footer{
+        margin-top: 0;
+    }
+
+    #futurepath_text{
+        display: none;
+    }
+}
+
