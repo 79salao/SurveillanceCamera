@@ -3,6 +3,7 @@
 .site{
     background: url(bg.jpeg) no-repeat center top;
     background-size: cover;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 header{
@@ -10,7 +11,6 @@ header{
     color: white;
     text-align: center;
     padding: 30px;  
-    font-family: 'Times New Roman', Times, serif;
 }
 
 header img{
@@ -37,14 +37,8 @@ footer{
     padding: 20px;
     height: 90px;
     margin-top: 300px;
-    font-family: 'Times New Roman', Times, serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: larger;
-}
-
-footer img{
-    height: 50px;
-    width: 100px;
-    float: left;
 }
 
 article{
@@ -77,7 +71,7 @@ article h1{
     font-size: 16px;
     border-radius: 20px;
     padding: 10px;
-    margin-top: 30px;  
+    margin: 10px;
 }
 
 .btn-recup{
@@ -89,7 +83,7 @@ article h1{
     font-size: 16px;
     border-radius: 20px;
     padding: 10px;
-    margin-top: 30px;  
+    margin: 10px; 
 }
 
 .login-box label{
@@ -112,13 +106,17 @@ article h1{
     footer{
         margin-top: 0;
     }
+
+    #futurepath_text{
+        display: none;
+    }
 }
 
 .form-login[type = "text"],.form-login[type = "password"]{
     transition: 0.25s;
     width: 200px;
     text-align: center;
-    margin: 15px;
+    margin: 10px;
     border: 1px solid #0f407a;
 }
 
