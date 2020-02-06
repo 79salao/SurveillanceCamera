@@ -1,6 +1,5 @@
-# Web streaming example
-# Source code from the official PiCamera package
-# http://picamera.readthedocs.io/en/latest/recipes2.html#web-streaming
+# Salahdin Belghiti
+
 import communication
 import io
 import picamera
@@ -42,18 +41,7 @@ class StreamingOutput(object):
 
 class StreamingHandler(server.BaseHTTPRequestHandler):
     def do_GET(self):
-        if self.path == '/':
-            self.send_response(301)
-            self.send_header('Location', '/index.html')
-            self.end_headers()
-        elif self.path == '/index.html':
-            content = PAGE.encode('utf-8')
-            self.send_response(200)
-            self.send_header('Content-Type', 'text/html')
-            self.send_header('Content-Length', len(content))
-            self.end_headers()
-            self.wfile.write(content)
-        elif self.path == '/stream.mjpg':
+        if self.path == '/stream.mjpg':
             self.send_response(200)
             self.send_header('Age', 0)
             self.send_header('Cache-Control', 'no-cache, private')
@@ -87,6 +75,7 @@ class StreamingServer(socketserver.ThreadingMixIn, server.HTTPServer):
 
 def stream():
     global camera
+    global output
     output = StreamingOutput()
     camera.rotation = 180
     camera.framerate = 25

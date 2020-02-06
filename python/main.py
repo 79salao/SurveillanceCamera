@@ -39,53 +39,55 @@ def thread_movimiento():
     print("Thread movimiento iniciado.")
     print("Sensor de movimiento iniciado.")
     # Comprueba que hay movimiento
-    if isActive():
-        while True:
-            # Este condicional comprueba el tamaño del array de threads y lo limpia
-            if len(threads) == 10:
-                clearThreads()
-            # Este condicional comprueba que el sensor esté activo, y cada vez que detecta
-            # movimiento, lo almacena en la variable detecciones
-            if sensor.is_active:
-                detecciones = detecciones + 1
-                print("Se ha detectado movimiento " + str(detecciones) + "veces...")
-                time.sleep(0.3)
-            # Si no detecta movimiento 5 veces, se restablece el contador de detecciones.
-            else:
-                print("No se ha vuelto a detectar movimiento...")
-                detecciones = 0
-                time.sleep(3)
-            # Si se detecta movimiento 5 veces, la variable movimiento se torna true
-            if detecciones == 5:
-                # Se restablece el contador de detecciones para la proxima vez
-                detecciones = 0
-                print("Movimiento detectado 5 veces, iniciando...")
-                movimiento = True
-                while True:
-                    # Condicional que comprueba que los videos no exceden el limite de duracion
-                    if stream.tiempo >= duracionVideos:
-                        print("Se ha alcanzado el limite de duración, se reiniciara la grabacion.")
-                        movimiento = False
-                        time.sleep(0.2)
-                        movimiento = True
-                        # Nuevo thread de temporizador
-                        newThread()
-                    # Este condicional comprueba si hay movimiento, si no detecta, aumenta el contador de noDetecciones.
-                    if not isActive():
-                        noDetecciones = noDetecciones + 1
-                        time.sleep(1)
-                        print("No se ha detectado movimiento " + str(noDetecciones) + "/" + str(segundosDeEspera))
-                    else:
-                        noDetecciones = 0
-                    if noDetecciones == segundosDeEspera:
-                        # Se para la grabación
-                        stream.stopRecording()
-                        print("Se parará el vídeo por falta de movimiento.")
-                        # Método que para los threads
-                        joinThreads()
-                        movimiento = False
-                        noDetecciones = 0
-                        break
+    pir.wait_for_active()
+    for i in range(2):
+        pir.wait_for_active()
+    while True:
+        # Este condicional comprueba el tamaño del array de threads y lo limpia
+        if len(threads) == 10:
+            clearThreads()
+        # Este condicional comprueba que el sensor esté activo, y cada vez que detecta
+        # movimiento, lo almacena en la variable detecciones
+        if sensor.is_active:
+            detecciones = detecciones + 1
+            print("Se ha detectado movimiento " + str(detecciones) + "veces...")
+            time.sleep(0.3)
+        # Si no detecta movimiento 5 veces, se restablece el contador de detecciones.
+        else:
+            print("No se ha vuelto a detectar movimiento...")
+            detecciones = 0
+            time.sleep(3)
+        # Si se detecta movimiento 5 veces, la variable movimiento se torna true
+        if detecciones == 5:
+            # Se restablece el contador de detecciones para la proxima vez
+            detecciones = 0
+            print("Movimiento detectado 5 veces, iniciando...")
+            movimiento = True
+            while True:
+                # Condicional que comprueba que los videos no exceden el limite de duracion
+                if stream.tiempo >= duracionVideos:
+                    print("Se ha alcanzado el limite de duración, se reiniciara la grabacion.")
+                    movimiento = False
+                    time.sleep(0.2)
+                    movimiento = True
+                    # Nuevo thread de temporizador
+                    newThread()
+                # Este condicional comprueba si hay movimiento, si no detecta, aumenta el contador de noDetecciones.
+                if not isActive():
+                    noDetecciones = noDetecciones + 1
+                    time.sleep(1)
+                    print("No se ha detectado movimiento " + str(noDetecciones) + "/" + str(segundosDeEspera))
+                else:
+                    noDetecciones = 0
+                if noDetecciones == segundosDeEspera:
+                    # Se para la grabación
+                    stream.stopRecording()
+                    print("Se parará el vídeo por falta de movimiento.")
+                    # Método que para los threads
+                    joinThreads()
+                    movimiento = False
+                    noDetecciones = 0
+                    break
 
 
 # Método del temporizador
