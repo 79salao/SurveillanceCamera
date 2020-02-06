@@ -8,6 +8,26 @@ table {
 	margin-top: 30px;
 }
 
+.dropdown-menu{
+	height: auto !important; 
+	width: 250px !important; 
+	border: 5px solid #0f407a !important;
+}
+
+.dropdown-menu a{
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	color: black;
+	margin-bottom: 100px !important;
+	font-size: large;
+	font-weight: bold;
+}
+
+.dropdown-menu img{
+	margin: 10px;
+	height: 33px;
+	width: 33px;
+}
+
 td, th {
 	padding: 8px;
 }
@@ -72,8 +92,11 @@ h4 {
 }
 
 footer{ 
+	width: 100%;
+	bottom: 0;
+	position: absolute;
     background: white;
-    color: white;
+    color: #0f407a;
     padding: 20px;
     height: 60px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -81,14 +104,13 @@ footer{
 }
 
 .card {
+	margin-top: 10px;
 	background: white;
 }
 
 tr {
 	text-align: left;
 }
-
-
 
 @media ( min-width : 768px) {
 	.navbar-nav>li>a {
@@ -131,18 +153,30 @@ tr {
 		visibility: visible;
 		float: left;
 	  }
-    }
 
-@media screen and (max-width: 1200px) {
-	aside {
-		height: 600px;
-	}
-}
+	  aside{
+		  text-align: center;
+		  height: 245px !important;
+	  }
+
+	  footer{
+		  width: 100%;
+		  bottom: 0;
+		  position: absolute;
+	  }
+
+	  #account-menu {
+		  visibility: hidden;
+	  }
+
+    }
 
 @media screen and (max-width: 425px) {
       footer{
         margin-top: 0px;
       }
 
-    }
+	}
+	
+
 

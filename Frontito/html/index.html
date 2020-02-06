@@ -30,22 +30,22 @@
           <h1 style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">L O G I N</h1>
           <form class="login-box" th:action="@{/validateUser}" th:object="${user}" method="post"><!-- caja central donde se encierra login -->
             <div class="form-group">
-              <input type="text" class="form-login" placeholder="Username" th:field="*{username}">
+              <input type="text" class="form-login" placeholder="Username" th:field="*{username}" required>
             </div>
             <div class="form-group">
-              <input type="password" class="form-login" placeholder="Password" th:field="*{password}">
+              <input type="password" class="form-login" placeholder="Password" th:field="*{password}" required>
             </div>
-            <div><button
+            <div>
+              <button
               type="submit" class="btn btn-login">Login <!-- login button -->
               </button>
             </div>
-            <div><button 
+            <div>
+              <button 
               type="button" class="btn btn-recup" data-toggle="modal" data-target="#exampleModal"> <!-- recuperar contraseña button -->
               Recuperar contraseña
               </button>
             </div>
-            
-            
           </form>
         </article>
 

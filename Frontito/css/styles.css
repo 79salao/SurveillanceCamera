@@ -111,7 +111,8 @@ article h1{
 }
 
 .form-login[type = "text"]:focus,.form-login[type = "password"]:focus{
-    border: 3px solid #a2d9f5;
+    border-bottom: 3px solid #0f407a;
+    border-right: 3px solid #0f407a;
     width: 250px;
 }
 
