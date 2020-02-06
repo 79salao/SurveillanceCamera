@@ -1,27 +1,26 @@
 # Web streaming example
 # Source code from the official PiCamera package
 # http://picamera.readthedocs.io/en/latest/recipes2.html#web-streaming
-import datetime
+import communication
 import io
 import picamera
 import logging
 import socketserver
 from threading import Condition
 from http import server
-import main
+import datetime
 
-PAGE="""\
-<html>
-<head>
-<title>Raspberry Pi - Surveillance Camera</title>
-</head>
-<body>
-<center><h1>Raspberry Pi - Surveillance Camera</h1></center>
-<center><img src="stream.mjpg" width="640" height="480"></center>
-</body>
-</html>
-"""
+# Variable que almacena el estado del puerto 2 de la cámara (puerto de grabaciones)
+grabando = False
+# Variable que almacena el objeto camera
+camera = picamera.PiCamera()
+# Variable que almacena el nombre del archivo de grabacion
+filename = ""
+# Variable de tiempo
+tiempo = 0
 
+
+# Métodos para controlar el streaming
 
 class StreamingOutput(object):
     def __init__(self):
@@ -87,26 +86,39 @@ class StreamingServer(socketserver.ThreadingMixIn, server.HTTPServer):
 
 
 def stream():
-    with picamera.PiCamera(resolution='640x480', framerate=24) as camera:
-        output = StreamingOutput()
-        #Uncomment the next line to change your Pi's Camera rotation (in degrees)
-        #camera.rotation = 90
-        camera.start_recording(output, format='mjpeg')
-        try:
-            address = ('', 8000)
-            server = StreamingServer(address, StreamingHandler)
-            server.serve_forever()
-        finally:
-            camera.stop_recording()
+    global camera
+    output = StreamingOutput()
+    camera.rotation = 180
+    camera.framerate = 25
+    camera.start_recording(output, format='mjpeg', resize=(480, 320))
+    try:
+        address = ('', 8000)
+        server = StreamingServer(address, StreamingHandler)
+        server.serve_forever()
+    finally:
+        camera.stop_recording(splitter_port=1)
 
+
+# Métodos para controlar las grabaciones
 
 def record():
+    global grabando
+    global camera
+    global filename
+    grabando = True
     x = datetime.datetime.now()
-    name = x.strftime("%Y") + "/" + x.strftime("%m") + "/" + x.strftime("%d") + "_" + x.strftime("%X") + ".h264"
-    camera = picamera.PiCamera()
-    camera.resolution = (640, 480)
-    camera.start_recording(name)
-    while main.movimiento:
-        camera.wait_recording(5)
-    camera.stop_recording()
-    Database.saveVideo(name)
+    filename = x.strftime("%Y") + "_" + x.strftime("%m") + "_" + x.strftime("%d") + "_" + x.strftime("%X") + ".h264"
+    camera.start_recording(filename, splitter_port=2, resize=(480, 320))
+    camera.start_preview()
+    communication.mandarEmail()
+
+
+def stopRecording():
+    global camera
+    global grabando
+    global tiempo
+    if grabando:
+        communication.registrarBD(filename, "1", tiempo)
+        camera.stop_recording(splitter_port=2)
+        grabando = False
+        tiempo = 0
