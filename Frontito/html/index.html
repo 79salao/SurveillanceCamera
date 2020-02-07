@@ -30,22 +30,22 @@
           <h1 style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">L O G I N</h1>
           <form class="login-box" th:action="@{/validateUser}" th:object="${user}" method="post"><!-- caja central donde se encierra login -->
             <div class="form-group">
-              <input type="text" class="form-login" placeholder="Username" th:field="*{username}">
+              <input type="text" class="form-login" placeholder="Username" th:field="*{username}" required>
             </div>
             <div class="form-group">
-              <input type="password" class="form-login" placeholder="Password" th:field="*{password}">
+              <input type="password" class="form-login" placeholder="Password" th:field="*{password}" required>
             </div>
-            <div><button
+            <div>
+              <button
               type="submit" class="btn btn-login">Login <!-- login button -->
               </button>
             </div>
-            <div><button 
+            <div>
+              <button 
               type="button" class="btn btn-recup" data-toggle="modal" data-target="#exampleModal"> <!-- recuperar contraseña button -->
               Recuperar contraseña
               </button>
             </div>
-            
-            
           </form>
         </article>
 
@@ -85,14 +85,19 @@
 
     <!-- footer -->
     <footer>
-      <div class="container-fluid col-xs-12">
-        <a href="https://futurepath.dev/"><img src="..\images\futurepath.png" id="futurepath_icon" style="height: 30px; width: 80px; float: left;"></a>
-        <a href="https://facebook.com"><img src="../SM_icons/facebook.png" id="facebook_icon" style="float: right; margin-left: 10px;"></a>
-        <a href="https://linkedin.com"><img src="../SM_icons/linkedin.png" id="linkedin_icon" style="float: right; margin-left: 10px;"></a>
-        <a href="https://reddit.com"><img src="../SM_icons/reddit.png" id="reddit_icon" style="float: right; margin-left: 10px;"></a>
-        <a href="https://twitter.com"><img src="../SM_icons/twitter.png" id="twitter_icon" style="float: right;"></a>
-      </div>
-    </footer>
+			<div class="container col-xs-12">
+				<a href="https://futurepath.dev/"><img src="..\images\futurepath.png" id="futurepath_icon"
+						style="height: 30px; width: 80px; float: left;"></a>
+				<a href="https://facebook.com"><img src="../images/facebook.png" id="facebook_icon"
+						style="float: right; margin-left: 10px;"></a>
+				<a href="https://linkedin.com"><img src="../images/linkedin.png" id="linkedin_icon"
+						style="float: right; margin-left: 10px;"></a>
+				<a href="https://reddit.com"><img src="../images/reddit.png" id="reddit_icon"
+						style="float: right; margin-left: 10px;"></a>
+				<a href="https://twitter.com"><img src="../images/twitter.png" id="twitter_icon"
+						style="float: right;"></a>
+			</div>
+		</footer>
 
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"

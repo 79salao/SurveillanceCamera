@@ -4,12 +4,15 @@
 <head>
 	<title th:text"${title}"></title>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="../css/main_styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../css/stats_styles.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-</head>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+	
+    
+  </head>
 
 <!-- Navegation bar -->
 <header>
@@ -87,60 +90,33 @@
 						<button class="btn btn-primary" type="submit">Buscar</button>
 					</div>
 				</aside>
-			</form>
-
-			<!-- acordeon table -->
-
+            </form>
+            
+			<!-- stats table -->
 			<section class="col-xs-12 col-sm-9 col-md-9 col-lg-10" style="background: #0f407a; color: black;">
-				<div id="accordion" th:each="record:${record}">
-					<div class="card" style="border: 10px solid #143968;">
-						<div class="card-header" id="headingTwo">
-							<h5 class="mb-0">
-								<button class="btn btn-link collapsed" style="color: black; font-weight: bold;"
-									data-toggle="collapse"
-									th:attr="data-target='#collapse'+${record.id}, aria-controls='collapse'+${record.id}"
-									aria-expanded="false">
-									Grabacion | <span th:text="${record.date}"></span>
-								</button>
-							</h5>
-						</div>
-						<div th:id="'collapse'+${record.id}" class="collapse" aria-labelledby="headingTwo"
-							data-parent="#accordion">
-							<div class="card-body" style="padding: 10px; border-top: 3px solid #143968;">
-								<table style="width: 100%">
-									<tr>
-										<th>Camara nº:</th>
-										<td th:text="${record.camera}"></td>
-									</tr>
-									<tr>
-										<th>Duracion:</th>
-										<td th:text="${record.duration}"></td>
-									</tr>
-								</table>
-								<!-- Aún hay que hacer la parte del vídeo con th -->
-								<button type="button" class="btn btn-primary" data-toggle="modal"
-									data-target=".bd-example-modal-lg-record">Vídeo</button>
-							</div>
-						</div>
-					</div>
+				<div class="españa" id="chartContainer"></div>
+				<div class="stat-changing">
+					<a class="btn-stats" href="../html/statsPage.html" role="button">Media de incidencias </a>
+					<a class="btn-stats" href="../html/statsPage2.html" role="button">Incidencias por día</a>
 				</div>
-			</section>
+			  </section>
 		</div>
 	</div>
-		<footer>
-			<div class="container col-xs-12">
-				<a href="https://futurepath.dev/"><img src="..\images\futurepath.png" id="futurepath_icon"
-						style="height: 30px; width: 80px; float: left;"></a>
-				<a href="https://facebook.com"><img src="../images/facebook.png" id="facebook_icon"
-						style="float: right; margin-left: 10px;"></a>
-				<a href="https://linkedin.com"><img src="../images/linkedin.png" id="linkedin_icon"
-						style="float: right; margin-left: 10px;"></a>
-				<a href="https://reddit.com"><img src="../images/reddit.png" id="reddit_icon"
-						style="float: right; margin-left: 10px;"></a>
-				<a href="https://twitter.com"><img src="../images/twitter.png" id="twitter_icon"
-						style="float: right;"></a>
-			</div>
-		</footer>
+
+    <footer>
+        <div class="container col-xs-12">
+            <a href="https://futurepath.dev/"><img src="..\images\futurepath.png" id="futurepath_icon"
+                    style="height: 30px; width: 80px; float: left;"></a>
+            <a href="https://facebook.com"><img src="../images/facebook.png" id="facebook_icon"
+                    style="float: right; margin-left: 10px;"></a>
+            <a href="https://linkedin.com"><img src="../images/linkedin.png" id="linkedin_icon"
+                    style="float: right; margin-left: 10px;"></a>
+            <a href="https://reddit.com"><img src="../images/reddit.png" id="reddit_icon"
+                    style="float: right; margin-left: 10px;"></a>
+            <a href="https://twitter.com"><img src="../images/twitter.png" id="twitter_icon"
+                    style="float: right;"></a>
+        </div>
+    </footer>
 	</div>
 </body>
 
@@ -159,19 +135,6 @@
 			</button>
 			<h4>CAMARA 1</h4>
 			<img src="http://192.168.2.119:8000/stream.mjpg" alt="Sin conexion" width="100%" height="auto">
-		</div>
-	</div>
-</div>
-
-<!-- record modal -->
-<div class="modal fade bd-example-modal-lg-record" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-	aria-hidden="true">
-	<div class="modal-dialog modal-lg">
-		<div class="modal-content">
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				<!-- VIDEO -->
-				<span aria-hidden="true">&times;</span>
-			</button>
 		</div>
 	</div>
 </div>
@@ -271,5 +234,60 @@
 		</div>
 	</div>
 </div>
+<script>
+ 
+ datax = [
+    { y: 8 },
+    { y: 5 },
+    { y: 11, indexLabel: "highest", markerColor: "red", markerType: "triangle" },
+    { y: 7 },
+    { y: 9 },
+    { y: 7 },
+    { y: 6 },
+    { y: 8 },
+    { y: 1, indexLabel: "lowest", markerColor: "green", markerType: "cross" },
+    { y: 9 },
+    { y: 10 },
+    { y: 4 },
+    { y: 8 },
+    { y: 5 },
+    { y: 6 },
+    { y: 7 },
+    { y: 9 },
+    { y: 7 },
+    { y: 6 },
+    { y: 8 },
+    { y: 9 },
+    { y: 9 },
+    { y: 10 },
+    { y: 4 },
+]
+ 
+window.onload = function() {
+ 
+ var chart1 = new CanvasJS.Chart("chartContainer", {
+     animationEnabled: true,
+     theme: "dark2",
+     backgroundColor: "transparent",
+     title: {
+         text: "Simple Line Chart"
+     },
+     axisX: {
+         title: "Hora",
+         interval: 1
+     },
+     axisY: {
+         title: "Media de incidencias",
+         includeZero: false
+     },
+     data: [{
+         type: "line",
+         dataPoints: datax
+     }]
+ });
+
+ chart1.render();
+}
+</script>
 
 </html>
