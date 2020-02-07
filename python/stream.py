@@ -96,9 +96,12 @@ def record():
     global filename
     grabando = True
     x = datetime.datetime.now()
-    filename = x.strftime("%Y") + "_" + x.strftime("%m") + "_" + x.strftime("%d") + "_" + x.strftime("%X") + ".h264"
-    camera.start_recording(filename, splitter_port=2, resize=(480, 320))
-    camera.start_preview()
+    path = "/home/pi/Desktop/SurveillanceCamera-master/Grabaciones/"
+    filename = path + x.strftime("%Y") + "_" + x.strftime("%m") + "_" + x.strftime("%d") + "_" + x.strftime("%X") + ".h264"
+    try:
+        camera.start_recording(filename, splitter_port=2, resize=(480, 320))
+    except:
+        print("ERROR NO SE HA PODIDO EMPEZAR LA GRABACION")
     communication.mandarEmail()
 
 
@@ -108,6 +111,9 @@ def stopRecording():
     global tiempo
     if grabando:
         communication.registrarBD(filename, "1", tiempo)
-        camera.stop_recording(splitter_port=2)
+        try:
+            camera.stop_recording(splitter_port=2)
+        except:
+            print("HA HABIDO UN ERROR A LA HORA DE PARAR LA GRABACION")
         grabando = False
         tiempo = 0

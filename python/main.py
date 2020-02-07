@@ -39,9 +39,9 @@ def thread_movimiento():
     print("Thread movimiento iniciado.")
     print("Sensor de movimiento iniciado.")
     # Comprueba que hay movimiento
-    pir.wait_for_active()
+    sensor.wait_for_active()
     for i in range(2):
-        pir.wait_for_active()
+        sensor.wait_for_active()
     while True:
         # Este condicional comprueba el tamaño del array de threads y lo limpia
         if len(threads) == 10:
