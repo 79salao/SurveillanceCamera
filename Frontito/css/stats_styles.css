@@ -39,6 +39,12 @@ section{
 	height: 100% !important;
 }
 
+.navbar-nav a:hover{
+	background: white !important;
+	color: #6da7ed;
+	border-bottom: 3px solid #6da7ed;
+}
+
 html {
 	margin: 0px;
 	height: 100%;
