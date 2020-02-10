@@ -29,6 +29,7 @@
         <article class="col-xs-12 col-sm-6">
           <img src="..\images\logo.png" alt="logo movicoders"><!-- logo del login -->
           <h1 style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">L O G I N</h1>
+          <h6 id="alert" style="background: rgb(250, 65, 65);"></h6>
           <form class="login-box" th:action="@{/validateUser}" th:object="${user}" method="post"><!-- caja central donde se encierra login -->
             <div class="form-group">
               <input type="text" class="form-login" placeholder="Username" th:field="*{username}" required>
@@ -101,6 +102,17 @@
 		</footer>
 
     <!-- Scripts -->
+
+    <script type="text/javascript">
+      window.onload= function showMessagePopUp(){
+          var message = $('#popup').val();
+          if(message != "")
+              document.getElementById('alert').innerHTML=message;
+          else
+          document.getElementById('alert').innerHTML="";
+        }
+   </script>
+
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
       integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
       crossorigin="anonymous"></script>
