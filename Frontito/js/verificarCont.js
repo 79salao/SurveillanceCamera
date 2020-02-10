@@ -1,14 +1,13 @@
 function verificar(){
 
-    var p1 = document.getElementById('pass1');
-    var p2 = document.getElementById('pass2');
+    var p1 = document.getElementById('pass');
 
-    if( p1.value != p2.value){
+    if( p1.value != "contra"){
 
-        console.log("nope")
+        console.log("No")
 
     }else{
 
-        console.log("yup")
+        console.log("yes")
     }
-    }
+}
