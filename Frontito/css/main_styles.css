@@ -38,8 +38,18 @@ tr:nth-child(even) {
 
 body {
 	background: #0f407a !important;
+	height: 90% !important;
 	margin: 0;
+}
+
+#filter{
 	height: 100% !important;
+}
+aside{
+	height: 100% !important;
+}
+section{
+	height: 69% !important;
 }
 
 html {
@@ -94,7 +104,7 @@ h4 {
 footer{ 
 	width: 100%;
 	bottom: 0;
-	position: absolute;
+	position: absolute !important;
     background: white;
     color: #0f407a;
     padding: 20px;
@@ -156,13 +166,7 @@ tr {
 
 	  aside{
 		  text-align: center;
-		  height: 245px !important;
-	  }
-
-	  footer{
-		  width: 100%;
-		  bottom: 0;
-		  position: absolute;
+		  height: auto !important;
 	  }
 
 	  #account-menu {

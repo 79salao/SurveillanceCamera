@@ -24,7 +24,18 @@ tr:nth-child(even) {
 
 body {
 	background: #0f407a !important;
+	height: 90% !important;
 	margin: 0;
+}
+#filter{
+	height: 100% !important;
+}
+
+aside{
+	height: 100% !important;
+}
+
+section{
 	height: 100% !important;
 }
 
@@ -80,9 +91,9 @@ h4 {
 footer{ 
 	width: 100%;
 	bottom: 0;
-	position: absolute;
+	position: relative !important;
     background: white;
-    color: white;
+    color: #0f407a;
     padding: 20px;
     height: 60px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -113,29 +124,19 @@ tr {
 }
 
 .españa{
-    height: 800px !important;
+    height: 90% !important;
     background: #0f407a;
 }
 
 
 
 @media ( min-width : 768px) {
-	.navbar-nav>li>a {
-		/* (80px - line-height of 27px) / 2 = 26.5px */
-		padding-top: 26.5px;
-		padding-bottom: 26.5px;
-		line-height: 27px;
-	}
 	#movil-menu{
 		visibility: hidden;
 	}
 }
 
 @media screen and (max-width: 767px) {
-      .sidenav {
-        height: 100%;
-        padding: 15px;
-      }
 
 	  .navbar-right{
 		  height: 30px;
@@ -162,11 +163,12 @@ tr {
 	  }
 
 	  aside{
-		  text-align: center;
-		  height: 245px !important;
+		  height: auto !important;
 	  }
 
 	  footer{
+		  bottom: 0 !important;
+		  width: 100% !important;
 		  position: relative !important;
 	  }
 
@@ -183,14 +185,9 @@ tr {
 		background: white;
 		font-weight: bold;
 	}
-
-	  .españa{
-		height: 400px !important;
-		background: #0f407a;
-	}
 	
 	#account-menu{
 		visibility: hidden;
 	}
 	  
-    }
+}
