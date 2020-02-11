@@ -32,11 +32,13 @@ article h1{
 }
 
 footer{ 
+    width: 100%;
+    bottom: 0;
+    position: absolute;
     background: #0f407a;
     color: white;
     padding: 20px;
     height: 90px;
-    margin-top: 300px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: larger;
 }
@@ -47,7 +49,6 @@ article{
     padding: 50px;
     border-left: 15px solid #0f407a;
     border-right: 15px solid #0f407a;
-    border-bottom: 15px solid #0f407a;
 }
 
 article img{

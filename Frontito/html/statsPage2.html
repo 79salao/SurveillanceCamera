@@ -23,19 +23,19 @@
 		style="background-color: #ffffff; color: #0f407a; font-size: medium; margin-top: 5px; font-weight: bold;">
 		<li class="active"><a href="../html/mainpage.html">Grabaciones</a></li>
 		<li><a href="../html/statsPage.html">Estadísticas</a></li>
-		<li><a data-toggle="modal" data-target=".bd-example-modal-lg-stream">Directo</a></li>
+		<li><a href="#" data-toggle="modal" data-target=".bd-example-modal-lg-stream">Directo</a></li>
 	</ul>
 
+	<ul class="nav navbar-right" style="background-color: #ffffff;height: 50px; margin-top: 5px; margin-right: 15px">	
 			<!-- dropmenu account -->
-	<ul class="nav navbar-right" style="background-color: #ffffff; width: 60px; height: 50px; margin-top: 5px; margin-right: 15px">		<!-- dropmenu account -->
-		<li class="btn-group dropleft" id="account-menu">
+		<li class="btn-group dropleft" style="margin-right: 30px" id="account-menu">
 			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 				<img src="..\images\account.png" width="30" height="30">
 			</a>
 			<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-				<a class="dropdown-item" data-toggle="modal" data-target=".bd-example-modal-lg-name"><img src="../images/icon_name.png">Change name <br></a>
-				<a class="dropdown-item" data-toggle="modal" data-target=".bd-example-modal-lg-password"><img src="../images/icon_password.png">Change password <br></a>
-				<a class="dropdown-item" data-toggle="modal" data-target=".bd-example-modal-lg-email"><img src="../images/icon_email.png">Change email <br></a>
+				<a href="#" class="dropdown-item" data-toggle="modal" data-target=".bd-example-modal-lg-name"><img src="../images/icon_name.png">Change name <br></a>
+				<a href="#" class="dropdown-item" data-toggle="modal" data-target=".bd-example-modal-lg-password"><img src="../images/icon_password.png">Change password <br></a>
+				<a href="#" class="dropdown-item" data-toggle="modal" data-target=".bd-example-modal-lg-email"><img src="../images/icon_email.png">Change email <br></a>
 				<p style="border-bottom: 3px solid #0f407a; width: 100%;"><br></p>
 				<a class="dropdown-item" href="../html/index.html"><img src="../images/icon_signOut.png">Sign out</a>
 			</div>
@@ -92,7 +92,8 @@
 			<section class="col-xs-12 col-sm-9 col-md-9 col-lg-10" style="background: #0f407a; color: black;">
 				<div class="chart_container" id="chartContainer2"></div>
 				<div class="stat-changing">
-					<a class="btn-stats" href="../html/statsPage.html" role="button">Media de incidencias </a>
+					<a class="btn-stats" href="../html/statsPage.html" role="button">Media de incidencias</a>
+					<span style="color: white; font-size: x-large;">|</span>
 					<a class="btn-stats" href="../html/statsPage2.html" role="button">Incidencias por día</a>
 				</div>
 			  </section>
@@ -101,8 +102,6 @@
 </div>
 			<!-- footer -->
 	<footer class="container col-xs-12">
-		<a href="https://futurepath.dev/"><img src="..\images\futurepath.png" id="futurepath_icon"
-				style="height: 30px; width: 80px; float: left;"></a>
 		<a href="https://facebook.com"><img src="../images/facebook.png" id="facebook_icon"
 				style="float: right; margin-left: 10px;"></a>
 		<a href="https://linkedin.com"><img src="../images/linkedin.png" id="linkedin_icon"
@@ -135,98 +134,99 @@
 
 			<!-- Modal change password -->
 <div class="modal fade bd-example-modal-lg-password" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-	aria-hidden="true">
-	<div class="modal-dialog modal-lg-password">
-		<div class="modal-content" style="width: auto;height: auto;background: lightgrey">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-				<h3 class="modal-title">Administrar contraseña</h3>
-			</div>
-			<div class="modal-body">
-				<form class="adminData-form">
-					<small class="form-text text-muted">Introduzca en primer lugar su contraseña actual</small>
-					<div class="form-group">
-						<label>Contraseña actual</label>
-						<input type="password" style="border: 1px solid #0f407a;margin-bottom: 50px;" required>
-					</div>
-					<div class="form-group">
-						<label>Nueva contraseña:</label>
-						<input type="password" style="border: 1px solid #0f407a" required>
-					</div>
-					<div class="form-group">
-						<label>R. nueva contraseña:</label>
-						<input type="password" style="border: 1px solid #0f407a" required>
-					</div>
-					<button type="submit" class="btn btn-primary">Change!</button>
-				</form>
-			</div>
-			<div class="modal-footer">
-			</div>
+aria-hidden="true">
+<div class="modal-dialog modal-lg-password">
+	<div class="modal-content" style="width: fit-content; height: auto;background: lightgray;">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<h3 class="modal-title">//Administrar contraseña</h3>
+		</div>
+		<div class="modal-body" style="text-align: center;">
+			<form class="adminData-form">
+				<small class="form-text text-muted">Introduzca en primer lugar su contraseña actual</small>
+				<div class="form-group">
+					<label>Contraseña actual:</label>
+					<input type="password" style="border: 2px solid #0f407a;" required>
+				</div>
+				<div style="border-top: 3px solid#0f407a; width: 100%; margin-bottom: 30px;">
+				</div>
+				<div class="form-group">
+					<label>Nueva contraseña:</label>
+					<input type="password" style="border: 2px solid #0f407a;" required>
+				</div>
+				<div class="form-group">
+					<label>Nueva contraseña:</label>
+					<input type="password" style="border: 2px solid #0f407a" required>
+				</div>
+				<div style="text-align: center; margin-top: 5px;">
+					<button type="submit" class="btn-form">Change!</button>
+				</div>
+				
+			</form>
 		</div>
 	</div>
 </div>
+</div>
 
-			<!-- Modal change name -->
+		<!-- Modal change name -->
 <div class="modal fade bd-example-modal-lg-name" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-	aria-hidden="true">
-	<div class="modal-dialog modal-lg-name">
-		<div class="modal-content" style="width: auto;height: auto;background: lightgrey">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-				<h3 class="modal-title">Administrar nombre</h3>
-			</div>
-			<div class="modal-body">
-				<form class="adminData-form">
-					<div class="form-group">
-						<label>Nuevo nombre:</label>
-						<input type="text" style="border: 1px solid #0f407a" required>
-					</div>
-					<button type="submit" class="btn btn-primary">Change!</button>
-				</form>
-			</div>
-			<div class="modal-footer">
-			</div>
+aria-hidden="true">
+<div class="modal-dialog modal-lg-name">
+	<div class="modal-content" style="width: fit-content;height: auto;background: lightgrey">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<h3 class="modal-title">//Administrar nombre</h3>
+		</div>
+		<div class="modal-body" style="text-align: center;">
+			<form class="adminData-form">
+				<div class="form-group">
+					<label>Nuevo nombre:</label>
+					<input type="text" style="border: 2px solid #0f407a;" required>
+				</div>
+				<button type="submit" class="btn-form">Change!</button>
+			</form>
 		</div>
 	</div>
 </div>
+</div>
 
-			<!-- Modal change email -->
+		<!-- Modal change email -->
 <div class="modal fade bd-example-modal-lg-email" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-	aria-hidden="true">
-	<div class="modal-dialog modal-lg-email">
-		<div class="modal-content" style="width: auto;height: auto;background: lightgrey">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-				<h3 class="modal-title">Administrar email</h3>
-			</div>
-			<div class="modal-body">
-				<form class="adminData-form">
-					<small class="form-text text-muted">Introduzca en primer lugar su contraseña actual</small>
-					<div class="form-group">
-						<label>Contraseña actual</label>
-						<input type="password" style="border: 1px solid #0f407a;margin-bottom: 50px;" required>
-					</div>
-					<div class="form-group">
-						<label>Nuevo email:</label>
-						<input type="email" style="border: 1px solid #0f407a" required>
-					</div>
-					<div class="form-group">
-						<label>R. nuevo email:</label>
-						<input type="email" style="border: 1px solid #0f407a" required>
-					</div>
-					<button type="submit" class="btn btn-primary">Change!</button>
-				</form>
-			</div>
-			<div class="modal-footer">
-			</div>
+aria-hidden="true">
+<div class="modal-dialog modal-lg-email">
+	<div class="modal-content" style="width: fit-content;height: auto;background: lightgrey">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<h3 class="modal-title">//Administrar email</h3>
+		</div>
+		<div class="modal-body" style="text-align: center;">
+			<form class="adminData-form">
+				<small class="form-text text-muted">Introduzca en primer lugar su contraseña actual</small>
+				<div class="form-group">
+					<label>Contraseña actual:</label>
+					<input type="password" style="border: 2px solid #0f407a;" required>
+				</div>
+				<div style="border-top: 3px solid#0f407a; width: 100%; margin-bottom: 20px;">
+				</div>
+				<div class="form-group">
+					<label>Nuevo email:</label>
+					<input type="email" style="border: 2px solid #0f407a" required>
+				</div>
+				<div class="form-group">
+					<label>Nuevo email:</label>
+					<input type="email" style="border: 2px solid #0f407a" required>
+				</div>
+				<button type="submit" class="btn-form">Change!</button>
+			</form>
 		</div>
 	</div>
+</div>
 </div>
 			<!-- scripts -->
 <script>

@@ -54,9 +54,7 @@ body {
 aside{
 	height: 100% !important;
 }
-section{
-	height: 100% !important;
-}
+
 
 html {
 	margin: 0px;
@@ -84,6 +82,14 @@ h4 {
 	color: rgb(255, 255, 255);
 }
 
+.btn-form{
+	padding: 10px;
+	width: 200px;
+	background: #0f407a;
+	border:2px solid #143968;
+	color: white;
+}
+
 .navbar-brand {
 	padding: 0 15px;
 	height: 80px;
@@ -107,14 +113,20 @@ h4 {
     color: white;
 }
 
+footer img{
+	height: 20px;
+	width: 20px;
+	margin-right: 5px;
+}
+
 footer{ 
 	width: 100%;
+	padding: 10px;
 	bottom: 0;
-	position: relative !important;
+	position: absolute !important;
     background: white;
     color: #0f407a;
-    padding: 20px;
-    height: 60px;
+    height: 40px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: larger;
 }
@@ -166,7 +178,7 @@ tr {
       }
 
 	  #movil-menu{
-		visibility: visible;
+		visibility: visible !important;
 		float: left;
 	  }
 
@@ -177,6 +189,11 @@ tr {
 
 	  #account-menu {
 		  visibility: hidden;
+	  }
+
+	  footer{
+		  position: absolute !important;
+		  bottom: 0;
 	  }
 
     }

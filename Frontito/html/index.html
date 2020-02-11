@@ -22,14 +22,21 @@
         <h2>Together we develop the path towards your future.</h2>
       </div>
     </header>
-    <div class="container">
+    <div class="container" style="height: 100%;">
       <section class="main row">
         <div class="col-xs-12 col-sm-3">
         </div>
         <article class="col-xs-12 col-sm-6">
           <img src="..\images\logo.png" alt="logo movicoders"><!-- logo del login -->
           <h1 style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">L O G I N</h1>
-          <h6 id="alert" style="background: rgb(250, 65, 65);"></h6>
+
+          <div class="alert alert-danger" role="alert" style="margin: 0;">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            This is a danger alert—check it out!
+          </div>
+
           <form class="login-box" th:action="@{/validateUser}" th:object="${user}" method="post"><!-- caja central donde se encierra login -->
             <div class="form-group">
               <input type="text" class="form-login" placeholder="Username" th:field="*{username}" required>
@@ -54,7 +61,16 @@
         <div class="col-xs-12 col-sm-3">
         </div>
       </section>
+      <!-- footer -->
+      <footer class="container col-xs-12">
+          <a href="https://futurepath.dev/"><img src="..\images\futurepath.png" id="futurepath_icon" style="height: 30px; width: 80px; float: left;"></a>
+          <a href="https://facebook.com"><img src="../images/facebook.png" id="facebook_icon" style="float: right; margin-left: 10px;"></a>
+          <a href="https://linkedin.com"><img src="../images/linkedin.png" id="linkedin_icon" style="float: right; margin-left: 10px;"></a>
+          <a href="https://reddit.com"><img src="../images/reddit.png" id="reddit_icon" style="float: right; margin-left: 10px;"></a>
+          <a href="https://twitter.com"><img src="../images/twitter.png" id="twitter_icon" style="float: right;"></a>
+      </footer>
     </div>
+        
 
     <!-- Modal forgot password -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -85,21 +101,7 @@
       </div>
     </div>
 
-    <!-- footer -->
-    <footer>
-			<div class="container col-xs-12">
-				<a href="https://futurepath.dev/"><img src="..\images\futurepath.png" id="futurepath_icon"
-						style="height: 30px; width: 80px; float: left;"></a>
-				<a href="https://facebook.com"><img src="../images/facebook.png" id="facebook_icon"
-						style="float: right; margin-left: 10px;"></a>
-				<a href="https://linkedin.com"><img src="../images/linkedin.png" id="linkedin_icon"
-						style="float: right; margin-left: 10px;"></a>
-				<a href="https://reddit.com"><img src="../images/reddit.png" id="reddit_icon"
-						style="float: right; margin-left: 10px;"></a>
-				<a href="https://twitter.com"><img src="../images/twitter.png" id="twitter_icon"
-						style="float: right;"></a>
-			</div>
-		</footer>
+
 
     <!-- Scripts -->
 
