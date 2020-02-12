@@ -1,16 +1,15 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 
 <head>
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title th:text="${title}"></title>
+  <title>LOGIN</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-  <link rel="stylesheet" href="..\css\styles.css">
-  <script src="../js/verificarCont.js"></script>
+  <link rel="stylesheet" href="../css/oldStyles.css">
 
 </head>
 
@@ -19,102 +18,43 @@
   <body>
     <header>
       <div class="container">
-        <h2>Together we develop the path towards your future.</h2>
+        <h2>LOGIN</h2>
       </div>
     </header>
-    <div class="container" style="height: 100%;">
+    <div class="container">
       <section class="main row">
         <div class="col-xs-12 col-sm-3">
         </div>
         <article class="col-xs-12 col-sm-6">
           <img src="..\images\logo.png" alt="logo movicoders"><!-- logo del login -->
-          <h1 style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">L O G I N</h1>
-
-          <div class="alert alert-danger" role="alert" style="margin: 0;">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
+          <h1>LOGIN</h1>
+          <form class="login-box"><!-- caja central donde se encierra login -->
+            <div class="form-group">
+              <input type="password" class="form-login" placeholder="password">
+            </div>
+            <div class="form-group">
+              <input type="password" class="form-login" placeholder="Repite Password">
+            </div>
+            <button
+            type="submit" class="btn btn-login">Log in <!-- reset button -->
             </button>
-            This is a danger alert—check it out!
-          </div>
-
-          <form class="login-box" th:action="@{/validateUser}" th:object="${user}" method="post"><!-- caja central donde se encierra login -->
-            <div class="form-group">
-              <input type="text" class="form-login" placeholder="Username" th:field="*{username}" required>
-            </div>
-            <div class="form-group">
-              <input type="password" id="pass" class="form-login" placeholder="Password" th:field="*{password}" required>
-            </div>
-            <div>
-              <button
-              type="submit" onclick="verificar()" class="btn btn-login">Login <!-- login button -->
-              </button>
-            </div>
-            <div>
-              <button 
-              type="button" class="btn btn-recup" data-toggle="modal" data-target="#exampleModal"> <!-- recuperar contraseña button -->
-              Recuperar contraseña
-              </button>
-            </div>
           </form>
         </article>
 
         <div class="col-xs-12 col-sm-3">
         </div>
       </section>
-      <!-- footer -->
-      <footer class="container col-xs-12">
-          <a href="https://futurepath.dev/"><img src="..\images\futurepath.png" id="futurepath_icon" style="height: 30px; width: 80px; float: left;"></a>
-          <a href="https://facebook.com"><img src="../images/facebook.png" id="facebook_icon" style="float: right; margin-left: 10px;"></a>
-          <a href="https://linkedin.com"><img src="../images/linkedin.png" id="linkedin_icon" style="float: right; margin-left: 10px;"></a>
-          <a href="https://reddit.com"><img src="../images/reddit.png" id="reddit_icon" style="float: right; margin-left: 10px;"></a>
-          <a href="https://twitter.com"><img src="../images/twitter.png" id="twitter_icon" style="float: right;"></a>
-      </footer>
     </div>
-        
 
-    <!-- Modal forgot password -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-      aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Recuperar contraseña</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body"><!-- send an email, changing the password in the database and sending the changed password -->
-            <p style="font-size: large;">Te enviaremos un correo con la nueva contraseña, asegurate de cambiarla
-              por una que recuerdes con mayor facilidad.</p><br>
-            <form class="forgotpw-form" th:object="${user}" method="post">
-              <div class="form-group">
-                <label>Email:</label>
-                <input type="email" style="border: 1px solid #0f407a" class="form-fgpw" th:field="*{email}">
-                <small class="form-text text-muted">No compartiremos tu correo con terceros.</small>
-              </div>
-              <button type="submit" class="btn btn-primary">Send!</button><!-- send email button -->
-            </form>
-          </div>
-          <div class="modal-footer">
-          </div>
-        </div>
+    <!-- footer -->
+    <footer>
+      <div class="container col-xs-12">
+        <img src="..\images\futurepath.png" alt="">
+        <a href="https://futurepath.dev/" style="color:white;float: left;margin-left: 8px;margin-top: 9px;">A Futurepath project.</a>
       </div>
-    </div>
-
-
+    </footer>
 
     <!-- Scripts -->
-
-    <script type="text/javascript">
-      window.onload= function showMessagePopUp(){
-          var message = $('#popup').val();
-          if(message != "")
-              document.getElementById('alert').innerHTML=message;
-          else
-          document.getElementById('alert').innerHTML="";
-        }
-   </script>
-
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
       integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
       crossorigin="anonymous"></script>

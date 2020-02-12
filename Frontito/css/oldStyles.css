@@ -1,9 +1,7 @@
-  
 
-body{
-    background: url(../html/bg.jpeg) no-repeat center top;
+.site{
+    background: url(bg.jpeg) no-repeat center top;
     background-size: cover;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 header{
@@ -11,10 +9,15 @@ header{
     color: white;
     text-align: center;
     padding: 30px;  
+    font-family: 'Times New Roman', Times, serif;
 }
 
-header img{
-    float: left;
+article h1{
+    border-bottom: 3px solid #0f407a;
+    margin-bottom: 70px;
+    margin-top: 30px;
+    font-weight: bold;
+    color: #0f407a;
 }
 
 .color-movi{
@@ -31,28 +34,13 @@ footer{
     font-family: 'Times New Roman', Times, serif;
 }
 
-footer img{
-    height: 20px;
-    width: 20px;
-    float: right;
-    margin-left: 15px;
-}
-
 article{
-    height: 100%;
     background: white;
     text-align: center;
-    padding: 150px;
+    padding: 50px;
     border-left: 15px solid #0f407a;
     border-right: 15px solid #0f407a;
-}
-
-article h1{
-    border-bottom: 3px solid #0f407a;
-    margin-bottom: 60px;
-    margin-top: 30px;
-    font-weight: bold;
-    color: #0f407a;
+    border-bottom: 15px solid #0f407a;
 }
 
 article img{
@@ -67,7 +55,7 @@ article h1{
     font-family: 'Courier New', Courier, monospace;
 }
 
-.btn-login{
+.btn-primary{
     border: none;
     outline: none;
     width: 90px;
@@ -76,7 +64,7 @@ article h1{
     font-size: 16px;
     border-radius: 20px;
     padding: 10px;
-    margin: 10px;
+    margin-bottom: 10px;  
 }
 
 .btn-recup{
@@ -88,7 +76,7 @@ article h1{
     font-size: 16px;
     border-radius: 20px;
     padding: 10px;
-    margin: 10px; 
+    margin-bottom: 10px; 
 }
 
 .login-box label{
@@ -98,8 +86,6 @@ article h1{
 
 .modal-footer{
     background: #0f407a;
-    bottom: 0;
-    width: 100%;
 }
 
 .modal-header{
@@ -107,23 +93,8 @@ article h1{
     color: white;
 }
 
-.form-login[type = "text"],.form-login[type = "password"]{
-    transition: 0.25s;
-    width: 200px;
-    text-align: center;
-    margin: 10px;
-    border: 1px solid #0f407a;
-}
-
-.form-login[type = "text"]:focus,.form-login[type = "password"]:focus{
-    border-bottom: 3px solid #0f407a;
-    border-right: 3px solid #0f407a;
-    width: 250px;
-}
-
-@media screen and (max-width: 1024px){
+@media screen and (max-width: 768px){
     footer{
-        position: relative;
+        margin-top: 0;
     }
 }
-

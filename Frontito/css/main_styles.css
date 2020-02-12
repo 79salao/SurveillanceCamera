@@ -196,6 +196,10 @@ tr {
 		  bottom: 0;
 	  }
 
+	  article{
+		  padding: 0 !important;
+	  }
+
     }
 
 @media screen and (max-width: 425px) {
