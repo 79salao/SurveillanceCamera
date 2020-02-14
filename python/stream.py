@@ -1,5 +1,7 @@
 # Salahdin Belghiti
 
+# Imports
+
 import communication
 import io
 import picamera
@@ -8,19 +10,37 @@ import socketserver
 from threading import Condition
 from http import server
 import datetime
+import gui
 
 # Variable que almacena el estado del puerto 2 de la cámara (puerto de grabaciones)
 grabando = False
 # Variable que almacena el objeto camera
-camera = picamera.PiCamera()
+camera = None
 # Variable que almacena el nombre del archivo de grabacion
 filename = ""
 # Variable de tiempo
 tiempo = 0
-
+# Variable para controlar la duración de los vídeos (En segundos)
+duracionVideos = 60
+altoRec = 480
+anchoRec = 320
+altoStrm = 480
+anchoStrm = 320
+fps = 25
+# HTML simple para visualizar el stream
+PAGE = """\
+<html>
+<head>
+<title>Raspberry Pi - Surveillance Camera</title>
+</head>
+<body>
+<center><h1>Raspberry Pi - Surveillance Camera</h1></center>
+<center><img src="stream.mjpg" width="640" height="480"></center>
+</body>
+</html>
+"""
 
 # Métodos para controlar el streaming
-
 class StreamingOutput(object):
     def __init__(self):
         self.frame = None
@@ -41,7 +61,18 @@ class StreamingOutput(object):
 
 class StreamingHandler(server.BaseHTTPRequestHandler):
     def do_GET(self):
-        if self.path == '/stream.mjpg':
+        if self.path == '/':
+            self.send_response(301)
+            self.send_header('Location', '/index.html')
+            self.end_headers()
+        elif self.path == '/index.html':
+            content = PAGE.encode('utf-8')
+            self.send_response(200)
+            self.send_header('Content-Type', 'text/html')
+            self.send_header('Content-Length', len(content))
+            self.end_headers()
+            self.wfile.write(content)
+        elif self.path == '/stream.mjpg':
             self.send_response(200)
             self.send_header('Age', 0)
             self.send_header('Cache-Control', 'no-cache, private')
@@ -49,7 +80,7 @@ class StreamingHandler(server.BaseHTTPRequestHandler):
             self.send_header('Content-Type', 'multipart/x-mixed-replace; boundary=FRAME')
             self.end_headers()
             try:
-                while True:
+                while gui.funcionando:
                     with output.condition:
                         output.condition.wait()
                         frame = output.frame
@@ -73,19 +104,28 @@ class StreamingServer(socketserver.ThreadingMixIn, server.HTTPServer):
     daemon_threads = True
 
 
+address = ('', 8000)
+server = StreamingServer(address, StreamingHandler)
+
+# Metodo para iniciar el streaming
 def stream():
+    global server
     global camera
     global output
+    # Config de la camara en stream
+    camera = picamera.PiCamera()
     output = StreamingOutput()
     camera.rotation = 180
-    camera.framerate = 25
-    camera.start_recording(output, format='mjpeg', resize=(480, 320))
+    camera.framerate = fps
+    camera.start_recording(output, format='mjpeg', resize=(altoStrm, anchoStrm))
     try:
-        address = ('', 8000)
-        server = StreamingServer(address, StreamingHandler)
         server.serve_forever()
     finally:
-        camera.stop_recording(splitter_port=1)
+        try:
+            camera.stop_recording(splitter_port=1)
+        except:
+            pass
+
 
 
 # Métodos para controlar las grabaciones
@@ -96,13 +136,13 @@ def record():
     global filename
     grabando = True
     x = datetime.datetime.now()
-    path = "/home/pi/Desktop/SurveillanceCamera-master/Grabaciones/"
-    filename = path + x.strftime("%Y") + "_" + x.strftime("%m") + "_" + x.strftime("%d") + "_" + x.strftime("%X") + ".h264"
+    filename = x.strftime("%Y") + "_" + x.strftime("%m") + "_" + x.strftime("%d") + "_" + x.strftime(
+        "%X") + ".h264"
     try:
-        camera.start_recording(filename, splitter_port=2, resize=(480, 320))
+        camera.start_recording(filename, splitter_port=2, resize=(altoRec, anchoRec))
+        communication.mandarEmail()
     except:
-        print("ERROR NO SE HA PODIDO EMPEZAR LA GRABACION")
-    communication.mandarEmail()
+        pass
 
 
 def stopRecording():
@@ -114,6 +154,11 @@ def stopRecording():
         try:
             camera.stop_recording(splitter_port=2)
         except:
-            print("HA HABIDO UN ERROR A LA HORA DE PARAR LA GRABACION")
-        grabando = False
-        tiempo = 0
+            pass
+        finally:
+            grabando = False
+            tiempo = 0
+
+
+
+

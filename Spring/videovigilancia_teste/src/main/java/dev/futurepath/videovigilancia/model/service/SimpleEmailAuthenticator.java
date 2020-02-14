@@ -1,0 +1,25 @@
+package dev.futurepath.videovigilancia.model.service;
+
+import javax.mail.Authenticator;
+import javax.mail.PasswordAuthentication;
+
+public class SimpleEmailAuthenticator extends Authenticator {
+
+
+    String userName;
+    String password;
+    PasswordAuthentication authentication;
+
+    public SimpleEmailAuthenticator(String userName,String password) {
+        super();
+        this.userName = userName;
+        this.password = password;           
+        authentication = new PasswordAuthentication(userName, password);
+    }
+
+    @Override
+    public PasswordAuthentication getPasswordAuthentication() {
+        return authentication;
+    }
+
+} 

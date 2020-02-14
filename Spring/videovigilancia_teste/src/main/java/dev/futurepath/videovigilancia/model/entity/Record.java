@@ -23,9 +23,9 @@ public class Record implements Serializable {
 	private Long id;
 	
 	@NotNull
-	@Temporal(TemporalType.TIMESTAMP) // los dias y la hora -- 2013-08-05 18:19:03
+	@Temporal(TemporalType.TIMESTAMP) //solamente la fecha -- 28-01-2020 //TIMESTAMP -2013-08-05 18:19:03
 	private Date date;
-	
+		
 	@NotNull
 	private int duration;
 	
@@ -50,7 +50,8 @@ public class Record implements Serializable {
 
 	public void setDate(Date date) {
 		this.date = date;
-	}
+	}	
+
 
 	public int getDuration() {
 		return duration;

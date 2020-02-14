@@ -2,25 +2,51 @@
 
 # Imports
 
+import gui
 import threading
 import time
 import stream
 import gpiozero
+import communication
 
-# Variables globales
+# Variables globales sin inicializar
 
-movimiento = False  # Variable que indica cuándo hay movimiento y cuando no.
-detecciones = 0  # Variable que indica las detecciones que hay, se usa para evitar falsas alarmas.
-noDetecciones = 0  # Variable que indica las veces que no se ha detectado movimiento.
-sensor = gpiozero.MotionSensor(24)  # Variable del sensor de movimiento.
-threads = []  # Lista que almacena los threads del temporizador.
-duracionVideos = 60  # Variable para controlar la duración de los vídeos (En segundos)
-segundosDeEspera = 5  # Numero de segundos y veces que se comprueba que movimiento antes de parar la grabacion.
-
-
+movimiento = None
+detecciones = None
+noDetecciones = None
+sensor = None
+threadsT = None
+threadsS = None
+segundosDeEspera = None
+firstTime = True
 # Métodos
 
+
+def init():
+    global movimiento
+    global detecciones
+    global noDetecciones
+    global sensor
+    global threadsT
+    global threadsS
+    global segundosDeEspera
+    movimiento = False  # Variable que indica cuándo hay movimiento y cuando no.
+    detecciones = 0  # Variable que indica las detecciones que hay, se usa para evitar falsas alarmas.
+    noDetecciones = 0  # Variable que indica las veces que no se ha detectado movimiento.
+    sensor = gpiozero.MotionSensor(24)  # Variable del sensor de movimiento.
+    threadsT = []  # Lista que almacena los threads del temporizador.
+    threadsS = []  # Lista que almacena los threads del stream.
+    segundosDeEspera = 5  # Numero de segundos y veces que se comprueba que movimiento antes de parar la grabacion.
+    # Iniciar thread del detector de movimiento
+    threadM = threading.Thread(target=thread_movimiento).start()
+    # Iniciar thread del la cámara
+    threadRefresh = threading.Thread(target=gui.refresh).start()
+    threadServer = threading.Thread(target=gui.checkConnection).start()
+    threadMain = threading.Thread(target=main).start()
+
+
 # Método que comprueba (varias veces) que el sensor está activo
+
 
 def isActive():
     for i in range(3):
@@ -35,56 +61,49 @@ def thread_movimiento():
     global detecciones
     global noDetecciones
     global movimiento
-    global duracionVideos
-    print("Thread movimiento iniciado.")
-    print("Sensor de movimiento iniciado.")
     # Comprueba que hay movimiento
     sensor.wait_for_active()
     for i in range(2):
         sensor.wait_for_active()
     while True:
         # Este condicional comprueba el tamaño del array de threads y lo limpia
-        if len(threads) == 10:
+        if len(threadsT) or len(threadsS) == 10:
             clearThreads()
         # Este condicional comprueba que el sensor esté activo, y cada vez que detecta
         # movimiento, lo almacena en la variable detecciones
         if sensor.is_active:
             detecciones = detecciones + 1
-            print("Se ha detectado movimiento " + str(detecciones) + "veces...")
             time.sleep(0.3)
         # Si no detecta movimiento 5 veces, se restablece el contador de detecciones.
         else:
-            print("No se ha vuelto a detectar movimiento...")
             detecciones = 0
             time.sleep(3)
         # Si se detecta movimiento 5 veces, la variable movimiento se torna true
         if detecciones == 5:
             # Se restablece el contador de detecciones para la proxima vez
             detecciones = 0
-            print("Movimiento detectado 5 veces, iniciando...")
             movimiento = True
             while True:
                 # Condicional que comprueba que los videos no exceden el limite de duracion
-                if stream.tiempo >= duracionVideos:
-                    print("Se ha alcanzado el limite de duración, se reiniciara la grabacion.")
+                if stream.tiempo >= stream.duracionVideos:
                     movimiento = False
+                    stream.grabando = False
                     time.sleep(0.2)
                     movimiento = True
+                    stream.grabando = True
                     # Nuevo thread de temporizador
-                    newThread()
+                    newThread("tiempo").start()
                 # Este condicional comprueba si hay movimiento, si no detecta, aumenta el contador de noDetecciones.
                 if not isActive():
                     noDetecciones = noDetecciones + 1
                     time.sleep(1)
-                    print("No se ha detectado movimiento " + str(noDetecciones) + "/" + str(segundosDeEspera))
                 else:
                     noDetecciones = 0
                 if noDetecciones == segundosDeEspera:
                     # Se para la grabación
                     stream.stopRecording()
-                    print("Se parará el vídeo por falta de movimiento.")
                     # Método que para los threads
-                    joinThreads()
+                    joinThreads("tiempo")
                     movimiento = False
                     noDetecciones = 0
                     break
@@ -92,54 +111,64 @@ def thread_movimiento():
 
 # Método del temporizador
 def temporizador():
+    print("temporizador")
     while stream.grabando:
         time.sleep(1)
-        print(stream.tiempo)
+        text = "Duration: " + str(stream.tiempo) + " seconds"
+        gui.recordingStatusDurationLabel.configure(text=text)
         stream.tiempo = stream.tiempo + 1
+        print(stream.tiempo)
 
 
 # Método que crea un thread y lo retorna
-def newThread():
-    stream.tiempo = 0
-    threadT = threading.Thread(target=temporizador, daemon=True)
-    threads.append(threadT)
-    return threadT
+def newThread(type):
+    if type == "tiempo":
+        stream.tiempo = 0
+        threadT = threading.Thread(target=temporizador, daemon=True)
+        threadsT.append(threadT)
+        return threadT
+    elif type == "stream":
+        threadS = threading.Thread(target=stream.stream)
+        threadsS.append(threadS)
+        return threadS
 
 
 # Método que para los threads
-def joinThreads():
-    for i in range(len(threads)):
-        if threads[i].isAlive():
-            threads[i].join()
+def joinThreads(type):
+    if type == "tiempo":
+        for i in range(len(threadsT)):
+            if threadsT[i].isAlive():
+                threadsT[i].join()
+    elif type == "stream":
+        for i in range(len(threadsS)):
+            if threadsS[i].isAlive():
+                threadsS[i].join()
 
 
 # Método que vacía el array de threads
 def clearThreads():
-    global threads
-    threads = []
-    print("Se han limpiado los threads.")
+    global threadsT
+    global threadsS
+    threadsT = []
+    threadsS = []
 
 
-# Flujo de ejecución principal
+def main():
+    gui.connect()
+    newThread("stream").start()
+    while True:
+        if movimiento:
+            newThread("tiempo").start()
+            stream.record()
+            while True:
+                if movimiento:
+                    pass
+                else:
+                    stream.stopRecording()
+                    stream.tiempo = 0
+                    stream.parar = True
+                    if len(threadsT) > 10:
+                        joinThreadsT("tiempo")
+                    break
 
-# Iniciar thread del detector de movimiento
-threadM = threading.Thread(target=thread_movimiento).start()
-# Iniciar thread del la cámara
-threadS = threading.Thread(target=stream.stream).start()  # iniciar stream
-# Iniciar programa
-while True:
-    if movimiento:
-        newThread().start()
-        stream.record()
-        while True:
-            if movimiento:
-                pass
-            else:
-                stream.stopRecording()
-                stream.tiempo = 0
-                print("Grabacion terminada.")
-                stream.parar = True
-                if len(threads) > 10:
-                    joinThreads()
-                newThread()
-                break
+
