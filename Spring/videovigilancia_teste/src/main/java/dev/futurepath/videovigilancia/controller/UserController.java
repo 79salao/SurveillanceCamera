@@ -257,13 +257,15 @@ public class UserController {
 	}	
 	
 	/*
-	 * Used to delete the cookies when the user click on SignOut. The parameter cookieName is the cookie that will be delete. In this case will be
-	 * the username. 
+	 * Used to delete the cookies when the user click on SignOut. The parameter username is the cookie that will be delete.
 	 */	
-	public void deleteCookies(String cookieName, HttpServletResponse response) {
-		 Cookie cookie = new Cookie("cookieName", null);
+	@GetMapping(value = "/deleteCookies")
+	public RedirectView deleteCookies(HttpServletResponse response) {
+		 RedirectView signOut = new RedirectView("/", true);
+		 Cookie cookie = new Cookie("username", null);
 		 cookie.setMaxAge(0);
 		 response.addCookie(cookie);
+		 return signOut;		 
 	}
 
 	/*
