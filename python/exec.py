@@ -8,5 +8,5 @@ import stream
 # Metodos para iniciar todo
 
 main.init()
-stream.window.mainloop()
+gui.window.mainloop()
 

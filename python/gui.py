@@ -244,6 +244,7 @@ def getindex(value, limit):
             return 5
         elif value == 40:
             return 6
+        elif value == 45:
             return 7
     elif not limit:
         if value == "Select resolution" or value == "Select limit (in seconds)":
