@@ -33,6 +33,7 @@ public class RecordController {
 	@RequestMapping(value= "/main")
 	public ModelAndView mainPage(HttpServletRequest request) throws ParseException{
 		ModelAndView mainModelAndView = new ModelAndView("html/mainpage");
+		ModelAndView redirectSignIn = new ModelAndView("redirect:/");
 		mainModelAndView.addObject("title","TB/O Records");
 		String from, to;		
 		if(request.getQueryString() != null) {
@@ -51,6 +52,9 @@ public class RecordController {
 		User user = userDao.findUserByUsername(cookieUsername);*/
 		User user = findCookies(request);
 		mainModelAndView.addObject("user", user);
+		if(user==null) {
+			return redirectSignIn;
+		}
 		return mainModelAndView;
 	}
 	/*
@@ -59,7 +63,8 @@ public class RecordController {
      */
     @RequestMapping(value = "/charts")
     public ModelAndView chartsPage(HttpServletRequest request) {
-    	ModelAndView chartsModelAndView = new ModelAndView("html/statsPage");    	
+    	ModelAndView chartsModelAndView = new ModelAndView("html/statsPage");
+    	ModelAndView redirectSignIn = new ModelAndView("redirect:/");
     	chartsModelAndView.addObject("title", "TB/O Charts");
         String from, to;
         if (request.getQueryString() != null) {
@@ -74,13 +79,17 @@ public class RecordController {
         chartsModelAndView.addObject("to", to);        
         
         User user = findCookies(request);
-        chartsModelAndView.addObject("user", user);        
+        chartsModelAndView.addObject("user", user); 
+        if(user==null) {
+			return redirectSignIn;
+		}
         return chartsModelAndView;
     }
     //copypasteado
     @RequestMapping(value = "/charts2")
     public ModelAndView chartsPage2(HttpServletRequest request) {
-    	ModelAndView chartsModelAndView = new ModelAndView("html/statsPage2");    	
+    	ModelAndView chartsModelAndView = new ModelAndView("html/statsPage2"); 
+    	ModelAndView redirectSignIn = new ModelAndView("redirect:/");
     	chartsModelAndView.addObject("title", "TB/O Charts");
         String from, to;
         if (request.getQueryString() != null) {
@@ -95,6 +104,9 @@ public class RecordController {
         chartsModelAndView.addObject("to", to);  
         User user = findCookies(request);
         chartsModelAndView.addObject("user", user);
+        if(user==null) {
+			return redirectSignIn;
+		}
         return chartsModelAndView;
     }
     

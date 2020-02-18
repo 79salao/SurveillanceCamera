@@ -37,7 +37,8 @@ public class UserController {
 	 */
 	private final Pattern pattern = Pattern
 			.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
-		
+	private Long emailID = null;
+	
 
 	/*
 	 * Show the index.html page with the URL '/'. Firstly, it's create a new user
@@ -64,14 +65,21 @@ public class UserController {
 	public ModelAndView resetPassword(@RequestParam(value = "id") Long id) {
 		ModelAndView resetPasswordModelAndView = new ModelAndView("html/resetpassword");
 		ModelAndView redirectSignIn = new ModelAndView("redirect:/");
-		User user = userDao.findUserByID(id);		
-		if (user != null) {
+		ModelAndView redirectReset = new ModelAndView("redirect:/resetpassword?id=" + emailID);
+		
+		User user = userDao.findUserByID(id);
+		
+		if (id == emailID) {
 			resetPasswordModelAndView.addObject("user", user);
-			resetPasswordModelAndView.addObject("title", "TB/O Reset your Password");
+			resetPasswordModelAndView.addObject("title", "TB/O Reset your Password");		
 			return resetPasswordModelAndView;
-		} else {
-			return redirectSignIn;
-		}
+		}else {
+			if(emailID == null) {
+				return redirectSignIn;
+			}else{
+				return redirectReset;
+			}
+		}		
 	}
 
 	/*
@@ -89,7 +97,7 @@ public class UserController {
 		
 		ModelAndView signInModelAndView = new ModelAndView("html/index");
 
-		if (result.hasErrors()) {
+		if (result.hasErrors()){
 			signInModelAndView.addObject("title", "TB/O SignIn");
 			return signInModelAndView;
 		}
@@ -228,6 +236,7 @@ public class UserController {
 	 *  Method to send an email
 	 */
 	private void sendEmail(User user) {
+		emailID = user.getId();
 		String subject = "Reset TB/O password";
 		String link = "<a style='text-decoration: none; border-radius: 5px; padding: 15px 23px; color: white; background-color: #3498db' href='http://localhost:8080/resetpassword?id="
 				+ user.getId() + "' target='_blank'>Click here to reset it!</a>";
@@ -253,7 +262,7 @@ public class UserController {
 				+ "				</p>"
 				+ "				<p style='color: #b3b3b3; font-size: 12px; text-align: center;margin: 30px 0 0'>©Copyright 2019, TB/O. All rights reserved.</p>"
 				+ "			</div>" + "		</td>" + "	</tr>" + "</table>";
-		sendMailService.sendMail("carolina.dasilva@movicoders.com", user.getEmail(), subject, body);
+		sendMailService.sendMail("tbonotifica@hotmail.com", user.getEmail(), subject, body);
 	}	
 	
 	/*
