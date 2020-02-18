@@ -4,6 +4,8 @@ import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.Cookie;
@@ -90,7 +92,13 @@ public class RecordController {
             from = LocalDateTime.now().minusWeeks(1).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             to = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         }
-        chartsModelAndView.addObject("records", recordDao.findDatesByDates(from, to));
+        
+        List<Date> records = recordDao.findDatesByDates(from, to);
+        chartsModelAndView.addObject("records", records);
+        for (Date date : records) {
+        	System.out.println(date);
+		}
+        
         chartsModelAndView.addObject("from", from);
         chartsModelAndView.addObject("to", to);  
         User user = findCookies(request);
@@ -103,7 +111,7 @@ public class RecordController {
     	User user = userDao.findUserByUsername(cookieUsername);
 		return user;
     }
-	
+    
 	@GetMapping("/all-cookies")
 	public String readAllCookies(HttpServletRequest request) {
 	    Cookie[] cookies = request.getCookies();

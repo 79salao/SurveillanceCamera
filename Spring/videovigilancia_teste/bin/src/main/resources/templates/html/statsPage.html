@@ -69,7 +69,7 @@
 		<div id="filter" class="row">
 			<!--Filter-->
 				<aside class="col-xs-12 col-sm-3 col-md-3 col-lg-2" style="background: #143968; color: white;">
-					<form method="get" action="/charts">
+					<form method="get" action="/main">
 					<div class="form-group">
 						<label for="example-date-input" class="col-form-label" style="margin-top: 20px;">DESDE</label>
 						<div>
@@ -226,79 +226,60 @@
 	</div>
 </div>
 			<!-- scripts -->
-<script th:inline="javascript">
+<script>
  
-
-/*<![CDATA[*/
-
-function getArray(arrayx) {
-    var arrayFechas = [];
-    arrayx.forEach(elemento => {
-        arrayProvisional = elemento.split("T");
-        arrayProvisional2 = arrayProvisional[1].split(":")
-        arrayFechas.push(arrayProvisional2[0]);
-    });
-    return arrayFechas;
-}
-
-function getReps(arrayFechas) {
-    var arrayReps = [];
-    var arrayFechas2 = arrayFechas;
-    var fechas = []
-    arrayFechas.forEach(hora => {
-        var reps = 0;
-        if (!fechas.includes(hora)) {
-            fechas.push(hora);
-            arrayFechas2.forEach(repeticion => {
-                if (hora == repeticion) {
-                    reps = reps + 1;
-                }
-            });
-            var arrayChars = hora.split("");
-            if (arrayChars[0]== "0") {
-                horaBien = arrayChars[1];
-            } else {
-                horaBien = hora;
-            }
-            arrayReps.push({
-                y: reps,
-                label: hora
-            });
-        }
-    });
-    console.log(arrayReps);
-    return arrayReps;
-}
-
-var records = /*[[${records}]]*/ 'default';
-
-var data = getReps(getArray(records))
-
+ datax = [
+    { y: 8 },
+    { y: 5 },
+    { y: 11, indexLabel: "highest", markerColor: "red", markerType: "triangle" },
+    { y: 7 },
+    { y: 9 },
+    { y: 7 },
+    { y: 6 },
+    { y: 8 },
+    { y: 1, indexLabel: "lowest", markerColor: "green", markerType: "cross" },
+    { y: 9 },
+    { y: 10 },
+    { y: 4 },
+    { y: 8 },
+    { y: 5 },
+    { y: 6 },
+    { y: 7 },
+    { y: 9 },
+    { y: 7 },
+    { y: 6 },
+    { y: 8 },
+    { y: 9 },
+    { y: 9 },
+    { y: 10 },
+    { y: 4 },
+]
+ 
 window.onload = function() {
-    var chart = new CanvasJS.Chart("chartContainer", {
-        animationEnabled: true,
-        theme: "dark1",
-        backgroundColor: "transparent",
-        title: {
-            text: "Incidencias por horas"
-        },
-        axisX: {
-            title: "Hora",
-            interval: 1
-        },
-        axisY: {
-            title: "Numero de incidencias por horas",
-            includeZero: false,
-            interval: 1
-        },
-        data: [{
-            type: "line",
-            dataPoints: data
-        }]
-    });
-    chart.render();
+ 
+ var chart1 = new CanvasJS.Chart("chartContainer", {
+     animationEnabled: true,
+     theme: "dark2",
+     backgroundColor: "transparent",
+     title: {
+         text: "Simple Line Chart"
+     },
+     axisX: {
+         title: "Hora",
+         interval: 1
+     },
+     axisY: {
+         title: "Media de incidencias",
+         includeZero: false
+     },
+     data: [{
+         type: "line",
+         dataPoints: datax
+     }]
+ });
+
+ chart1.render();
 }
-/*]]>*/
 </script>
 
 </html>
