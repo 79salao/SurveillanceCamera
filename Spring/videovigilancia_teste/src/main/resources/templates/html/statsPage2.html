@@ -234,6 +234,37 @@ aria-hidden="true">
 
 	
 var intervalo;
+
+function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) 
+        month = '0' + month;
+    if (day.length < 2) 
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+}
+
+
+var getDates = function(startDate, endDate) {
+	  var dates = [],
+	      currentDate = startDate,
+	      addDays = function(days) {
+	        var date = new Date(this.valueOf());
+	        date.setDate(date.getDate() + days);
+	        return date;
+	      };
+	  while (currentDate <= endDate) {
+	    dates.push(currentDate);
+	    currentDate = addDays.call(currentDate, 1);
+	  }
+	  return dates;
+	};
+
 function getArray(arrayx) {
     var arrayFechas = [];
     arrayx.forEach(elemento => {
@@ -244,11 +275,12 @@ function getArray(arrayx) {
 }
 
 
-function getReps(arrayFechas) {
+function getReps(arrayFechas, totalFechas) {
     var arrayReps = [];
     var arrayFechas2 = arrayFechas;
     var fechas = []
     var max = 0;
+    var fechasDefault = totalFechas;
     arrayFechas.forEach(fecha => {
         var reps = 0;
         if (!fechas.includes(fecha)) {
@@ -261,26 +293,53 @@ function getReps(arrayFechas) {
                 	max = reps;
                 }
             });
-            arrayReps.push({
-                y: reps,
-                label: fecha
-            });
+            var index = fechasDefault.indexOf(fecha);
+            if(index !== -1) {
+            	fechasDefault[index] = {
+	                y: reps,
+	                label: fecha
+	            };
+            }
         }
     });
     if(max > 20) {
     	intervalo = 5;
     } else if (max > 40) {
     	intervalo = 10;
+    } else if (max == 0) {
+    	intervalo = 1;
     }
-    return arrayReps;
+    return fechasDefault;
 }
 
+function format(array) {
+	var arrayFinal = []
+	array.forEach(element => {
+		if(typeof element == "string") {
+			arrayFinal.push({
+				y: 0,
+				label: element
+			});
+		} else {
+			arrayFinal.push(element);
+		}
+	});
+	return arrayFinal;
+}
 
+var from = /*[[${from}]]*/ 'default';
+var to = /*[[${to}]]*/ 'default';
 var records = /*[[${records}]]*/ 'default';
+var dates = getDates(new Date(from), new Date(to));
+var datesFinal = []
+dates.forEach(date => {
+	datesFinal.push(formatDate(date));
+})
 var array = getArray(records);
-
-var texto = "Incidencias del " + array[0] + " al " + array[Object.keys(array).length - 1];
-var data = getReps(array);
+var texto = "Incidencias del " + from + " al " + to;
+var data = getReps(array, datesFinal);
+var dataFinal = format(data);
+console.log(dataFinal)
 
 window.onload = function() {
     CanvasJS.addColorSet("greenShades", [
@@ -298,15 +357,17 @@ window.onload = function() {
             text: this.texto
         },
         axisY: {
+        	labelFontSize: 20,
             title: "Incidencias por dia",
             interval: intervalo
         },
         axisX: {
-            title: "Fechas"
+            title: "Fechas",
+            labelFontSize: 14,
         },
         data: [{
             type: "column",
-            dataPoints: data
+            dataPoints: dataFinal
         }]
     });
     chart.render();
