@@ -33,8 +33,7 @@ def salir():
     config_out.close()
     exit()
     window.destroy()
-
-
+threads = []
 # Array que guarda la configuracion de las grabaciones
 confArray1 = confArray[0]
 # Array que guarda la configuracion del streaming
@@ -110,8 +109,9 @@ def waitToStopRec():
             running = False
 
 def newThread():
+    global threads
     threads = []
-    thread = threading.Thread(target=saveConfig(), daemon=True)
+    thread = threading.Thread(target=saveConfig, daemon=True)
     threads.append(thread)
     return thread
 
@@ -139,7 +139,8 @@ def applyRecords():
                 stream.duracionVideos = 1000000000000000000
                 confArray1 = [resolution, int(fps), limit]
                 if stream.grabando:
-                    newThread().start()
+                    if len(threads) == 0:
+                        newThread().start()
                 else:
                     saveConfig()
             elif limit != "No limit" and limit != "Select limit (in seconds)":
