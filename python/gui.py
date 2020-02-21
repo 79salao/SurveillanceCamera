@@ -87,6 +87,28 @@ def alert_popup(title, message):
     b.pack()
     window.mainloop()
 
+def saveConfig():
+    global config_out
+    global confArray
+    try:
+        confArray = [confArray1, confArray2]
+        pickle.dump(confArray, config_out)
+        config_out.close()
+    except:
+        config_out = open("config.pickle", "wb")
+        confArray = [confArray1, confArray2]
+        pickle.dump(confArray, config_out)
+        config_out.close()
+
+def threadWaitToStopRec():
+    running = True
+    while running:
+        if stream.grabando:
+            pass
+        else:
+            saveConfig()
+            running = False
+
 
 # Método que aplica la configuracion y la guarda en el archivo
 def applyRecords():
@@ -109,26 +131,18 @@ def applyRecords():
             if limit == "No limit":
                 stream.duracionVideos = 1000000000000000000
                 confArray1 = [resolution, int(fps), limit]
-                try:
-                    confArray = [confArray1, confArray2]
-                    pickle.dump(confArray, config_out)
-                    config_out.close()
-                except:
-                    config_out = open("config.pickle", "wb")
-                    confArray = [confArray1, confArray2]
-                    pickle.dump(confArray, config_out)
-                    config_out.close()
+                if stream.grabando:
+                    thread = threading.thread(target=saveConfig).start()
+                else:
+                    saveConfig()
             elif limit != "No limit" and limit != "Select limit (in seconds)":
                 stream.duracionVideos = int(limit)
                 confArray1 = [resolution, int(fps), int(limit)]
                 confArray = [confArray1, confArray2]
-                try:
-                    pickle.dump(confArray, config_out)
-                    config_out.close()
-                except:
-                    config_out = open("config.pickle", "wb")
-                    pickle.dump(confArray, config_out)
-                    config_out.close()
+                if stream.grabando:
+                    thread = threading.thread(target=saveConfig).start()
+                else:
+                    saveConfig()
             elif limit == "Select limit (in seconds)":
                 alert_popup("Invalid recording limit", "Please select a limit")
         else:
