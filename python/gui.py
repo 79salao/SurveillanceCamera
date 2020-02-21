@@ -100,7 +100,7 @@ def saveConfig():
         pickle.dump(confArray, config_out)
         config_out.close()
 
-def threadWaitToStopRec():
+def waitToStopRec():
     running = True
     while running:
         if stream.grabando:
@@ -108,6 +108,13 @@ def threadWaitToStopRec():
         else:
             saveConfig()
             running = False
+
+def newThread():
+    threads = []
+    thread = threading.Thread(target=saveConfig(), daemon=True)
+    threads.append(thread)
+    return thread
+
 
 
 # Método que aplica la configuracion y la guarda en el archivo
@@ -132,7 +139,7 @@ def applyRecords():
                 stream.duracionVideos = 1000000000000000000
                 confArray1 = [resolution, int(fps), limit]
                 if stream.grabando:
-                    thread = threading.thread(target=saveConfig).start()
+                    newThread().start()
                 else:
                     saveConfig()
             elif limit != "No limit" and limit != "Select limit (in seconds)":
@@ -140,7 +147,7 @@ def applyRecords():
                 confArray1 = [resolution, int(fps), int(limit)]
                 confArray = [confArray1, confArray2]
                 if stream.grabando:
-                    thread = threading.thread(target=saveConfig).start()
+                    newThread().start()
                 else:
                     saveConfig()
             elif limit == "Select limit (in seconds)":
