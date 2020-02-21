@@ -3,22 +3,17 @@ package dev.futurepath.videovigilancia.controller;
 import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.stream.Collectors;
 
-import javax.servlet.http.Cookie;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.util.WebUtils;
 
 import dev.futurepath.videovigilancia.model.dao.IRecordDao;
-import dev.futurepath.videovigilancia.model.dao.IUserDao;
 import dev.futurepath.videovigilancia.model.entity.User;
 
 
@@ -28,7 +23,7 @@ public class RecordController {
 	@Autowired
 	private IRecordDao recordDao;
 	@Autowired
-	private IUserDao userDao;
+	private SharedMethods sharedMethods;
 	
 	@RequestMapping(value= "/main")
 	public ModelAndView mainPage(HttpServletRequest request) throws ParseException{
@@ -50,7 +45,7 @@ public class RecordController {
 		/*String cookieUsername = (cookieID(request));
 		//Long cookieId = Long.parseLong(cookieID(request));
 		User user = userDao.findUserByUsername(cookieUsername);*/
-		User user = findCookies(request);
+		User user = sharedMethods.findCookies(request);
 		mainModelAndView.addObject("user", user);
 		if(user==null) {
 			return redirectSignIn;
@@ -78,7 +73,7 @@ public class RecordController {
         chartsModelAndView.addObject("from", from);
         chartsModelAndView.addObject("to", to);        
         
-        User user = findCookies(request);
+        User user = sharedMethods.findCookies(request);
         chartsModelAndView.addObject("user", user); 
         if(user==null) {
 			return redirectSignIn;
@@ -102,36 +97,14 @@ public class RecordController {
         chartsModelAndView.addObject("records", recordDao.findDatesByDates(from, to));
         chartsModelAndView.addObject("from", from);
         chartsModelAndView.addObject("to", to);  
-        User user = findCookies(request);
+        User user = sharedMethods.findCookies(request);
         chartsModelAndView.addObject("user", user);
         if(user==null) {
 			return redirectSignIn;
 		}
         return chartsModelAndView;
-    }
-    
-    private User findCookies(HttpServletRequest request) {
-    	String cookieUsername = (cookieID(request));
-    	User user = userDao.findUserByUsername(cookieUsername);
-		return user;
-    }
+    }    
 	
-	@GetMapping("/all-cookies")
-	public String readAllCookies(HttpServletRequest request) {
-	    Cookie[] cookies = request.getCookies();
-	    if (cookies != null) {
-	        return Arrays.stream(cookies)
-	                .map(c -> c.getValue()).collect(Collectors.joining(", "));
-	    }
-	    return "No cookies";
-	}
-	@GetMapping("/cookieid")
-	public String cookieID(HttpServletRequest request) {
-	    Cookie idUser = WebUtils.getCookie(request, "username");
-	    if (idUser != null) {
-	        return idUser.getValue();
-	    } else {
-	        return "Not found!";
-	    }
-	}
+
+
 }
