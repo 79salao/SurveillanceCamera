@@ -61,7 +61,7 @@ public class UserController {
 
 	/*
 	 * URL sent by email. The URL contains the user's id as a parameter to use it
-	 * after. The if conditional verify if the ID exist (in case of it's manually
+	 * after. The if conditional verify if the ID is the same send by email (in case of it's manually
 	 * changed).
 	 */
 	@GetMapping(value = "/resetpassword", params = "id")
@@ -121,7 +121,7 @@ public class UserController {
 
 	/*
 	 * This method is called after click on the button "Recuperar contraseña". If
-	 * the field match with the email's pattern, is send an email to the typed
+	 * the field match with an email inside the database, is send an email to the typed
 	 * email. It's used RedirectView because RedirectAttributes only work with it
 	 * (changing the model attribute - message of the page before redirecting).
 	 */
@@ -185,7 +185,7 @@ public class UserController {
 	}
 	
 	/*
-	 * Update the user's email if the user introduce the correct current password. After, redirect to the main page.
+	 * Update the user's email if the user introduce the correct current password and both email's field match. After, redirect to the main page.
 	 * If the typed email already exists in the database or the current password does't match with the typed one, send an error to the view. 
 	 */
 	@PostMapping(value = "/updateemail")
@@ -218,8 +218,8 @@ public class UserController {
 	}
 	
 	/*
-	 * Update the user's password if the user introduce the correct current password. After, redirect to the main page.
-	 * If the current password does't match with the typed one, send an error to the view.
+	 * Update the user's password if the user introduce the correct current password and both password's fields match. After, redirect to the main page.
+	 * If the current password or the new password does't match with the typed one, send an error to the view.
 	 */
 	@PostMapping(value = "/updatepassword")
 	public RedirectView updatePassword(@RequestParam("currentpassword") String currentpassword,
@@ -263,7 +263,7 @@ public class UserController {
 				+ "			</div>"
 				+ "			<hr style='border-bottom: 3px solid #0f407a; margin-bottom: 30px;margin-top: 30px;font-weight: bold;color: #0f407a;'>"
 				+ "			<div style='color: #34495e; margin: 4% 10% 2%; text-align: justify;font-family: sans-serif'>"
-				+ "				<h2 style='text-align: center;color: #0f407a; margin: 0 0 7px'>Hola " + user.getName()
+				+ "				<h2 style='text-align: center;color: #0f407a; margin: 0 0 7px'>Hello " + user.getName()
 				+ " !</h2>" 
 				+ "				<p style='margin: 2px; font-size: 15px'>"
 				+ "					We received a request to reset your TB/O password. If you really did, click on the link below to choose a new one."
