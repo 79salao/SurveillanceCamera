@@ -19,20 +19,22 @@ import dev.futurepath.videovigilancia.model.entity.User;
 @Controller
 public class SharedMethods {
 	
+	/* 
+	 * Method findCookies =  Used to return the object User based on the cookies that contains the page.
+	 * Method cookieID = Used to return an specific cookie that contains the page.
+	 * Method readAllCookies = Used to return all the cookies that contains the page.
+	 * Method deleteCookies = Used to delete a specific cookie when the user click on SignOut.
+	 */
+	
 	@Autowired
 	private IUserDao userDao;
 
-	/*
-	 * Used to return the object User based on the cookies that contains the page.
-	 */	
 	public User findCookies(HttpServletRequest request) {
     	String cookieUsername = (cookieID(request));
     	User user = userDao.findUserByUsername(cookieUsername);
 		return user;
     }	
-	/*
-	 * Used to return an specific cookie that contains the page.
-	 */	
+
 	@GetMapping("/cookieid")
 	public String cookieID(HttpServletRequest request) {
 	    Cookie idUser = WebUtils.getCookie(request, "username");
@@ -42,9 +44,7 @@ public class SharedMethods {
 	        return "Not found!";
 	    }
 	}	
-	/*
-	 * Used to return all the cookies that contains the page.
-	 */	
+
 	@GetMapping("/all-cookies")
 	public String readAllCookies(HttpServletRequest request) {
 	    Cookie[] cookies = request.getCookies();
@@ -54,10 +54,7 @@ public class SharedMethods {
 	    }
 	    return "No cookies";
 	}
-	
-	/*
-	 * Used to delete the cookies when the user click on SignOut. The parameter username is the cookie that will be delete.
-	 */	
+
 	@GetMapping(value = "/deleteCookies")
 	public RedirectView deleteCookies(HttpServletResponse response) {
 		 RedirectView signOut = new RedirectView("/", true);
