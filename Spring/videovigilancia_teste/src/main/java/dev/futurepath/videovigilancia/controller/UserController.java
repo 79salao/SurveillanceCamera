@@ -136,7 +136,7 @@ public class UserController {
 				sendEmail(user);
 				addToTheModel(redir, "EMAIL_OK");
 			}else{
-				addToTheModel(redir, "USER_ERROR");
+				addToTheModel(redir, "EMAIL_ERROR1");
 			}
 		}else{
 			addToTheModel(redir, "EMAIL_ERROR");

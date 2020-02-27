@@ -9,6 +9,7 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<link rel="icon" type="image/png" href="/images/logo.png" />
 </head>
 <!-- Navegation bar -->
 <header>
@@ -19,8 +20,8 @@
 			<img src="..\images\logonav.png" width="65" height="57" class="navbar-left" id="logonav" style="margin-left: 10px;">
 		</div>
 		<ul class="nav navbar-nav" style="background-color: #ffffff; color: #0f407a; font-size: medium; margin-top: 5px; font-weight: bold;">
-		<li class="active"><a th:href="@{/main}">Grabaciones</a></li>
-		<li><a th:href="@{/charts}">Estadísticas</a></li>
+		<li href="#" class="active"><a th:href="@{/main}">Grabaciones</a></li>
+		<li><a href="#" th:href="@{/charts}">Estadísticas</a></li>
 		<li><a href="#" data-toggle="modal" data-target=".bd-example-modal-lg-stream">Directo</a></li>
 	</ul>
 
@@ -36,7 +37,7 @@
 				<a class="dropdown-item" href="#" data-toggle="modal" data-target=".bd-example-modal-lg-password"><img src="../images/icon_password.png">Change password <br></a>
 				<a class="dropdown-item" href="#" data-toggle="modal" data-target=".bd-example-modal-lg-email"><img src="../images/icon_email.png">Change email <br></a>
 				<p style="border-bottom: 3px solid #0f407a; width: 100%;"><br></p>
-				<a class="dropdown-item" th:href="@{/}"><img src="../images/icon_signOut.png">Sign out</a>
+				<a class="dropdown-item" th:href="@{/deleteCookies}"><img src="../images/icon_signOut.png">Sign out</a>
 			</div>
 		</li>
 
@@ -54,7 +55,7 @@
 				<a class="dropdown-item" th:href="@{/charts}"><img src="../images/icon_stats.png">Estadísticas <br></a>
 				<a class="dropdown-item" data-toggle="modal" data-target=".bd-example-modal-lg-stream"><img src="../images/icon_stream.png">Directo <br></a>
 				<p style="border-bottom: 3px solid #0f407a; width: 100%;"><br></p>
-				<a class="dropdown-item" th:href="@{/}"><img src="../images/icon_signOut.png" style="height: 33px; width: 33px;">Sign out</a>
+				<a class="dropdown-item" th:href="@{/deleteCookies}"><img src="../images/icon_signOut.png" style="height: 33px; width: 33px;">Sign out</a>
 			</div>
 		</li>			
 	</ul>
@@ -127,12 +128,11 @@
 	</div>
 			<!-- footer -->
 			<footer>
-				<div class="container col-xs-12">
+					<p style="color: black; float: left;">A futurepath project</p>
 					<a href="https://facebook.com"><img src="../images/facebook.png" id="facebook_icon" style="float: right; margin-left: 10px;"></a>
 					<a href="https://linkedin.com"><img src="../images/linkedin.png" id="linkedin_icon" style="float: right; margin-left: 10px;"></a>
 					<a href="https://reddit.com"><img src="../images/reddit.png" id="reddit_icon" style="float: right; margin-left: 10px;"></a>
 					<a href="https://twitter.com"><img src="../images/twitter.png" id="twitter_icon" style="float: right;"></a>
-				</div>
 			</footer>
 </body>
 
@@ -140,13 +140,10 @@
 
 <!-- Stream modal -->
 
-<div class="modal fade bd-example-modal-lg-stream" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-	aria-hidden="true">
+<div class="modal fade bd-example-modal-lg-stream" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
-		<div class="modal-content"
-			style="border: 10px solid #0f407a; background: #0f407a; color: white">
-			<button type="button" class="close" style="background-color: #0f407a;" data-dismiss="modal"
-				aria-label="Close">
+		<div class="modal-content" style="border: 10px solid #0f407a; background: #0f407a; color: white">
+			<button type="button" class="close" style="background-color: #0f407a;" data-dismiss="modal" aria-label="Close">
 				<span aria-hidden="true">&times;</span>
 			</button>
 			<h4>CAMARA 1</h4>
@@ -156,14 +153,14 @@
 </div>
 
 <!-- record modal -->
-<div class="modal fade bd-example-modal-lg-record" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-	aria-hidden="true">
+<div class="modal fade bd-example-modal-lg-record" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
-		<div class="modal-content">
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				<!-- VIDEO -->
+		<div class="modal-content" style="border: 10px solid #0f407a; background: #0f407a; color: white">
+			<button type="button" class="close" style="background-color: #0f407a;" data-dismiss="modal" aria-label="Close">
 				<span aria-hidden="true">&times;</span>
 			</button>
+			<h4>//Nombre grabacion</h4>
+				EL VIDEO
 		</div>
 	</div>
 </div>
@@ -179,7 +176,7 @@
 				<h3 class="modal-title">//Administrar contraseña</h3>
 			</div>
 			<div class="modal-body" style="text-align: center;">
-				<form class="adminData-form" th:action="@{/updatepassword}" th:object="${user}" method="post">
+				<form class="adminData-form" th:action="@{/updatepassword}" method="post">
 					<small class="form-text text-muted">Introduzca en primer lugar su contraseña actual</small>
 					<div class="form-group">
 						<label>Contraseña actual:</label>
@@ -196,11 +193,6 @@
 						<input type="password" name="secondFieldPassword" style="border: 2px solid #0f407a" required>
 					</div>
 					<div>
-						<input type="hidden" th:field="*{id}">
-						<input type="hidden" th:field="*{name}">
-						<input type="hidden" th:field="*{username}">
-						<input type="hidden" th:field="*{email}">
-						<input type="hidden" th:field="*{password}">
 						<input type="hidden" id="popup" th:value='${message}'/>
 				   </div>
 					<div style="text-align: center; margin-top: 5px;">
@@ -224,16 +216,13 @@ aria-hidden="true">
 				<h3 class="modal-title">//Administrar nombre</h3>
 			</div>
 			<div class="modal-body" style="text-align: center;">
-				<form class="adminData-form"  th:action="@{/updatename}" th:object="${user}" method="post">
+				<form class="adminData-form"  th:action="@{/updatename}" method="post">
 					<div class="form-group">
 						<label>Nuevo nombre:</label>
-						<input type="text" th:field="*{name}" style="border: 2px solid #0f407a;" required>
+						<input type="text" name="name" style="border: 2px solid #0f407a;" required>
 					</div>
 					<div>
-						<input type="hidden" th:field="*{id}">
-						<input type="hidden" th:field="*{username}">
-						<input type="hidden" th:field="*{email}">
-						<input type="hidden" th:field="*{password}">
+						<input type="hidden" id="popup" th:value='${message}'/>	
 					</div>
 					<button type="submit" class="btn-form">Change!</button>
 				</form>
@@ -254,7 +243,7 @@ aria-hidden="true">
 				<h3 class="modal-title">//Administrar email</h3>
 			</div>
 			<div class="modal-body" style="text-align: center;">
-				<form class="adminData-form" th:action="@{/updateemail}" th:object="${user}" method="post">
+				<form class="adminData-form" th:action="@{/updateemail}" method="post">
 					<small class="form-text text-muted">Introduzca en primer lugar su contraseña actual</small>
 					<div class="form-group">
 						<label>Contraseña actual:</label>
@@ -271,27 +260,48 @@ aria-hidden="true">
 						<input type="email" name="secondFieldEmail" style="border: 2px solid #0f407a" required>
 					</div>
 					<div>
-						<input type="hidden" th:field="*{id}">
-						<input type="hidden" th:field="*{name}">
-						<input type="hidden" th:field="*{username}">
-						<input type="hidden" th:field="*{email}">
-						<input type="hidden" th:field="*{password}">
+						
 						<input type="hidden" id="popup" th:value='${message}'/>					  
 				</div>
 					<button type="submit" class="btn-form">Change!</button>
 				</form>
 			</div>
-		</div>
+		</div> 
 	</div>
 </div>
-    <!-- ES NECESARIO TENER UN CAMPO DE INPUT HIDDEN. --> 	   
-	<script type="text/javascript">
+    <script type="text/javascript">
       window.onload= function showMessagePopUp(){
           var message = $('#popup').val();
-          if(message != "")
-              document.getElementById('alert').innerHTML=message;
-          else
-          document.getElementById('alert').innerHTML="";
+          if(message == "EMAIL_ERROR"){
+            document.getElementById('toast_msg').innerHTML="Usuario o contraseña no coinciden";
+            document.getElementById('toast_body').style="background: lightcoral";
+            $('#toast').toast('show');
+          }
+          if(message == "FIELD_ERROR"){
+              document.getElementById('toast_msg').innerHTML="Email enviado";
+              document.getElementById('toast_body').style="background: lightcoral";
+              $('#toast').toast('show');
+            }
+          if(message == "PASSWORD_ERROR"){
+              document.getElementById('toast_msg').innerHTML="Email enviado";
+              document.getElementById('toast_body').style="background: lightcoral";
+              $('#toast').toast('show');
+            }
+          if(message == "NAME_ERROR"){
+              document.getElementById('toast_msg').innerHTML="Email enviado";
+              document.getElementById('toast_body').style="background: lightcoral";
+              $('#toast').toast('show');
+            }
+          if(message == "NAME_OK"){
+              document.getElementById('toast_msg').innerHTML="Email enviado";
+              document.getElementById('toast_body').style="background: lightgreen";
+              $('#toast').toast('show');
+            }
+          if(message == "EMAIL_ERROR1"){
+              document.getElementById('toast_msg').innerHTML="Email enviado";
+              document.getElementById('toast_body').style="background: lightcoral";
+              $('#toast').toast('show');
+            }
         }
     </script>
 
