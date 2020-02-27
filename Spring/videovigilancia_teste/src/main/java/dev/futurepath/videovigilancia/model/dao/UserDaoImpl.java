@@ -19,9 +19,11 @@ import dev.futurepath.videovigilancia.model.MySQLConnection;
 import dev.futurepath.videovigilancia.model.entity.User;
 /*
  * Method findId = search in database if the user exists after the user introduced their username and their password and return the id
- * Method findIdByUsername = search in database if the email exists and return the user.
+ * Method findUserByEmail = search in database if the email exists and return the user.
  * Method findUserByID = search in database if the id exists and return the user.
+ * Method findIdByUsername = search in database if the username exists and return the user. 
  * Method update = update the all the user data in the database.
+ * Method findAllUsers = return all the users in the database.
  */
 @Repository
 public class UserDaoImpl implements IUserDao {
@@ -82,9 +84,6 @@ public class UserDaoImpl implements IUserDao {
 		em.merge(user);		
 	}
 
-	/*
-	 * Returns all users in the DB.
-	 */
 	@Transactional(readOnly=true)
 	@Override
 	public List<User> findAllUsers() {

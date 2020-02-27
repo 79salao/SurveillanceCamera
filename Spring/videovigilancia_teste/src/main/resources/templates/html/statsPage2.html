@@ -21,8 +21,8 @@
 	</div>
 	<ul class="nav navbar-nav"
 		style="background-color: #ffffff; color: #0f407a; font-size: medium; margin-top: 5px; font-weight: bold;">
-		<li class="active"><a href="../html/mainpage.html">Grabaciones</a></li>
-		<li><a href="../html/statsPage.html">Estadísticas</a></li>
+		<li class="active"><a th:href="@{/main}">Grabaciones</a></li>
+		<li><a th:href="@{/charts}">Estadísticas</a></li>
 		<li><a href="#" data-toggle="modal" data-target=".bd-example-modal-lg-stream">Directo</a></li>
 	</ul>
 
@@ -132,101 +132,109 @@
 	</div>
 </div>
 
-			<!-- Modal change password -->
-<div class="modal fade bd-example-modal-lg-password" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-aria-hidden="true">
-<div class="modal-dialog modal-lg-password">
-	<div class="modal-content" style="width: fit-content; height: auto;background: lightgray;">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			</button>
-			<h3 class="modal-title">//Administrar contraseña</h3>
-		</div>
-		<div class="modal-body" style="text-align: center;">
-			<form class="adminData-form">
-				<small class="form-text text-muted">Introduzca en primer lugar su contraseña actual</small>
-				<div class="form-group">
-					<label>Contraseña actual:</label>
-					<input type="password" style="border: 2px solid #0f407a;" required>
-				</div>
-				<div style="border-top: 3px solid#0f407a; width: 100%; margin-bottom: 30px;">
-				</div>
-				<div class="form-group">
-					<label>Nueva contraseña:</label>
-					<input type="password" style="border: 2px solid #0f407a;" required>
-				</div>
-				<div class="form-group">
-					<label>Nueva contraseña:</label>
-					<input type="password" style="border: 2px solid #0f407a" required>
-				</div>
-				<div style="text-align: center; margin-top: 5px;">
-					<button type="submit" class="btn-form">Change!</button>
-				</div>
-				
-			</form>
+<!-- Modal change password -->
+<div class="modal fade bd-example-modal-lg-password" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg-password">
+		<div class="modal-content" style="width: fit-content; height: auto;background: lightgray;">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h3 class="modal-title">//Administrar contraseña</h3>
+			</div>
+			<div class="modal-body" style="text-align: center;">
+				<form class="adminData-form" th:action="@{/updatepassword}" method="post">
+					<small class="form-text text-muted">Introduzca en primer lugar su contraseña actual</small>
+					<div class="form-group">
+						<label>Contraseña actual:</label>
+						<input type="password" name="currentpassword" style="border: 2px solid #0f407a;" required>
+					</div>
+					<div style="border-top: 3px solid#0f407a; width: 100%; margin-bottom: 30px;">
+					</div>
+					<div class="form-group">
+						<label>Nueva contraseña:</label>
+						<input type="password" name="firstFieldPassword" style="border: 2px solid #0f407a;" required>
+					</div>
+					<div class="form-group">
+						<label>Nueva contraseña:</label>
+						<input type="password" name="secondFieldPassword" style="border: 2px solid #0f407a" required>
+					</div>
+					<div>
+						<input type="hidden" id="popup" th:value='${message}'/>
+				   </div>
+					<div style="text-align: center; margin-top: 5px;">
+						<button type="submit" class="btn-form">Change!</button>
+					</div>
+				</form>
+			</div>
 		</div>
 	</div>
 </div>
-</div>
 
-		<!-- Modal change name -->
+<!-- Modal change name -->
 <div class="modal fade bd-example-modal-lg-name" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
 aria-hidden="true">
-<div class="modal-dialog modal-lg-name">
-	<div class="modal-content" style="width: fit-content;height: auto;background: lightgrey">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			</button>
-			<h3 class="modal-title">//Administrar nombre</h3>
-		</div>
-		<div class="modal-body" style="text-align: center;">
-			<form class="adminData-form">
-				<div class="form-group">
-					<label>Nuevo nombre:</label>
-					<input type="text" style="border: 2px solid #0f407a;" required>
-				</div>
-				<button type="submit" class="btn-form">Change!</button>
-			</form>
+	<div class="modal-dialog modal-lg-name">
+		<div class="modal-content" style="width: fit-content;height: auto;background: lightgrey">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h3 class="modal-title">//Administrar nombre</h3>
+			</div>
+			<div class="modal-body" style="text-align: center;">
+				<form class="adminData-form"  th:action="@{/updatename}" method="post">
+					<div class="form-group">
+						<label>Nuevo nombre:</label>
+						<input type="text" name="name" style="border: 2px solid #0f407a;" required>
+					</div>
+					<div>
+						<input type="hidden" id="popup" th:value='${message}'/>	
+					</div>
+					<button type="submit" class="btn-form">Change!</button>
+				</form>
+			</div>
 		</div>
 	</div>
-</div>
 </div>
 
-		<!-- Modal change email -->
+<!-- Modal change email -->
 <div class="modal fade bd-example-modal-lg-email" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
 aria-hidden="true">
-<div class="modal-dialog modal-lg-email">
-	<div class="modal-content" style="width: fit-content;height: auto;background: lightgrey">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			</button>
-			<h3 class="modal-title">//Administrar email</h3>
-		</div>
-		<div class="modal-body" style="text-align: center;">
-			<form class="adminData-form">
-				<small class="form-text text-muted">Introduzca en primer lugar su contraseña actual</small>
-				<div class="form-group">
-					<label>Contraseña actual:</label>
-					<input type="password" style="border: 2px solid #0f407a;" required>
+	<div class="modal-dialog modal-lg-email">
+		<div class="modal-content" style="width: fit-content;height: auto;background: lightgrey">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h3 class="modal-title">//Administrar email</h3>
+			</div>
+			<div class="modal-body" style="text-align: center;">
+				<form class="adminData-form" th:action="@{/updateemail}" method="post">
+					<small class="form-text text-muted">Introduzca en primer lugar su contraseña actual</small>
+					<div class="form-group">
+						<label>Contraseña actual:</label>
+						<input type="password" name="currentpassword" style="border: 2px solid #0f407a;" required>
+					</div>
+					<div style="border-top: 3px solid#0f407a; width: 100%; margin-bottom: 20px;">
+					</div>
+					<div class="form-group">
+						<label>Nuevo email:</label>
+						<input type="email" name="firstFieldEmail" style="border: 2px solid #0f407a" required>
+					</div>
+					<div class="form-group">
+						<label>Nuevo email:</label>
+						<input type="email" name="secondFieldEmail" style="border: 2px solid #0f407a" required>
+					</div>
+					<div>
+						
+						<input type="hidden" id="popup" th:value='${message}'/>					  
 				</div>
-				<div style="border-top: 3px solid#0f407a; width: 100%; margin-bottom: 20px;">
-				</div>
-				<div class="form-group">
-					<label>Nuevo email:</label>
-					<input type="email" style="border: 2px solid #0f407a" required>
-				</div>
-				<div class="form-group">
-					<label>Nuevo email:</label>
-					<input type="email" style="border: 2px solid #0f407a" required>
-				</div>
-				<button type="submit" class="btn-form">Change!</button>
-			</form>
-		</div>
+					<button type="submit" class="btn-form">Change!</button>
+				</form>
+			</div>
+		</div> 
 	</div>
-</div>
 </div>
 			<!-- scripts -->
 <script th:inline="javascript">
