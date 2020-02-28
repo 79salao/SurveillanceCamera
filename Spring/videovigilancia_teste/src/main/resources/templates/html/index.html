@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <link rel="stylesheet" href="/css/styles.css">
+  <link rel="icon" type="image/png" href="/images/logo.png" />
 </head>
 
 <!-- Main block/container -->
@@ -28,9 +29,9 @@
           <h1 style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">L O G I N</h1>
 
                     <!-- toast -->
-                    <div class="toast" id="toastPW" style="position: relative; min-width: 100%;" data-autohide="false" role="alert" aria-live="assertive" aria-atomic="true">
-                      <div class="toast-body">
-                        Los datos que has introducido son incorrectos.
+                    <div class="toast" id="toast" style="position: relative; min-width: 100%;" data-autohide="false" role="alert" aria-live="assertive" aria-atomic="true">
+                      <div class="toast-body" id="toast_body">
+                        <div id='toast_msg'></div>
                       </div>
                     </div>
                     <!-- - - - -->
@@ -118,13 +119,28 @@
       integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
       crossorigin="anonymous"></script>
       
-    <!-- ES NECESARIO TENER UN CAMPO DE INPUT HIDDEN. --> 	   
+    <!-- errors pop ups --> 	   
     <script type="text/javascript">
       window.onload= function showMessagePopUp(){
           var message = $('#popup').val();
-
-          if(message == "USER_ERROR")
-          $('#toastPW').toast('show')
+          console.log(message)
+          if(message == "EMAIL_OK"){
+              document.getElementById('toast_msg').innerHTML="Email enviado";
+              document.getElementById('toast_body').style="background: lightgreen";
+              $('#toast').toast('show');
+            }
+          else if(message == "USER_ERROR"){
+            document.getElementById('toast_msg').innerHTML="Usuario o contraseña no coinciden";
+            document.getElementById('toast_body').style="background: lightcoral";
+            $('#toast').toast('show');
+          }
+          else if(message == "EMAIL_ERROR2"){
+              document.getElementById('toast_msg').innerHTML="Email no registrado";
+              document.getElementById('toast_body').style="background: lightcoral";
+              $('#toast').toast('show');
+            }
+          
+          
         }
     </script>
 	   

@@ -51,8 +51,18 @@ body {
 #filter{
 	height: 100% !important;
 }
+
 aside{
 	height: 100% !important;
+	overflow: hidden;
+}
+
+section{
+	align-items: center;
+	text-align: center;
+	max-height: 100% !important;
+	overflow-x: auto;
+	overflow-y: auto;
 }
 
 
@@ -120,23 +130,28 @@ footer img{
 }
 
 footer{ 
+	clear: both;
+	bottom: 0;
 	width: 100%;
 	padding: 10px;
-	bottom: 0;
 	position: absolute !important;
     background: white;
     color: #0f407a;
-    height: 40px;
+    height: 33px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: larger;
 }
 
 .card {
+	max-width: 50% !important;
 	margin-top: 10px;
+	margin-left: 25%;
+	margin-bottom: 10px;
 	background: white;
 }
 
 tr {
+	max-width: 200px !important;
 	text-align: left;
 }
 
@@ -151,6 +166,15 @@ tr {
 		visibility: hidden;
 	}
 }
+
+@media screen and (max-width: 1024px) {
+	.card{
+		max-width: 100% !important;
+		margin-left:0;
+	}
+	
+}
+
 
 @media screen and (max-width: 767px) {
       .sidenav {
@@ -192,8 +216,7 @@ tr {
 	  }
 
 	  footer{
-		  position: absolute !important;
-		  bottom: 0;
+		  position: relative !important;
 	  }
 
 	  article{

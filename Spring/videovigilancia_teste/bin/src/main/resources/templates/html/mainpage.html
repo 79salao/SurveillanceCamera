@@ -36,7 +36,7 @@
 				<a class="dropdown-item" href="#" data-toggle="modal" data-target=".bd-example-modal-lg-password"><img src="../images/icon_password.png">Change password <br></a>
 				<a class="dropdown-item" href="#" data-toggle="modal" data-target=".bd-example-modal-lg-email"><img src="../images/icon_email.png">Change email <br></a>
 				<p style="border-bottom: 3px solid #0f407a; width: 100%;"><br></p>
-				<a class="dropdown-item" th:href="@{/}"><img src="../images/icon_signOut.png">Sign out</a>
+				<a class="dropdown-item" th:href="@{/deleteCookies}"><img src="../images/icon_signOut.png">Sign out</a>
 			</div>
 		</li>
 
@@ -54,7 +54,7 @@
 				<a class="dropdown-item" th:href="@{/charts}"><img src="../images/icon_stats.png">Estadísticas <br></a>
 				<a class="dropdown-item" data-toggle="modal" data-target=".bd-example-modal-lg-stream"><img src="../images/icon_stream.png">Directo <br></a>
 				<p style="border-bottom: 3px solid #0f407a; width: 100%;"><br></p>
-				<a class="dropdown-item" th:href="@{/}"><img src="../images/icon_signOut.png" style="height: 33px; width: 33px;">Sign out</a>
+				<a class="dropdown-item" th:href="@{/deleteCookies}"><img src="../images/icon_signOut.png" style="height: 33px; width: 33px;">Sign out</a>
 			</div>
 		</li>			
 	</ul>
@@ -179,7 +179,7 @@
 				<h3 class="modal-title">//Administrar contraseña</h3>
 			</div>
 			<div class="modal-body" style="text-align: center;">
-				<form class="adminData-form" th:action="@{/updatepassword}" th:object="${user}" method="post">
+				<form class="adminData-form" th:action="@{/updatepassword}" method="post">
 					<small class="form-text text-muted">Introduzca en primer lugar su contraseña actual</small>
 					<div class="form-group">
 						<label>Contraseña actual:</label>
@@ -196,11 +196,6 @@
 						<input type="password" name="secondFieldPassword" style="border: 2px solid #0f407a" required>
 					</div>
 					<div>
-						<input type="hidden" th:field="*{id}">
-						<input type="hidden" th:field="*{name}">
-						<input type="hidden" th:field="*{username}">
-						<input type="hidden" th:field="*{email}">
-						<input type="hidden" th:field="*{password}">
 						<input type="hidden" id="popup" th:value='${message}'/>
 				   </div>
 					<div style="text-align: center; margin-top: 5px;">
@@ -224,16 +219,13 @@ aria-hidden="true">
 				<h3 class="modal-title">//Administrar nombre</h3>
 			</div>
 			<div class="modal-body" style="text-align: center;">
-				<form class="adminData-form"  th:action="@{/updatename}" th:object="${user}" method="post">
+				<form class="adminData-form"  th:action="@{/updatename}" method="post">
 					<div class="form-group">
 						<label>Nuevo nombre:</label>
-						<input type="text" th:field="*{name}" style="border: 2px solid #0f407a;" required>
+						<input type="text" name="name" style="border: 2px solid #0f407a;" required>
 					</div>
 					<div>
-						<input type="hidden" th:field="*{id}">
-						<input type="hidden" th:field="*{username}">
-						<input type="hidden" th:field="*{email}">
-						<input type="hidden" th:field="*{password}">
+						<input type="hidden" id="popup" th:value='${message}'/>	
 					</div>
 					<button type="submit" class="btn-form">Change!</button>
 				</form>
@@ -254,7 +246,7 @@ aria-hidden="true">
 				<h3 class="modal-title">//Administrar email</h3>
 			</div>
 			<div class="modal-body" style="text-align: center;">
-				<form class="adminData-form" th:action="@{/updateemail}" th:object="${user}" method="post">
+				<form class="adminData-form" th:action="@{/updateemail}" method="post">
 					<small class="form-text text-muted">Introduzca en primer lugar su contraseña actual</small>
 					<div class="form-group">
 						<label>Contraseña actual:</label>
@@ -271,17 +263,13 @@ aria-hidden="true">
 						<input type="email" name="secondFieldEmail" style="border: 2px solid #0f407a" required>
 					</div>
 					<div>
-						<input type="hidden" th:field="*{id}">
-						<input type="hidden" th:field="*{name}">
-						<input type="hidden" th:field="*{username}">
-						<input type="hidden" th:field="*{email}">
-						<input type="hidden" th:field="*{password}">
+						
 						<input type="hidden" id="popup" th:value='${message}'/>					  
 				</div>
 					<button type="submit" class="btn-form">Change!</button>
 				</form>
 			</div>
-		</div>
+		</div> 
 	</div>
 </div>
     <!-- ES NECESARIO TENER UN CAMPO DE INPUT HIDDEN. --> 	   
