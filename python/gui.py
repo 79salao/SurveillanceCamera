@@ -33,6 +33,8 @@ def salir():
     config_out.close()
     exit()
     window.destroy()
+
+
 threads = []
 # Array que guarda la configuracion de las grabaciones
 confArray1 = confArray[0]
@@ -86,6 +88,7 @@ def alert_popup(title, message):
     b.pack()
     window.mainloop()
 
+
 def saveConfig():
     global config_out
     global confArray
@@ -99,6 +102,7 @@ def saveConfig():
         pickle.dump(confArray, config_out)
         config_out.close()
 
+
 def waitToStopRec():
     running = True
     while running:
@@ -108,13 +112,13 @@ def waitToStopRec():
             saveConfig()
             running = False
 
+
 def newThread():
     global threads
     threads = []
     thread = threading.Thread(target=saveConfig, daemon=True)
     threads.append(thread)
     return thread
-
 
 
 # Método que aplica la configuracion y la guarda en el archivo
@@ -168,7 +172,6 @@ def applyStream():
     global confArray2
     global confArray
     funcionando = False
-    main.checkThreads()
     resolution = comboStrmRes.get()
     fps = comboStrmFps.get()
     if resolution != "Select resolution":
@@ -296,6 +299,7 @@ def refresh():
             recordingStatusStateLabel.configure(text="Recording", fg="green")
         else:
             recordingStatusStateLabel.configure(text="Not recording", fg="red")
+            recordingStatusDurationLabel.configure(text="Duration: 0 seconds")
         if checkStream():
             streamingStatusStateLabel.configure(text="Streaming", fg="green")
         else:

@@ -7,7 +7,6 @@ import threading
 import time
 import stream
 import gpiozero
-import communication
 
 # Variables globales sin inicializar
 
