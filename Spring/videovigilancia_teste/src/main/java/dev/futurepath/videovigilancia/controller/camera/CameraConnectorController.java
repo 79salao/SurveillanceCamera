@@ -78,7 +78,7 @@ public class CameraConnectorController extends Thread {
 	}
 
 	/*
-	 * 
+	 * Method for the socket to listen
 	 */
 	private String readMessageFromClient(InputStream is, int lockSeconds) throws IOException {
 		lockSeconds *= 1000;

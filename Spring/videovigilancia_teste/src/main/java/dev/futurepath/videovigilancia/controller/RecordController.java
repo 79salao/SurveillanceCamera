@@ -43,6 +43,9 @@ public class RecordController {
     	return modelView(request, "html/statsPage2");
     }    
     
+    /*
+     * Method to avoid duplicated code in this class
+     */
     private ModelAndView modelView(HttpServletRequest request, String direccion) {
     	
     	User user = sharedMethods.findCookies(request);

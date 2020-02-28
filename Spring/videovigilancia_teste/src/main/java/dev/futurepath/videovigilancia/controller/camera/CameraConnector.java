@@ -6,7 +6,7 @@ import java.net.*;
 public class CameraConnector {
 	static final int PORT = 6666;
 
-	//192.168.2.82 Mi ip
+	//192.168.2.82 IP Angela
 	public static void main(String[] args) throws IOException {
 		ServerSocket s = new ServerSocket(PORT);		
 		try {
