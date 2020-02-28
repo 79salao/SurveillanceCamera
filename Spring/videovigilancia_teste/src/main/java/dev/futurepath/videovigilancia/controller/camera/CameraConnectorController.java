@@ -78,7 +78,7 @@ public class CameraConnectorController extends Thread {
 	}
 
 	/*
-	 * 
+	 * Method for the socket to listen
 	 */
 	private String readMessageFromClient(InputStream is, int lockSeconds) throws IOException {
 		lockSeconds *= 1000;
@@ -126,7 +126,7 @@ public class CameraConnectorController extends Thread {
 					+ "                <p style='color: #b3b3b3; font-size: 12px; text-align: center;margin: 30px 0 0'>©Copyright 2019, TB/O. All rights reserved.</p>"
 					+ "            </div>" + "        </td>" + "    </tr>" + "</table>";
 			try {
-				sendMailService.sendMail("carolina.dasilva@movicoders.com", user.getEmail(), subject, body);
+				sendMailService.sendMail("tbonotifica@hotmail.com", user.getEmail(), subject, body);
 			} catch (NullPointerException e) {
 				e.printStackTrace();
 			}

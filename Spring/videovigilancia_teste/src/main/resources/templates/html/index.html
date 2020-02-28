@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <link rel="stylesheet" href="/css/styles.css">
+  <link rel="icon" type="image/png" href="/images/logo.png" />
 </head>
 
 <!-- Main block/container -->
@@ -28,9 +29,9 @@
           <h1 style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">L O G I N</h1>
 
                     <!-- toast -->
-                    <div class="toast" id="toastPW" style="position: relative; min-width: 100%;" data-autohide="false" role="alert" aria-live="assertive" aria-atomic="true">
-                      <div class="toast-body">
-                        Los datos que has introducido son incorrectos.
+                    <div class="toast" id="toast" style="position: relative; min-width: 100%;" data-autohide="false" role="alert" aria-live="assertive" aria-atomic="true">
+                      <div class="toast-body" id="toast_body">
+                        <div id='toast_msg'></div>
                       </div>
                     </div>
                     <!-- - - - -->
@@ -56,7 +57,7 @@
             <div>
             <button 
               type="button" class="btn btn-recup" data-toggle="modal" data-target="#exampleModal"> <!-- recuperar contraseña button -->
-              Recuperar contraseña
+              Forgot your password?
               </button>
             </div>         
             
@@ -74,19 +75,18 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Recuperar contraseña</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Forgot your password?</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body"><!-- send an email, changing the password in the database and sending the changed password -->
-            <p style="font-size: large;">Te enviaremos un correo con la nueva contraseña, asegurate de cambiarla
-              por una que recuerdes con mayor facilidad.</p><br>
+            <p style="font-size: large;">We will send you an email with a link to reset your password. Be sure to change it for one that you will remember.</p><br>
             <form class="forgotpw-form" th:action="@{/sendEmail}" method="post">
               <div class="form-group">
                 <label>Email:</label>
                 <input type="email" style="border: 1px solid #0f407a" class="form-fgpw" name="email" required/>
-                <small class="form-text text-muted">No compartiremos tu correo con terceros.</small>
+                <small class="form-text text-muted">We won't share your email with third-parties.</small>
               </div>
               <button type="submit" class="btn btn-primary">Send!</button><!-- send email button -->
             </form>
@@ -118,13 +118,28 @@
       integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
       crossorigin="anonymous"></script>
       
-    <!-- ES NECESARIO TENER UN CAMPO DE INPUT HIDDEN. --> 	   
+    <!-- errors pop ups --> 	   
     <script type="text/javascript">
       window.onload= function showMessagePopUp(){
           var message = $('#popup').val();
-
-          if(message == "USER_ERROR")
-          $('#toastPW').toast('show')
+          console.log(message)
+          if(message == "EMAIL_OK"){
+              document.getElementById('toast_msg').innerHTML="Email sent";
+              document.getElementById('toast_body').style="background: lightgreen";
+              $('#toast').toast('show');
+            }
+          else if(message == "USER_ERROR"){
+            document.getElementById('toast_msg').innerHTML="User or password doesn't match";
+            document.getElementById('toast_body').style="background: lightcoral";
+            $('#toast').toast('show');
+          }
+          else if(message == "EMAIL_ERROR2"){
+              document.getElementById('toast_msg').innerHTML="Email not registered";
+              document.getElementById('toast_body').style="background: lightcoral";
+              $('#toast').toast('show');
+            }
+          
+          
         }
     </script>
 	   

@@ -4,6 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
@@ -18,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+
 import dev.futurepath.videovigilancia.model.dao.IUserDao;
 import dev.futurepath.videovigilancia.model.entity.User;
 import dev.futurepath.videovigilancia.model.service.SendHTMLEmail;
@@ -29,6 +31,8 @@ public class UserController {
 	private IUserDao userDao;
 	@Autowired
 	private SendHTMLEmail sendMailService;
+	@Autowired
+	private SharedMethods sharedMethods;
 
 	/*
 	 * Variables' class
@@ -37,7 +41,7 @@ public class UserController {
 	 */
 	private final Pattern pattern = Pattern
 			.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
-		
+	private Long emailID = null;
 
 	/*
 	 * Show the index.html page with the URL '/'. Firstly, it's create a new user
@@ -57,21 +61,28 @@ public class UserController {
 
 	/*
 	 * URL sent by email. The URL contains the user's id as a parameter to use it
-	 * after. The if conditional verify if the ID exist (in case of it's manually
+	 * after. The if conditional verify if the ID is the same send by email (in case of it's manually
 	 * changed).
 	 */
 	@GetMapping(value = "/resetpassword", params = "id")
 	public ModelAndView resetPassword(@RequestParam(value = "id") Long id) {
 		ModelAndView resetPasswordModelAndView = new ModelAndView("html/resetpassword");
 		ModelAndView redirectSignIn = new ModelAndView("redirect:/");
-		User user = userDao.findUserByID(id);		
-		if (user != null) {
+		ModelAndView redirectReset = new ModelAndView("redirect:/resetpassword?id=" + emailID);
+		
+		User user = userDao.findUserByID(id);
+		
+		if (id == emailID){
 			resetPasswordModelAndView.addObject("user", user);
-			resetPasswordModelAndView.addObject("title", "TB/O Reset your Password");
+			resetPasswordModelAndView.addObject("title", "TB/O Reset your Password");		
 			return resetPasswordModelAndView;
-		} else {
-			return redirectSignIn;
-		}
+		}else {
+			if(emailID == null) {
+				return redirectSignIn;
+			}else{
+				return redirectReset;
+			}
+		}		
 	}
 
 	/*
@@ -89,7 +100,7 @@ public class UserController {
 		
 		ModelAndView signInModelAndView = new ModelAndView("html/index");
 
-		if (result.hasErrors()) {
+		if (result.hasErrors()){
 			signInModelAndView.addObject("title", "TB/O SignIn");
 			return signInModelAndView;
 		}
@@ -110,7 +121,7 @@ public class UserController {
 
 	/*
 	 * This method is called after click on the button "Recuperar contraseña". If
-	 * the field match with the email's pattern, is send an email to the typed
+	 * the field match with an email inside the database, is send an email to the typed
 	 * email. It's used RedirectView because RedirectAttributes only work with it
 	 * (changing the model attribute - message of the page before redirecting).
 	 */
@@ -125,7 +136,7 @@ public class UserController {
 				sendEmail(user);
 				addToTheModel(redir, "EMAIL_OK");
 			}else{
-				addToTheModel(redir, "USER_ERROR");
+				addToTheModel(redir, "EMAIL_ERROR1");
 			}
 		}else{
 			addToTheModel(redir, "EMAIL_ERROR");
@@ -159,26 +170,35 @@ public class UserController {
 	 * Update the user's name and redirect to the main page.
 	 */
 	@PostMapping(value = "/updatename")
-	public RedirectView updateName(User user, RedirectAttributes redir) {
+	public RedirectView updateName(@RequestParam("name") String name, RedirectAttributes redir, HttpServletRequest request) {
 		RedirectView redirectMainPage = new RedirectView("/main", true);
-		userDao.update(user);
-		redir.addFlashAttribute("message", "Name changed");
+		User user = sharedMethods.findCookies(request);		
+		name = name.trim();
+		if(name.length() != 0) {
+			user.setName(name);
+			userDao.update(user);
+			addToTheModel(redir, "NAME_OK");			
+		}else {
+			addToTheModel(redir, "NAME_ERROR");			
+		}
 		return redirectMainPage;
 	}
 	
 	/*
-	 * Update the user's email if the user introduce the correct current password. After, redirect to the main page.
+	 * Update the user's email if the user introduce the correct current password and both email's field match. After, redirect to the main page.
 	 * If the typed email already exists in the database or the current password does't match with the typed one, send an error to the view. 
 	 */
 	@PostMapping(value = "/updateemail")
-	public RedirectView updateEmail(@Valid User user, BindingResult result, @RequestParam("currentpassword") String currentpassword,
-			@RequestParam("firstFieldEmail") String firstFieldEmail, @RequestParam("secondFieldEmail") String secondFieldEmail, RedirectAttributes redir) {
-		RedirectView redirectMainPage = new RedirectView("/main", true);
+	public RedirectView updateEmail(@RequestParam("currentpassword") String currentpassword,
+			@RequestParam("firstFieldEmail") String firstFieldEmail, @RequestParam("secondFieldEmail") String secondFieldEmail, RedirectAttributes redir,
+			HttpServletRequest request) {
 		
-		if (result.hasErrors()) {
-			redir.addFlashAttribute("message", "Both password field is requiered");
-			return redirectMainPage;
-		}
+		RedirectView redirectMainPage = new RedirectView("/main", true);
+
+		User user = sharedMethods.findCookies(request);	
+		firstFieldEmail = firstFieldEmail.trim();
+		secondFieldEmail = secondFieldEmail.trim();
+
 		if (currentpassword.equals(user.getPassword())) {
 			if (userDao.findUserByEmail(secondFieldEmail) == null) {
 				Matcher mather = pattern.matcher(secondFieldEmail);
@@ -186,27 +206,29 @@ public class UserController {
 					user.setEmail(secondFieldEmail);
 					userDao.update(user);
 				}else {
-					redir.addFlashAttribute("message", "Email format is incorrect");
+					addToTheModel(redir, "EMAIL_ERROR");
 				}
 			} else {
-				redir.addFlashAttribute("message", "Email already exist. Choose another one");
+				addToTheModel(redir, "EMAIL_ERROR1");
 			}
 		} else {
-			redir.addFlashAttribute("message", "Wrong current password");
+			addToTheModel(redir, "PASSWORD_ERROR");
 		}
 		return redirectMainPage;
 	}
 	
 	/*
-	 * Update the user's password if the user introduce the correct current password. After, redirect to the main page.
-	 * If the current password does't match with the typed one, send an error to the view.
+	 * Update the user's password if the user introduce the correct current password and both password's fields match. After, redirect to the main page.
+	 * If the current password or the new password does't match with the typed one, send an error to the view.
 	 */
 	@PostMapping(value = "/updatepassword")
-	public RedirectView updatePassword(User user, @RequestParam("currentpassword") String currentpassword,
+	public RedirectView updatePassword(@RequestParam("currentpassword") String currentpassword,
 			@RequestParam("firstFieldPassword") String firstFieldPassword, @RequestParam("secondFieldPassword") String secondFieldPassword,
-			RedirectAttributes redir) {
+			RedirectAttributes redir, HttpServletRequest request) {
 		
 		RedirectView redirectMainPage = new RedirectView("/main", true);
+		
+		User user = sharedMethods.findCookies(request);
 		
 		if(!(firstFieldPassword.equals(secondFieldPassword))) {			
 			addToTheModel(redir, "FIELD_ERROR");
@@ -228,6 +250,7 @@ public class UserController {
 	 *  Method to send an email
 	 */
 	private void sendEmail(User user) {
+		emailID = user.getId();
 		String subject = "Reset TB/O password";
 		String link = "<a style='text-decoration: none; border-radius: 5px; padding: 15px 23px; color: white; background-color: #3498db' href='http://localhost:8080/resetpassword?id="
 				+ user.getId() + "' target='_blank'>Click here to reset it!</a>";
@@ -240,7 +263,7 @@ public class UserController {
 				+ "			</div>"
 				+ "			<hr style='border-bottom: 3px solid #0f407a; margin-bottom: 30px;margin-top: 30px;font-weight: bold;color: #0f407a;'>"
 				+ "			<div style='color: #34495e; margin: 4% 10% 2%; text-align: justify;font-family: sans-serif'>"
-				+ "				<h2 style='text-align: center;color: #0f407a; margin: 0 0 7px'>Hola " + user.getName()
+				+ "				<h2 style='text-align: center;color: #0f407a; margin: 0 0 7px'>Hello " + user.getName()
 				+ " !</h2>" 
 				+ "				<p style='margin: 2px; font-size: 15px'>"
 				+ "					We received a request to reset your TB/O password. If you really did, click on the link below to choose a new one."
@@ -253,23 +276,16 @@ public class UserController {
 				+ "				</p>"
 				+ "				<p style='color: #b3b3b3; font-size: 12px; text-align: center;margin: 30px 0 0'>©Copyright 2019, TB/O. All rights reserved.</p>"
 				+ "			</div>" + "		</td>" + "	</tr>" + "</table>";
-		sendMailService.sendMail("carolina.dasilva@movicoders.com", user.getEmail(), subject, body);
-	}	
-	
-	/*
-	 * Used to delete the cookies when the user click on SignOut. The parameter cookieName is the cookie that will be delete. In this case will be
-	 * the username. 
-	 */	
-	public void deleteCookies(String cookieName, HttpServletResponse response) {
-		 Cookie cookie = new Cookie("cookieName", null);
-		 cookie.setMaxAge(0);
-		 response.addCookie(cookie);
+		sendMailService.sendMail("tbonotifica@hotmail.com", user.getEmail(), subject, body);
 	}
-
 	/*
 	 * Method to change the model attribute - message - of the page before redirecting
 	 */
 	private void addToTheModel(RedirectAttributes redir, String msg) {
 		redir.addFlashAttribute("message", msg);
 	}
+	
+
+	
+	
 }

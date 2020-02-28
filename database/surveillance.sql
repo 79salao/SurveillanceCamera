@@ -1,12 +1,3 @@
--- phpMyAdmin SQL Dump
--- version 4.9.2
--- https://www.phpmyadmin.net/
---
--- Servidor: 127.0.0.1
--- Tiempo de generación: 14-01-2020 a las 11:47:30
--- Versión del servidor: 10.4.10-MariaDB
--- Versión de PHP: 7.3.12
-
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
 START TRANSACTION;
@@ -21,8 +12,7 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `surveillance`
 --
-
--- --------------------------------------------------------
+CREATE DATABASE surveillance;
 
 --
 -- Estructura de tabla para la tabla `records`
@@ -31,10 +21,30 @@ SET time_zone = "+00:00";
 CREATE TABLE `records` (
   `id` int(11) NOT NULL,
   `date` datetime NOT NULL,
-  `duration` time NOT NULL,
+  `duration` int(11) NOT NULL DEFAULT 0,
   `camera` int(11) NOT NULL,
   `video_location` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `records`
+--
+
+INSERT INTO `records` (`id`, `date`, `duration`, `camera`, `video_location`) VALUES
+(156, '2020-02-21 09:31:01', 23, 1, '/home/pi/Desktop/SurveillanceCamera-master/2020_02_21_09:31:01.h264'),
+(157, '2020-02-20 00:32:02', 10, 1, '/home/pi/Desktop/SurveillanceCamera-master/2020_02_21_09:32:02.h264'),
+(158, '2020-02-19 10:32:02', 10, 1, '/home/pi/Desktop/SurveillanceCamera-master/2020_02_21_09:32:02.h264'),
+(159, '2020-02-19 12:32:02', 10, 1, '/home/pi/Desktop/SurveillanceCamera-master/2020_02_21_09:32:02.h264'),
+(160, '2020-02-18 12:32:02', 10, 1, '/home/pi/Desktop/SurveillanceCamera-master/2020_02_21_09:32:02.h264'),
+(161, '2020-02-16 14:32:02', 10, 1, '/home/pi/Desktop/SurveillanceCamera-master/2020_02_21_09:32:02.h264'),
+(162, '2020-02-16 14:32:02', 10, 1, '/home/pi/Desktop/SurveillanceCamera-master/2020_02_21_09:32:02.h264'),
+(163, '2020-02-15 20:32:02', 10, 1, '/home/pi/Desktop/SurveillanceCamera-master/2020_02_21_09:32:02.h264'),
+(164, '2020-02-10 20:32:02', 10, 1, '/home/pi/Desktop/SurveillanceCamera-master/2020_02_21_09:32:02.h264'),
+(165, '2020-02-21 09:43:27', 16, 1, '/home/pi/Desktop/SurveillanceCamera-master/2020_02_21_09:43:27.h264'),
+(166, '2020-02-21 09:45:31', 14, 1, '/home/pi/Desktop/SurveillanceCamera-master/2020_02_21_09:45:31.h264'),
+(167, '2020-02-21 10:13:39', 12, 1, '/home/pi/Desktop/SurveillanceCamera-master/2020_02_21_10:13:39.h264'),
+(168, '2020-02-21 10:15:05', 15, 1, '/home/pi/Desktop/SurveillanceCamera-master/2020_02_21_10:15:05.h264'),
+(169, '2020-02-21 10:19:21', 9, 1, '/home/pi/Desktop/SurveillanceCamera-master/2020_02_21_10:19:21.h264');
 
 -- --------------------------------------------------------
 
@@ -43,11 +53,20 @@ CREATE TABLE `records` (
 --
 
 CREATE TABLE `users` (
-  `username` varchar(16) NOT NULL,
-  `password` varchar(16) NOT NULL,
-  `email` varchar(50) NOT NULL,
-  `name` varchar(80) NOT NULL
+  `id` int(11) NOT NULL,
+  `username` varchar(16) NOT NULL DEFAULT '',
+  `password` varchar(16) NOT NULL DEFAULT '',
+  `email` varchar(50) NOT NULL DEFAULT '',
+  `name` varchar(50) NOT NULL DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `users`
+--
+
+INSERT INTO `users` (`id`, `username`, `password`, `email`, `name`) VALUES
+(0, 'admin', 'testTesting4Pi', 'tbonotifica@hotmail.com', 'admin'),
+(2, 'aps', 'aps', 'alu.112478@usj.es', 'Angela');
 
 --
 -- Índices para tablas volcadas
@@ -63,7 +82,9 @@ ALTER TABLE `records`
 -- Indices de la tabla `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`username`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `username` (`username`),
+  ADD UNIQUE KEY `email` (`email`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -73,7 +94,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `records`
 --
 ALTER TABLE `records`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=170;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

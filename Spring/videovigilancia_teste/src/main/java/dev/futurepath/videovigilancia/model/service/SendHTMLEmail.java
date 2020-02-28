@@ -5,15 +5,22 @@ import java.util.Properties;
 import javax.mail.*;
 import javax.mail.internet.*;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import dev.futurepath.videovigilancia.model.dao.IUserDao;
+import dev.futurepath.videovigilancia.model.entity.User;
 
 @Service
 public class SendHTMLEmail {
 	
+	@Autowired
+	private IUserDao userDao;
+	
 	public void sendMail(String from, String to, String subject, String body) {
 
-		// No podemos dejar la contraseña a la vista
-		final String password = "Qun41984";
+		User user = userDao.findUserByID((long) 0);
+		final String password = user.getPassword();
 		final String username = from;
 
 		String host = "smtp.office365.com";

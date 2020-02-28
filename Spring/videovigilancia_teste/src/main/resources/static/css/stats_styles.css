@@ -130,16 +130,17 @@ tr {
 }
 
 .btn-stats{
-	margin: 5px;
-	font-size: large;
+	margin: 0;
+	font-size: smaller;
+	padding: 10px;
 	color: white;
-	background: #143968;
+	background: #0f407a;
 	font-weight: bold;
-	border-bottom: 1px solid white;
+	border: 2px solid white;
 }
 
 .stat-changing{
-	padding: 10px;
+	padding: 13px;
 	background: #143968;
 }
 
@@ -195,15 +196,18 @@ tr {
 	  .stat-changing{
 		text-align: center;
 		margin-left: 0px;
+
 	}
 
 	.btn-stats{
+		min-width: 100px !important;
 		margin: 0;
 		font-size: smaller;
-		padding: 3px;
-		color: #0f407a;
-		background: white;
+		padding: 5px;
+		color: white;
+		background: #0f407a;
 		font-weight: bold;
+		border: 2px solid white;
 	}
 	
 	#account-menu{

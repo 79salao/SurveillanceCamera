@@ -2,187 +2,232 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<title th:text="${title}"></title>
-	<meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/css/stats_styles.css">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-        
- </head>
+<title th:text="${title}"></title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/stats_styles.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+ <link rel="icon" type="image/png" href="/images/logo.png" />
+</head>
 
 <!-- Navegation bar -->
 <header>
-<nav class="navbar navbar-dark bg-primary " style="background-color: #ffffff; margin-bottom: 0px;">
-	<div class="navbar-header">
-		<img src="..\images\logonav.png" width="65" height="57" class="navbar-left" id="logonav" style="margin-left: 10px;">
-	</div>
-	<ul class="nav navbar-nav"
-		style="background-color: #ffffff; color: #0f407a; font-size: medium; margin-top: 5px; font-weight: bold;">
-		<li class="active"><a href="../html/mainpage.html">Grabaciones</a></li>
-		<li><a href="../html/statsPage.html">Estadísticas</a></li>
-		<li><a href="#" data-toggle="modal" data-target=".bd-example-modal-lg-stream">Directo</a></li>
-	</ul>
+	<nav class="navbar navbar-dark bg-primary "
+		style="background-color: #ffffff; margin-bottom: 0px;">
+		<div class="navbar-header">
+			<img src="..\images\logonav.png" width="65" height="57" class="navbar-left" id="logonav" style="margin-left: 10px;">
+		</div>
+		<ul class="nav navbar-nav" style="background-color: #ffffff; color: #0f407a; font-size: medium; margin-top: 5px; font-weight: bold;">
+			<li class="active"><a th:href="@{/main}">Records</a></li>
+			<li><a th:href="@{/charts}">Stats</a></li>
+			<li><a href="#" data-toggle="modal"
+				data-target=".bd-example-modal-lg-stream">Live</a></li>
+		</ul>
 
-	<ul class="nav navbar-right" style="background-color: #ffffff;height: 50px; margin-top: 5px; margin-right: 15px">		
-		<!-- dropmenu account -->
-		<li class="btn-group dropleft" style="margin-right: 30px" id="account-menu">
+		<ul class="nav navbar-right" style="background-color: #ffffff; height: 50px; margin-top: 5px; margin-right: 15px">
+			<!-- dropmenu account -->
+			<li class="btn-group dropleft" style="margin-right: 30px" id="account-menu">
 			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-				<img src="..\images\account.png" width="30" height="30">
+			 <img src="..\images\account.png" width="30" height="30">
 			</a>
-			<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-				<a class="dropdown-item" href="#" data-toggle="modal" data-target=".bd-example-modal-lg-name"><img src="../images/icon_name.png">Change name <br></a>
-				<a class="dropdown-item" href="#" data-toggle="modal" data-target=".bd-example-modal-lg-password"><img src="../images/icon_password.png">Change password <br></a>
-				<a class="dropdown-item" href="#" data-toggle="modal" data-target=".bd-example-modal-lg-email"><img src="../images/icon_email.png">Change email <br></a>
-				<p style="border-bottom: 3px solid #0f407a; width: 100%;"><br></p>
-				<a class="dropdown-item" th:href="@{/}"><img src="../images/icon_signOut.png">Sign out</a>
-			</div>
-		</li>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+					<a class="dropdown-item" href="#" data-toggle="modal" data-target=".bd-example-modal-lg-name">
+					<img src="../images/icon_name.png">Change name <br></a>
+					 <a class="dropdown-item" href="#" data-toggle="modal"
+						data-target=".bd-example-modal-lg-password"><img
+						src="../images/icon_password.png">Change password <br></a>
+					<a class="dropdown-item" href="#" data-toggle="modal"
+						data-target=".bd-example-modal-lg-email"><img
+						src="../images/icon_email.png">Change email <br></a>
+					<p style="border-bottom: 3px solid #0f407a; width: 100%;">
+						<br>
+					</p>
+					<a class="dropdown-item" th:href="@{/deleteCookies}"><img
+						src="../images/icon_signOut.png">Log out</a>
+				</div></li>
 
 			<!-- dropmenu movil -->
-		<li class="btn-group dropdown" id="movil-menu" style="float: left; margin-left: 15px;">
-			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-				<img src="../images/movil-menu.png" width="29" height="29">
+			<li class="btn-group dropdown" id="movil-menu"
+				style="float: left; margin-left: 15px;"><a
+				class="nav-link dropdown-toggle" href="#"
+				id="navbarDropdownMenuLink" data-toggle="dropdown"
+				aria-haspopup="true" aria-expanded="true"> <img
+					src="../images/movil-menu.png" width="29" height="29">
 			</a>
-			<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-				<a class="dropdown-item" data-toggle="modal" data-target=".bd-example-modal-lg-name"><img src="../images/icon_name.png">Change name <br></a>
-				<a class="dropdown-item" data-toggle="modal" data-target=".bd-example-modal-lg-password"><img src="../images/icon_password.png">Change password <br></a>
-				<a class="dropdown-item" data-toggle="modal" data-target=".bd-example-modal-lg-email"><img src="../images/icon_email.png">Change email <br></a>
-				<p style="border-bottom: 3px solid #0f407a; width: 100%;"><br></p>
-				<a class="dropdown-item" th:href="@{/main}"><img src="../images/icon_records.png">Grabaciones <br></a>
-				<a class="dropdown-item" th:href="@{/charts}"><img src="../images/icon_stats.png">Estadísticas <br></a>
-				<a class="dropdown-item" data-toggle="modal" data-target=".bd-example-modal-lg-stream"><img src="../images/icon_stream.png">Directo <br></a>
-				<p style="border-bottom: 3px solid #0f407a; width: 100%;"><br></p>
-				<a class="dropdown-item" th:href="@{/}"><img src="../images/icon_signOut.png" style="height: 33px; width: 33px;">Sign out</a>
-			</div>
-		</li>			
-	</ul>
-</nav>
+
+				<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+					<a class="dropdown-item" data-toggle="modal"
+						data-target=".bd-example-modal-lg-name"><img
+						src="../images/icon_name.png">Change name <br></a> <a
+						class="dropdown-item" data-toggle="modal"
+						data-target=".bd-example-modal-lg-password"><img
+						src="../images/icon_password.png">Change password <br></a>
+					<a class="dropdown-item" data-toggle="modal"
+						data-target=".bd-example-modal-lg-email"><img
+						src="../images/icon_email.png">Change email <br></a>
+					<p style="border-bottom: 3px solid #0f407a; width: 100%;">
+						<br>
+					</p>
+					<a class="dropdown-item" th:href="@{/main}">
+						<img src="../images/icon_records.png">Records <br>
+					</a> 
+					<a class="dropdown-item" th:href="@{/charts}"><img
+						src="../images/icon_stats.png">Stats <br></a> <a
+						class="dropdown-item" data-toggle="modal"
+						data-target=".bd-example-modal-lg-stream"><img
+						src="../images/icon_stream.png">Live <br></a>
+					<p style="border-bottom: 3px solid #0f407a; width: 100%;">
+						<br>
+					</p>
+					<a class="dropdown-item" th:href="@{/deleteCookies}"><img
+						src="../images/icon_signOut.png"
+						style="height: 33px; width: 33px;">Log out</a>
+				</div></li>
+		</ul>
+	</nav>
 </header>
 
 
 <body>
-			<!--Contenedor central-->
+	<!--Contenedor central-->
 	<div class="container-fluid" style="height: 100% !important;">
 		<div id="filter" class="row">
 			<!--Filter-->
-				<aside class="col-xs-12 col-sm-3 col-md-3 col-lg-2" style="background: #143968; color: white;">
-					<form method="get" action="/main">
+			<aside class="col-xs-12 col-sm-3 col-md-3 col-lg-2"
+				style="background: #143968; color: white;">
+				<form method="get" action="/charts">
 					<div class="form-group">
-						<label for="example-date-input" class="col-form-label" style="margin-top: 20px;">DESDE</label>
+						<label for="example-date-input" class="col-form-label"
+							style="margin-top: 20px;">FROM</label>
 						<div>
-							<input class="form-control" type="date" name="from" th:value="${from}" />
+							<input class="form-control" type="date" name="from"
+								th:value="${from}" />
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="example-date-input" class="col-form-label">HASTA</label>
+						<label for="example-date-input" class="col-form-label">TO</label>
 						<div>
-							<input class="form-control" type="date" name="to" th:value="${to}" />
+							<input class="form-control" type="date" name="to"
+								th:value="${to}" />
 						</div>
 					</div>
 					<div class="form-group" style="text-align: center;">
-						<button class="btn btn-primary" type="submit">Buscar</button>
+						<button class="btn btn-primary" type="submit">Search</button>
 					</div>
 				</form>
-				</aside>
+			</aside>
 
-            
+
 			<!-- stats table -->
-			<section class="col-xs-12 col-sm-9 col-md-9 col-lg-10" style="background: #0f407a; color: black;">
+			<section class="col-xs-12 col-sm-9 col-md-9 col-lg-10"
+				style="background: #0f407a; color: black;">
 				<div class="chart_container" id="chartContainer"></div>
 				<div class="stat-changing">
-					<a class="btn-stats" th:href="@{/charts}" role="button">Media de incidencias</a>
-					<span style="color: white; font-size: x-large;">|</span>
-					<a class="btn-stats" th:href="@{/charts2}" role="button">Incidencias por día</a>
+					<a class="btn-stats" th:href="@{/charts}" role="button">Incidents average</a> <span style="color: white; font-size: x-large;">|</span>
+					<a class="btn-stats" th:href="@{/charts2}" role="button">Incidents per day</a>
 				</div>
-			  </section>
+			</section>
 		</div>
 	</div>
 
-			<!-- footer -->
+	<!-- footer -->
 	<footer class="container col-xs-12">
-            <a href="https://facebook.com"><img src="../images/facebook.png" id="facebook_icon" style="float: right; margin-left: 10px;"></a>
-            <a href="https://linkedin.com"><img src="../images/linkedin.png" id="linkedin_icon" style="float: right; margin-left: 10px;"></a>
-            <a href="https://reddit.com"><img src="../images/reddit.png" id="reddit_icon" style="float: right; margin-left: 10px;"></a>
-            <a href="https://twitter.com"><img src="../images/twitter.png" id="twitter_icon" style="float: right;"></a>
-    </footer>
+		<a href="https://facebook.com"><img src="../images/facebook.png"
+			id="facebook_icon" style="float: right; margin-left: 10px;"></a> <a
+			href="https://linkedin.com"><img src="../images/linkedin.png"
+			id="linkedin_icon" style="float: right; margin-left: 10px;"></a> <a
+			href="https://reddit.com"><img src="../images/reddit.png"
+			id="reddit_icon" style="float: right; margin-left: 10px;"></a> <a
+			href="https://twitter.com"><img src="../images/twitter.png"
+			id="twitter_icon" style="float: right;"></a>
+	</footer>
 </body>
 
 
 
-			<!-- Stream modal -->
+<!-- Stream modal -->
 
-<div class="modal fade bd-example-modal-lg-stream" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-	aria-hidden="true">
+<div class="modal fade bd-example-modal-lg-stream" tabindex="-1"
+	role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content"
 			style="border: 10px solid #0f407a; background: #0f407a; color: white">
-			<button type="button" class="close" style="background-color: #0f407a;" data-dismiss="modal"
+			<button type="button" class="close"
+				style="background-color: #0f407a;" data-dismiss="modal"
 				aria-label="Close">
 				<span aria-hidden="true">&times;</span>
 			</button>
-			<h4>CAMARA 1</h4>
-			<img src="http://192.168.2.119:8000/stream.mjpg" alt="Sin conexion" width="100%" height="auto">
+			<h4>CAMERA 1</h4>
+			<img src="http://192.168.2.119:8000/stream.mjpg" alt="Sin conexion"
+				width="100%" height="auto">
 		</div>
 	</div>
 </div>
 
-			<!-- Modal change password -->
-<div class="modal fade bd-example-modal-lg-password" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-	aria-hidden="true">
+<!-- Modal change password -->
+<div class="modal fade bd-example-modal-lg-password" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg-password">
 		<div class="modal-content" style="width: fit-content; height: auto;background: lightgray;">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
-				<h3 class="modal-title">//Administrar contraseña</h3>
+				<h3 class="modal-title">//Change password</h3>
 			</div>
 			<div class="modal-body" style="text-align: center;">
-				<form class="adminData-form">
-					<small class="form-text text-muted">Introduzca en primer lugar su contraseña actual</small>
+				<form class="adminData-form" th:action="@{/updatepassword}" method="post">
+					<small class="form-text text-muted">Introduce your current password</small>
 					<div class="form-group">
-						<label>Contraseña actual:</label>
-						<input type="password" style="border: 2px solid #0f407a;" required>
+						<label>Current password:</label>
+						<input type="password" name="currentpassword" style="border: 2px solid #0f407a;" required>
 					</div>
 					<div style="border-top: 3px solid#0f407a; width: 100%; margin-bottom: 30px;">
 					</div>
 					<div class="form-group">
-						<label>Nueva contraseña:</label>
-						<input type="password" style="border: 2px solid #0f407a;" required>
+						<label>New password:</label>
+						<input type="password" name="firstFieldPassword" style="border: 2px solid #0f407a;" required>
 					</div>
 					<div class="form-group">
-						<label>Nueva contraseña:</label>
-						<input type="password" style="border: 2px solid #0f407a" required>
+						<label>New password:</label>
+						<input type="password" name="secondFieldPassword" style="border: 2px solid #0f407a" required>
 					</div>
+					<div>
+						<input type="hidden" id="popup" th:value='${message}'/>
+				   </div>
 					<div style="text-align: center; margin-top: 5px;">
 						<button type="submit" class="btn-form">Change!</button>
 					</div>
-					
 				</form>
 			</div>
 		</div>
 	</div>
 </div>
 
-			<!-- Modal change name -->
+<!-- Modal change name -->
 <div class="modal fade bd-example-modal-lg-name" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-	aria-hidden="true">
+aria-hidden="true">
 	<div class="modal-dialog modal-lg-name">
 		<div class="modal-content" style="width: fit-content;height: auto;background: lightgrey">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
-				<h3 class="modal-title">//Administrar nombre</h3>
+				<h3 class="modal-title">//Change name</h3>
 			</div>
 			<div class="modal-body" style="text-align: center;">
-				<form class="adminData-form">
+				<form class="adminData-form"  th:action="@{/updatename}" method="post">
 					<div class="form-group">
-						<label>Nuevo nombre:</label>
-						<input type="text" style="border: 2px solid #0f407a;" required>
+						<label>New name:</label>
+						<input type="text" name="name" style="border: 2px solid #0f407a;" required>
+					</div>
+					<div>
+						<input type="hidden" id="popup" th:value='${message}'/>	
 					</div>
 					<button type="submit" class="btn-form">Change!</button>
 				</form>
@@ -191,95 +236,141 @@
 	</div>
 </div>
 
-			<!-- Modal change email -->
+<!-- Modal change email -->
 <div class="modal fade bd-example-modal-lg-email" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-	aria-hidden="true">
+aria-hidden="true">
 	<div class="modal-dialog modal-lg-email">
 		<div class="modal-content" style="width: fit-content;height: auto;background: lightgrey">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
-				<h3 class="modal-title">//Administrar email</h3>
+				<h3 class="modal-title">//Change email</h3>
 			</div>
 			<div class="modal-body" style="text-align: center;">
-				<form class="adminData-form">
-					<small class="form-text text-muted">Introduzca en primer lugar su contraseña actual</small>
+				<form class="adminData-form" th:action="@{/updateemail}" method="post">
+					<small class="form-text text-muted">Introduce your current password</small>
 					<div class="form-group">
-						<label>Contraseña actual:</label>
-						<input type="password" style="border: 2px solid #0f407a;" required>
+						<label>Current password:</label>
+						<input type="password" name="currentpassword" style="border: 2px solid #0f407a;" required>
 					</div>
 					<div style="border-top: 3px solid#0f407a; width: 100%; margin-bottom: 20px;">
 					</div>
 					<div class="form-group">
-						<label>Nuevo email:</label>
-						<input type="email" style="border: 2px solid #0f407a" required>
+						<label>New email:</label>
+						<input type="email" name="firstFieldEmail" style="border: 2px solid #0f407a" required>
 					</div>
 					<div class="form-group">
-						<label>Nuevo email:</label>
-						<input type="email" style="border: 2px solid #0f407a" required>
+						<label>New email:</label>
+						<input type="email" name="secondFieldEmail" style="border: 2px solid #0f407a" required>
 					</div>
+					<div>
+						
+						<input type="hidden" id="popup" th:value='${message}'/>					  
+				</div>
 					<button type="submit" class="btn-form">Change!</button>
 				</form>
 			</div>
-		</div>
+		</div> 
 	</div>
 </div>
-			<!-- scripts -->
-<script>
+<!-- scripts -->
+<script th:inline="javascript">
  
- datax = [
-    { y: 8 },
-    { y: 5 },
-    { y: 11, indexLabel: "highest", markerColor: "red", markerType: "triangle" },
-    { y: 7 },
-    { y: 9 },
-    { y: 7 },
-    { y: 6 },
-    { y: 8 },
-    { y: 1, indexLabel: "lowest", markerColor: "green", markerType: "cross" },
-    { y: 9 },
-    { y: 10 },
-    { y: 4 },
-    { y: 8 },
-    { y: 5 },
-    { y: 6 },
-    { y: 7 },
-    { y: 9 },
-    { y: 7 },
-    { y: 6 },
-    { y: 8 },
-    { y: 9 },
-    { y: 9 },
-    { y: 10 },
-    { y: 4 },
-]
- 
-window.onload = function() {
- 
- var chart1 = new CanvasJS.Chart("chartContainer", {
-     animationEnabled: true,
-     theme: "dark2",
-     backgroundColor: "transparent",
-     title: {
-         text: "Simple Line Chart"
-     },
-     axisX: {
-         title: "Hora",
-         interval: 1
-     },
-     axisY: {
-         title: "Media de incidencias",
-         includeZero: false
-     },
-     data: [{
-         type: "line",
-         dataPoints: datax
-     }]
- });
 
- chart1.render();
+/*<![CDATA[*/
+
+function getArray(arrayx) {
+    var arrayFechas = [];
+    arrayx.forEach(elemento => {
+        arrayProvisional = elemento.split("T");
+        arrayProvisional2 = arrayProvisional[1].split(":")
+        arrayFechas.push(arrayProvisional2[0]);
+    });
+    return arrayFechas;
 }
+
+function getReps(arrayHoras) {
+    var arrayReps = [];
+    var arrayHoras2= arrayHoras;
+    var horas = []
+    var horasDefault = [0, 1, 2, 3, 4,
+    					5, 6, 7, 8, 9, 
+    					10, 11, 12, 13,
+    					14, 15, 16, 17, 
+    					18, 19, 20, 21, 
+    					22, 23]
+    arrayHoras.forEach(hora => {
+    	var reps = 0;
+        if (!horas.includes(hora)) {
+            horas.push(hora);
+            arrayHoras.forEach(repeticion => {
+                if (hora == repeticion) {
+                    reps = reps + 1;
+                }
+            });
+            var arrayChars = hora.split("");
+            if (arrayChars[0]== "0") {
+                hora = arrayChars[1];
+            }
+            var index = horasDefault.indexOf(parseInt(hora));
+            if(index !== -1) {
+	            horasDefault[index] = {
+	                y: reps,
+	                label: hora
+	            };
+            }
+        }
+    });
+    console.log(horasDefault)
+    return horasDefault;
+}
+
+function format(array) {
+	var arrayFinal = []
+	array.forEach(element => {
+		if(Number.isInteger(element)) {
+			arrayFinal.push({
+				y: 0,
+				label: element.toString()
+			});
+		} else {
+			arrayFinal.push(element);
+		}
+	});
+	return arrayFinal;
+}
+
+var records = /*[[${record}]]*/ 'default';
+
+var data = format(getReps(getArray(records)));
+console.log(data);
+
+window.onload = function() {
+    var chart = new CanvasJS.Chart("chartContainer", {
+        animationEnabled: true,
+        theme: "dark1",
+        backgroundColor: "transparent",
+        title: {
+            text: "Incidents per hours"
+        },
+        axisX: {
+            title: "Hours",
+            interval: 1
+        },
+        axisY: {
+            title: "Number of incidents per hours",
+            includeZero: false,
+            interval: 1
+        },
+        data: [{
+            type: "area",
+            dataPoints: data
+        }]
+    });
+    chart.render();
+}
+/*]]>*/
 </script>
 
 </html>

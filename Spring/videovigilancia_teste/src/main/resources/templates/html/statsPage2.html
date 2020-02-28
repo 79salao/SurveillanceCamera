@@ -10,6 +10,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>    
+     <link rel="icon" type="image/png" href="/images/logo.png" />
 </head>
 
 			<!-- Navegation bar -->
@@ -21,9 +22,9 @@
 	</div>
 	<ul class="nav navbar-nav"
 		style="background-color: #ffffff; color: #0f407a; font-size: medium; margin-top: 5px; font-weight: bold;">
-		<li class="active"><a href="../html/mainpage.html">Grabaciones</a></li>
-		<li><a href="../html/statsPage.html">Estadísticas</a></li>
-		<li><a href="#" data-toggle="modal" data-target=".bd-example-modal-lg-stream">Directo</a></li>
+		<li class="active"><a th:href="@{/main}">Records</a></li>
+		<li><a th:href="@{/charts}">Stats</a></li>
+		<li><a href="#" data-toggle="modal" data-target=".bd-example-modal-lg-stream">Live</a></li>
 	</ul>
 
 	<ul class="nav navbar-right" style="background-color: #ffffff;height: 50px; margin-top: 5px; margin-right: 15px">	
@@ -37,7 +38,7 @@
 				<a href="#" class="dropdown-item" data-toggle="modal" data-target=".bd-example-modal-lg-password"><img src="../images/icon_password.png">Change password <br></a>
 				<a href="#" class="dropdown-item" data-toggle="modal" data-target=".bd-example-modal-lg-email"><img src="../images/icon_email.png">Change email <br></a>
 				<p style="border-bottom: 3px solid #0f407a; width: 100%;"><br></p>
-				<a class="dropdown-item" th:href="@{/}"><img src="../images/icon_signOut.png">Sign out</a>
+				<a class="dropdown-item" th:href="@{/deleteCookies}"><img src="../images/icon_signOut.png">Log out</a>
 			</div>
 		</li>
 
@@ -51,11 +52,11 @@
 				<a class="dropdown-item" data-toggle="modal" data-target=".bd-example-modal-lg-password"><img src="../images/icon_password.png">Change password <br></a>
 				<a class="dropdown-item" data-toggle="modal" data-target=".bd-example-modal-lg-email"><img src="../images/icon_email.png">Change email <br></a>
 				<p style="border-bottom: 3px solid #0f407a; width: 100%;"><br></p>
-				<a class="dropdown-item" th:href="@{/main}"><img src="../images/icon_records.png">Grabaciones <br></a>
-				<a class="dropdown-item" th:href="@{/charts}"><img src="../images/icon_stats.png">Estadísticas <br></a>
-				<a class="dropdown-item" data-toggle="modal" data-target=".bd-example-modal-lg-stream"><img src="../images/icon_stream.png">Directo <br></a>
+				<a class="dropdown-item" th:href="@{/main}"><img src="../images/icon_records.png">Records <br></a>
+				<a class="dropdown-item" th:href="@{/charts}"><img src="../images/icon_stats.png">Stats <br></a>
+				<a class="dropdown-item" data-toggle="modal" data-target=".bd-example-modal-lg-stream"><img src="../images/icon_stream.png">Live <br></a>
 				<p style="border-bottom: 3px solid #0f407a; width: 100%;"><br></p>
-				<a class="dropdown-item" th:href="@{/}"><img src="../images/icon_signOut.png" style="height: 33px; width: 33px;">Sign out</a>
+				<a class="dropdown-item" th:href="@{/deleteCookies}"><img src="../images/icon_signOut.png" style="height: 33px; width: 33px;">Log out</a>
 			</div>
 		</li>			
 	</ul>
@@ -69,21 +70,21 @@
 		<div id="filter" class="row">
 				<!--Filter-->
 				<aside class="col-xs-12 col-sm-3 col-md-3 col-lg-2" style="background: #143968;">
-					<form method="get" action="/main">
+					<form method="get" action="/charts2">
 					<div class="form-group">
-						<label for="example-date-input" class="col-form-label" style="margin-top: 20px;">DESDE</label>
+						<label for="example-date-input" class="col-form-label" style="margin-top: 20px;">FROM</label>
 						<div>
 							<input class="form-control" type="date" name="from" th:value="${from}" />
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="example-date-input" class="col-form-label">HASTA</label>
+						<label for="example-date-input" class="col-form-label">TO</label>
 						<div>
 							<input class="form-control" type="date" name="to" th:value="${to}" />
 						</div>
 					</div>
 					<div class="form-group" style="text-align: center;">
-						<button class="btn btn-primary" type="submit">Buscar</button>
+						<button class="btn btn-primary" type="submit">Search</button>
 					</div>
 				</form>
 				</aside>
@@ -92,9 +93,9 @@
 			<section class="col-xs-12 col-sm-9 col-md-9 col-lg-10" style="background: #0f407a; color: black;">
 				<div class="chart_container" id="chartContainer2"></div>
 				<div class="stat-changing">
-					<a class="btn-stats" th:href="@{/charts}" role="button">Media de incidencias</a>
+					<a class="btn-stats" th:href="@{/charts}" role="button">Incidents average</a>
 					<span style="color: white; font-size: x-large;">|</span>
-					<a class="btn-stats" th:href="@{/charts2}" role="button">Incidencias por día</a>
+					<a class="btn-stats" th:href="@{/charts2}" role="button">Incidents per day</a>
 				</div>
 			  </section>
 		</div>
@@ -126,146 +127,262 @@
 				aria-label="Close">
 				<span aria-hidden="true">&times;</span>
 			</button>
-			<h4>CAMARA 1</h4>
+			<h4>CAMERA 1</h4>
 			<img src="http://192.168.2.119:8000/stream.mjpg" alt="Sin conexion" width="100%" height="auto">
 		</div>
 	</div>
 </div>
 
-			<!-- Modal change password -->
-<div class="modal fade bd-example-modal-lg-password" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-aria-hidden="true">
-<div class="modal-dialog modal-lg-password">
-	<div class="modal-content" style="width: fit-content; height: auto;background: lightgray;">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			</button>
-			<h3 class="modal-title">//Administrar contraseña</h3>
-		</div>
-		<div class="modal-body" style="text-align: center;">
-			<form class="adminData-form">
-				<small class="form-text text-muted">Introduzca en primer lugar su contraseña actual</small>
-				<div class="form-group">
-					<label>Contraseña actual:</label>
-					<input type="password" style="border: 2px solid #0f407a;" required>
-				</div>
-				<div style="border-top: 3px solid#0f407a; width: 100%; margin-bottom: 30px;">
-				</div>
-				<div class="form-group">
-					<label>Nueva contraseña:</label>
-					<input type="password" style="border: 2px solid #0f407a;" required>
-				</div>
-				<div class="form-group">
-					<label>Nueva contraseña:</label>
-					<input type="password" style="border: 2px solid #0f407a" required>
-				</div>
-				<div style="text-align: center; margin-top: 5px;">
-					<button type="submit" class="btn-form">Change!</button>
-				</div>
-				
-			</form>
+<!-- Modal change password -->
+<div class="modal fade bd-example-modal-lg-password" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg-password">
+		<div class="modal-content" style="width: fit-content; height: auto;background: lightgray;">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h3 class="modal-title">//Change password</h3>
+			</div>
+			<div class="modal-body" style="text-align: center;">
+				<form class="adminData-form" th:action="@{/updatepassword}" method="post">
+					<small class="form-text text-muted">Introduce your current password</small>
+					<div class="form-group">
+						<label>Current password:</label>
+						<input type="password" name="currentpassword" style="border: 2px solid #0f407a;" required>
+					</div>
+					<div style="border-top: 3px solid#0f407a; width: 100%; margin-bottom: 30px;">
+					</div>
+					<div class="form-group">
+						<label>New password:</label>
+						<input type="password" name="firstFieldPassword" style="border: 2px solid #0f407a;" required>
+					</div>
+					<div class="form-group">
+						<label>New password:</label>
+						<input type="password" name="secondFieldPassword" style="border: 2px solid #0f407a" required>
+					</div>
+					<div>
+						<input type="hidden" id="popup" th:value='${message}'/>
+				   </div>
+					<div style="text-align: center; margin-top: 5px;">
+						<button type="submit" class="btn-form">Change!</button>
+					</div>
+				</form>
+			</div>
 		</div>
 	</div>
 </div>
-</div>
 
-		<!-- Modal change name -->
+<!-- Modal change name -->
 <div class="modal fade bd-example-modal-lg-name" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
 aria-hidden="true">
-<div class="modal-dialog modal-lg-name">
-	<div class="modal-content" style="width: fit-content;height: auto;background: lightgrey">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			</button>
-			<h3 class="modal-title">//Administrar nombre</h3>
-		</div>
-		<div class="modal-body" style="text-align: center;">
-			<form class="adminData-form">
-				<div class="form-group">
-					<label>Nuevo nombre:</label>
-					<input type="text" style="border: 2px solid #0f407a;" required>
-				</div>
-				<button type="submit" class="btn-form">Change!</button>
-			</form>
+	<div class="modal-dialog modal-lg-name">
+		<div class="modal-content" style="width: fit-content;height: auto;background: lightgrey">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h3 class="modal-title">//Change name</h3>
+			</div>
+			<div class="modal-body" style="text-align: center;">
+				<form class="adminData-form"  th:action="@{/updatename}" method="post">
+					<div class="form-group">
+						<label>New name:</label>
+						<input type="text" name="name" style="border: 2px solid #0f407a;" required>
+					</div>
+					<div>
+						<input type="hidden" id="popup" th:value='${message}'/>	
+					</div>
+					<button type="submit" class="btn-form">Change!</button>
+				</form>
+			</div>
 		</div>
 	</div>
-</div>
 </div>
 
-		<!-- Modal change email -->
+<!-- Modal change email -->
 <div class="modal fade bd-example-modal-lg-email" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
 aria-hidden="true">
-<div class="modal-dialog modal-lg-email">
-	<div class="modal-content" style="width: fit-content;height: auto;background: lightgrey">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			</button>
-			<h3 class="modal-title">//Administrar email</h3>
-		</div>
-		<div class="modal-body" style="text-align: center;">
-			<form class="adminData-form">
-				<small class="form-text text-muted">Introduzca en primer lugar su contraseña actual</small>
-				<div class="form-group">
-					<label>Contraseña actual:</label>
-					<input type="password" style="border: 2px solid #0f407a;" required>
+	<div class="modal-dialog modal-lg-email">
+		<div class="modal-content" style="width: fit-content;height: auto;background: lightgrey">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h3 class="modal-title">//Change email</h3>
+			</div>
+			<div class="modal-body" style="text-align: center;">
+				<form class="adminData-form" th:action="@{/updateemail}" method="post">
+					<small class="form-text text-muted">Introduce your current password</small>
+					<div class="form-group">
+						<label>Current password:</label>
+						<input type="password" name="currentpassword" style="border: 2px solid #0f407a;" required>
+					</div>
+					<div style="border-top: 3px solid#0f407a; width: 100%; margin-bottom: 20px;">
+					</div>
+					<div class="form-group">
+						<label>New email:</label>
+						<input type="email" name="firstFieldEmail" style="border: 2px solid #0f407a" required>
+					</div>
+					<div class="form-group">
+						<label>New email:</label>
+						<input type="email" name="secondFieldEmail" style="border: 2px solid #0f407a" required>
+					</div>
+					<div>
+						
+						<input type="hidden" id="popup" th:value='${message}'/>					  
 				</div>
-				<div style="border-top: 3px solid#0f407a; width: 100%; margin-bottom: 20px;">
-				</div>
-				<div class="form-group">
-					<label>Nuevo email:</label>
-					<input type="email" style="border: 2px solid #0f407a" required>
-				</div>
-				<div class="form-group">
-					<label>Nuevo email:</label>
-					<input type="email" style="border: 2px solid #0f407a" required>
-				</div>
-				<button type="submit" class="btn-form">Change!</button>
-			</form>
-		</div>
+					<button type="submit" class="btn-form">Change!</button>
+				</form>
+			</div>
+		</div> 
 	</div>
 </div>
-</div>
 			<!-- scripts -->
-<script>
- 
-dataw = [
-    { label: "21/01", y: 1 },
-    { label: "22/01", y: 6 },
-    { label: "23/01", y: 5 },
-    { label: "24/01", y: 2 },
-    { label: "25/01", y: 1 },
-    { label: "26/01", y: 1 },
-    { label: "27/01", y: 1 },
-]
- 
+<script th:inline="javascript">
+/*<![CDATA[*/
+
+	
+var intervalo;
+
+function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) 
+        month = '0' + month;
+    if (day.length < 2) 
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+}
+
+
+var getDates = function(startDate, endDate) {
+	  var dates = [],
+	      currentDate = startDate,
+	      addDays = function(days) {
+	        var date = new Date(this.valueOf());
+	        date.setDate(date.getDate() + days);
+	        return date;
+	      };
+	  while (currentDate <= endDate) {
+	    dates.push(currentDate);
+	    currentDate = addDays.call(currentDate, 1);
+	  }
+	  return dates;
+	};
+
+function getArray(arrayx) {
+    var arrayFechas = [];
+    arrayx.forEach(elemento => {
+        arrayProvisional = elemento.split("T");
+        arrayFechas.push(arrayProvisional[0]);
+    });
+    return arrayFechas;
+}
+
+
+function getReps(arrayFechas, totalFechas) {
+    var arrayReps = [];
+    var arrayFechas2 = arrayFechas;
+    var fechas = []
+    var max = 0;
+    var fechasDefault = totalFechas;
+    arrayFechas.forEach(fecha => {
+        var reps = 0;
+        if (!fechas.includes(fecha)) {
+            fechas.push(fecha);
+            arrayFechas2.forEach(repeticion => {
+                if (fecha == repeticion) {
+                    reps = reps + 1;
+                }
+                if(reps > max) {
+                	max = reps;
+                }
+            });
+            var index = fechasDefault.indexOf(fecha);
+            if(index !== -1) {
+            	fechasDefault[index] = {
+	                y: reps,
+	                label: fecha
+	            };
+            }
+        }
+    });
+    if(max > 20) {
+    	intervalo = 5;
+    } else if (max > 40) {
+    	intervalo = 10;
+    } else if (max == 0) {
+    	intervalo = 1;
+    }
+    return fechasDefault;
+}
+
+function format(array) {
+	var arrayFinal = []
+	array.forEach(element => {
+		if(typeof element == "string") {
+			arrayFinal.push({
+				y: 0,
+				label: element
+			});
+		} else {
+			arrayFinal.push(element);
+		}
+	});
+	return arrayFinal;
+}
+
+var from = /*[[${from}]]*/ 'default';
+var to = /*[[${to}]]*/ 'default';
+var records = /*[[${record}]]*/ 'default';
+var dates = getDates(new Date(from), new Date(to));
+var datesFinal = []
+dates.forEach(date => {
+	datesFinal.push(formatDate(date));
+})
+var array = getArray(records);
+var texto = "Incidents from " + from + " to " + to;
+var data = getReps(array, datesFinal);
+var dataFinal = format(data);
+console.log(dataFinal)
+
 window.onload = function() {
- 
-    var chart2 = new CanvasJS.Chart("chartContainer2", {
+    CanvasJS.addColorSet("greenShades", [
+        " #436FA6",
+        "#5D88BB",
+        "#79A1C3",
+        "#96BAD4"
+    ]);
+    var chart = new CanvasJS.Chart("chartContainer2", {
         animationEnabled: true,
-        theme: "dark1", // "light1", "light2", "dark1", "dark2"
+        theme: "dark1",
         backgroundColor: "transparent",
         colorSet: "greenShades",
         title: {
-            text: "Incidencias del 21/01/2020 al 28/01/2020"
+            text: this.texto
         },
         axisY: {
-            title: "Incidencias por dia",
-            interval: 1
+        	labelFontSize: 20,
+            title: "Incidents per day",
+            interval: intervalo
         },
         axisX: {
-            title: "Fechas"
+            title: "Dates",
+            labelFontSize: 14,
         },
         data: [{
             type: "column",
-            dataPoints: dataw
+            dataPoints: dataFinal
         }]
     });
-    chart2.render();
- 
+    chart.render();
+
 }
+/*]]>*/
 </script>
 
 </html>
