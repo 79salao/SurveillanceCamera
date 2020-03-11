@@ -99,6 +99,9 @@ public class UserDaoImpl implements IUserDao {
                 User user = new User();
                 user.setEmail(rs.getString("email"));
                 user.setName(rs.getString("name"));
+                user.setUsername(rs.getString("username"));
+                user.setId(rs.getLong("id"));
+                user.setPassword(rs.getString("name"));
                 result.add(user);
             }
             rs.close();

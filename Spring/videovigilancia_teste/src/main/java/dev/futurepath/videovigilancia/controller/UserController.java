@@ -276,7 +276,7 @@ public class UserController {
 				+ "				</p>"
 				+ "				<p style='color: #b3b3b3; font-size: 12px; text-align: center;margin: 30px 0 0'>©Copyright 2019, TB/O. All rights reserved.</p>"
 				+ "			</div>" + "		</td>" + "	</tr>" + "</table>";
-		sendMailService.sendMail("tbonotifica@hotmail.com", user.getEmail(), subject, body);
+		sendMailService.sendMail(user.getEmail(), subject, body);
 	}
 	/*
 	 * Method to change the model attribute - message - of the page before redirecting
