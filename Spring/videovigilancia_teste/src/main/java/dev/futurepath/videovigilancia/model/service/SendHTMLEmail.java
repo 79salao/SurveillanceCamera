@@ -17,11 +17,11 @@ public class SendHTMLEmail {
 	@Autowired
 	private IUserDao userDao;
 	
-	public void sendMail(String from, String to, String subject, String body) {
+	public void sendMail(String to, String subject, String body) {
 
 		User user = userDao.findUserByID((long) 0);
 		final String password = user.getPassword();
-		final String username = from;
+		final String email = user.getEmail();
 
 		String host = "smtp.office365.com";
 
@@ -30,13 +30,13 @@ public class SendHTMLEmail {
 		properties.put("mail.smtp.starttls.enable", true);
 		properties.put("mail.smtp.host", host);
 
-		SimpleEmailAuthenticator authenticator = new SimpleEmailAuthenticator(username, password);
+		SimpleEmailAuthenticator authenticator = new SimpleEmailAuthenticator(email, password);
 		Session session = Session.getInstance(properties, authenticator);
 
 		try {
 			MimeMessage message = new MimeMessage(session);
 
-			message.setFrom(new InternetAddress(from));
+			message.setFrom(new InternetAddress(email));
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
 			message.setSubject(subject);
 			message.setContent(body, "text/html");
