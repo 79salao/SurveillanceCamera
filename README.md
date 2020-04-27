@@ -1,2 +1,2 @@
 # SurveillanceCamera
-Documentacion en carpeta documentacion
+OPEN WORD FILE TO SEE THE DOCUMENTATION
